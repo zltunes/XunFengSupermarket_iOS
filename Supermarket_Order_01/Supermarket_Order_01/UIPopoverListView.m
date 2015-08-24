@@ -120,7 +120,6 @@
     {
         [self.delegate popoverListView:self didSelectIndexPath:indexPath];
     }
-    
     [self dismiss];
 }
 

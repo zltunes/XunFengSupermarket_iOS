@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OrderTableViewController.h"
+#import "AFNetworking.h"
 
-@interface OrderAppDelegate : UIResponder
+@interface OrderAppDelegate : UIResponder<UIApplicationDelegate>
 
+@property (strong, nonatomic) UIWindow *window;
+@property(strong,nonatomic) UINavigationController *naviController;
+@property(strong,nonatomic) OrderTableViewController *viewController;
+@property(strong,nonatomic) AFHTTPRequestOperationManager* manager;
+@property(strong,nonatomic) NSNumber* orderID;//订单id
+@property(strong,nonatomic) NSNumber* superID;//超市id
 @end

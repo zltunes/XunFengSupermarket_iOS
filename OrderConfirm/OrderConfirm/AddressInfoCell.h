@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface AddressInfoCell : UITableViewCell
-
+@property(strong,nonatomic) UILabel* addressLabel;
+@property(strong,nonatomic) UILabel* phoneNoLabel;
 @end

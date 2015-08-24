@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface purchaseBagCell : UITableViewCell
-
+@property(strong,nonatomic) UILabel* goodsNameLabel;
+@property(strong,nonatomic) UILabel* goodsCountLabel;
+@property(strong,nonatomic) UILabel* totalPriceLabel;
 @end

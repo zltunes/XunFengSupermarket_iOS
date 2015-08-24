@@ -139,14 +139,6 @@ static const char * const kZSYPopoverListButtonClickForDone = "kZSYPopoverListBu
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(popoverListView:didDeselectRowAtIndexPath:)])
-    {
-        [self.delegate popoverListView:self didDeselectRowAtIndexPath:indexPath];
-    }
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(popoverListView:didSelectRowAtIndexPath:)])

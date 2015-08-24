@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "OrderTableViewCell.h"
 @interface OrderTableViewController : UITableViewController
 
 @end

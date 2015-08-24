@@ -8,6 +8,7 @@
 
 #ifndef Supermarket_Order_01_Header_h
 #define Supermarket_Order_01_Header_h
-
+#define kWindowWidth                        ([[UIScreen mainScreen] bounds].size.width)
+#define kWindowHeight                       ([[UIScreen mainScreen] bounds].size.height)
 
 #endif

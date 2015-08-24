@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict/>
+<array>
+	<string>等待超市接单</string>
+	<string>配送中</string>
+	<string>已送达</string>
+	<string>已取消</string>
+	<string>订单完成</string>
+</array>
 </plist>

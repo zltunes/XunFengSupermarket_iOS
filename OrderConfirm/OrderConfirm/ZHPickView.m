@@ -7,8 +7,13 @@
 //
 #define ZHToobarHeight 40
 #import "ZHPickView.h"
+#import "ConfirmAppDelegate.h"
 
 @interface ZHPickView ()<UIPickerViewDelegate,UIPickerViewDataSource>
+{
+    ConfirmAppDelegate* confirmAppdelegate;
+    NSString* start_timeURL;
+}
 @property(nonatomic,copy)NSString *plistName;
 @property(nonatomic,strong)NSArray *plistArray;
 @property(nonatomic,assign)BOOL isLevelArray;
@@ -26,6 +31,7 @@
 @property(nonatomic,strong)NSMutableArray *dicKeyArray;
 @property(nonatomic,copy)NSMutableArray *state;
 @property(nonatomic,copy)NSMutableArray *city;
+@property(nonatomic,strong)NSArray* array;//start_time数组
 @end
 
 @implementation ZHPickView
@@ -60,10 +66,9 @@
     self=[super init];
     if (self) {
         _plistName=plistName;
-        self.plistArray=[self getPlistArrayByplistName:plistName];
+        self.plistArray=[self getPlistArrayByplistName:@"起送时间"];
         [self setUpPickView];
         [self setFrameWith:isHaveNavControler];
-        
     }
     return self;
 }
@@ -89,11 +94,20 @@
 //    return self;
 //}
 
-
+//
 -(NSArray *)getPlistArrayByplistName:(NSString *)plistName{
-    
+    //可供选择的起送时间
     NSString *path= [[NSBundle mainBundle] pathForResource:plistName ofType:@"plist"];
     NSArray * array=[[NSArray alloc] initWithContentsOfFile:path];
+//    confirmAppdelegate = [UIApplication sharedApplication].delegate;
+//    start_timeURL = @"http://115.29.197.143:8999/v1.0/supermarket/2/times";//sup_id暂定为2，需从上一界面获取(delegate属性？)
+//    //后台返回：[time1,time2]
+//    [confirmAppdelegate.manager GET:start_timeURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSLog(@"获取start_time成功!start_time个数: %lu",(unsigned long)[responseObject count]);
+//        _array = responseObject;
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"获取start_time失败:%@",error);
+//    }];
     [self setArrayClass:array];
     return array;
 }

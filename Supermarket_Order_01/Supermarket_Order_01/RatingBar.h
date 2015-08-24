@@ -18,7 +18,7 @@
  *
  *  @param newRating 新的值
  */
-- (void)ratingChanged:(float)newRating;
+- (void)ratingChanged:(NSInteger)newRating;
 
 @end
 

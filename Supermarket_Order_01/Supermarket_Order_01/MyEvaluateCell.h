@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MyEvaluateCell : UITableViewCell
-
+@property(strong,nonatomic) UITextView* myEvaluateView;
 @end

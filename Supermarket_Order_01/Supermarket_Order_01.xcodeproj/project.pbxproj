@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		357B448B1B637B7E00BCEA69 /* OrderEvaluate.m in Sources */ = {isa = PBXBuildFile; fileRef = 357B448A1B637B7E00BCEA69 /* OrderEvaluate.m */; };
+		357B448F1B638FFE00BCEA69 /* RatingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 357B448E1B638FFE00BCEA69 /* RatingBar.m */; };
+		359226221B692B830089D4B0 /* 购物袋.plist in Resources */ = {isa = PBXBuildFile; fileRef = 359226211B692B830089D4B0 /* 购物袋.plist */; };
+		359226251B692C000089D4B0 /* MyEvaluateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 359226241B692C000089D4B0 /* MyEvaluateCell.m */; };
+		35B3DF411B69515E00BCB67A /* UIPopoverListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B3DF401B69515E00BCB67A /* UIPopoverListView.m */; };
+		35B3DF481B697FAE00BCB67A /* shop.png in Resources */ = {isa = PBXBuildFile; fileRef = 35B3DF471B697FAE00BCB67A /* shop.png */; };
+		35B3DF4B1B69809C00BCB67A /* purchaseBagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B3DF4A1B69809C00BCB67A /* purchaseBagCell.m */; };
+		35B3DF4F1B69895600BCB67A /* 订单详情.plist in Resources */ = {isa = PBXBuildFile; fileRef = 35B3DF4E1B69895600BCB67A /* 订单详情.plist */; };
 		35CC8A541B62376700F28433 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CC8A531B62376700F28433 /* main.m */; };
 		35CC8A571B62376700F28433 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CC8A561B62376700F28433 /* AppDelegate.m */; };
 		35CC8A5A1B62376700F28433 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CC8A591B62376700F28433 /* ViewController.m */; };
@@ -14,6 +22,16 @@
 		35CC8A5F1B62376700F28433 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35CC8A5E1B62376700F28433 /* Images.xcassets */; };
 		35CC8A621B62376700F28433 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35CC8A601B62376700F28433 /* LaunchScreen.xib */; };
 		35CC8A6E1B62376700F28433 /* Supermarket_Order_01Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CC8A6D1B62376700F28433 /* Supermarket_Order_01Tests.m */; };
+		35CC8A7A1B62524D00F28433 /* OrderAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CC8A791B62524D00F28433 /* OrderAppDelegate.m */; };
+		35CC8A7D1B62528300F28433 /* OrderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CC8A7C1B62528300F28433 /* OrderTableViewController.m */; };
+		35CC8A801B6252A700F28433 /* OrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CC8A7F1B6252A700F28433 /* OrderTableViewCell.m */; };
+		35CC8A841B625D4300F28433 /* test.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35CC8A831B625D4300F28433 /* test.jpg */; };
+		35E39DCF1B67A6E5008336FF /* OrderStatus.plist in Resources */ = {isa = PBXBuildFile; fileRef = 35E39DCE1B67A6E5008336FF /* OrderStatus.plist */; };
+		35E39DD31B67B7DB008336FF /* detailedOrderStatusTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E39DD21B67B7DB008336FF /* detailedOrderStatusTableViewController.m */; };
+		35E39DD61B67B82A008336FF /* orderStatusCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E39DD51B67B82A008336FF /* orderStatusCell.m */; };
+		35E39DDC1B68D332008336FF /* error.png in Resources */ = {isa = PBXBuildFile; fileRef = 35E39DDA1B68D332008336FF /* error.png */; };
+		35E39DDD1B68D332008336FF /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 35E39DDB1B68D332008336FF /* check.png */; };
+		3B9095C8BA31730A4FE68A3A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BB0EC3D0050D02B31030547 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +45,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2BB0EC3D0050D02B31030547 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		357B44891B637B7E00BCEA69 /* OrderEvaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderEvaluate.h; sourceTree = "<group>"; };
+		357B448A1B637B7E00BCEA69 /* OrderEvaluate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderEvaluate.m; sourceTree = "<group>"; };
+		357B448D1B638FFE00BCEA69 /* RatingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingBar.h; sourceTree = "<group>"; };
+		357B448E1B638FFE00BCEA69 /* RatingBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingBar.m; sourceTree = "<group>"; };
+		359226211B692B830089D4B0 /* 购物袋.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "购物袋.plist"; sourceTree = "<group>"; };
+		359226231B692C000089D4B0 /* MyEvaluateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyEvaluateCell.h; sourceTree = "<group>"; };
+		359226241B692C000089D4B0 /* MyEvaluateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyEvaluateCell.m; sourceTree = "<group>"; };
+		35B3DF3F1B69515E00BCB67A /* UIPopoverListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPopoverListView.h; sourceTree = "<group>"; };
+		35B3DF401B69515E00BCB67A /* UIPopoverListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPopoverListView.m; sourceTree = "<group>"; };
+		35B3DF471B697FAE00BCB67A /* shop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shop.png; sourceTree = "<group>"; };
+		35B3DF491B69809C00BCB67A /* purchaseBagCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = purchaseBagCell.h; sourceTree = "<group>"; };
+		35B3DF4A1B69809C00BCB67A /* purchaseBagCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = purchaseBagCell.m; sourceTree = "<group>"; };
+		35B3DF4E1B69895600BCB67A /* 订单详情.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "订单详情.plist"; sourceTree = "<group>"; };
 		35CC8A4E1B62376700F28433 /* Supermarket_Order_01.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Supermarket_Order_01.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35CC8A521B62376700F28433 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		35CC8A531B62376700F28433 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -40,6 +72,23 @@
 		35CC8A671B62376700F28433 /* Supermarket_Order_01Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Supermarket_Order_01Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35CC8A6C1B62376700F28433 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		35CC8A6D1B62376700F28433 /* Supermarket_Order_01Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Supermarket_Order_01Tests.m; sourceTree = "<group>"; };
+		35CC8A781B62524D00F28433 /* OrderAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderAppDelegate.h; sourceTree = "<group>"; };
+		35CC8A791B62524D00F28433 /* OrderAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderAppDelegate.m; sourceTree = "<group>"; };
+		35CC8A7B1B62528300F28433 /* OrderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTableViewController.h; sourceTree = "<group>"; };
+		35CC8A7C1B62528300F28433 /* OrderTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTableViewController.m; sourceTree = "<group>"; };
+		35CC8A7E1B6252A700F28433 /* OrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTableViewCell.h; sourceTree = "<group>"; };
+		35CC8A7F1B6252A700F28433 /* OrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTableViewCell.m; sourceTree = "<group>"; };
+		35CC8A811B62573500F28433 /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
+		35CC8A831B625D4300F28433 /* test.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test.jpg; sourceTree = "<group>"; };
+		35E39DCE1B67A6E5008336FF /* OrderStatus.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OrderStatus.plist; sourceTree = "<group>"; };
+		35E39DD11B67B7DB008336FF /* detailedOrderStatusTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = detailedOrderStatusTableViewController.h; sourceTree = "<group>"; };
+		35E39DD21B67B7DB008336FF /* detailedOrderStatusTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = detailedOrderStatusTableViewController.m; sourceTree = "<group>"; };
+		35E39DD41B67B82A008336FF /* orderStatusCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = orderStatusCell.h; sourceTree = "<group>"; };
+		35E39DD51B67B82A008336FF /* orderStatusCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = orderStatusCell.m; sourceTree = "<group>"; };
+		35E39DDA1B68D332008336FF /* error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = error.png; sourceTree = "<group>"; };
+		35E39DDB1B68D332008336FF /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
+		43DD92A52263243AA397A8CE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		CD7C41B969EC11B2FCEEE42C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B9095C8BA31730A4FE68A3A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,12 +110,57 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		357B448C1B637C9A00BCEA69 /* Oder_Evaluate */ = {
+			isa = PBXGroup;
+			children = (
+				357B448D1B638FFE00BCEA69 /* RatingBar.h */,
+				357B448E1B638FFE00BCEA69 /* RatingBar.m */,
+				357B44891B637B7E00BCEA69 /* OrderEvaluate.h */,
+				357B448A1B637B7E00BCEA69 /* OrderEvaluate.m */,
+			);
+			name = Oder_Evaluate;
+			sourceTree = "<group>";
+		};
+		359226261B692C0C0089D4B0 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				35B3DF491B69809C00BCB67A /* purchaseBagCell.h */,
+				35B3DF4A1B69809C00BCB67A /* purchaseBagCell.m */,
+				35E39DD41B67B82A008336FF /* orderStatusCell.h */,
+				35E39DD51B67B82A008336FF /* orderStatusCell.m */,
+				359226231B692C000089D4B0 /* MyEvaluateCell.h */,
+				359226241B692C000089D4B0 /* MyEvaluateCell.m */,
+			);
+			name = cell;
+			sourceTree = "<group>";
+		};
+		35B3DF3E1B69502B00BCB67A /* callToSupermarket */ = {
+			isa = PBXGroup;
+			children = (
+				35B3DF3F1B69515E00BCB67A /* UIPopoverListView.h */,
+				35B3DF401B69515E00BCB67A /* UIPopoverListView.m */,
+			);
+			name = callToSupermarket;
+			sourceTree = "<group>";
+		};
+		35B3DF441B697E3700BCB67A /* image */ = {
+			isa = PBXGroup;
+			children = (
+				35E39DDA1B68D332008336FF /* error.png */,
+				35B3DF471B697FAE00BCB67A /* shop.png */,
+				35E39DDB1B68D332008336FF /* check.png */,
+			);
+			name = image;
+			sourceTree = "<group>";
+		};
 		35CC8A451B62376700F28433 = {
 			isa = PBXGroup;
 			children = (
 				35CC8A501B62376700F28433 /* Supermarket_Order_01 */,
 				35CC8A6A1B62376700F28433 /* Supermarket_Order_01Tests */,
 				35CC8A4F1B62376700F28433 /* Products */,
+				7DE61189EA478924AE287E66 /* Pods */,
+				731FAF42B949740B29D8A567 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,6 +176,10 @@
 		35CC8A501B62376700F28433 /* Supermarket_Order_01 */ = {
 			isa = PBXGroup;
 			children = (
+				35CC8A811B62573500F28433 /* Header.h */,
+				35E39DD01B67B765008336FF /* detailedOderStatus */,
+				357B448C1B637C9A00BCEA69 /* Oder_Evaluate */,
+				35CC8A771B62391100F28433 /* Oder_01 */,
 				35CC8A551B62376700F28433 /* AppDelegate.h */,
 				35CC8A561B62376700F28433 /* AppDelegate.m */,
 				35CC8A581B62376700F28433 /* ViewController.h */,
@@ -96,6 +195,9 @@
 		35CC8A511B62376700F28433 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				35B3DF4E1B69895600BCB67A /* 订单详情.plist */,
+				35E39DCE1B67A6E5008336FF /* OrderStatus.plist */,
+				359226211B692B830089D4B0 /* 购物袋.plist */,
 				35CC8A521B62376700F28433 /* Info.plist */,
 				35CC8A531B62376700F28433 /* main.m */,
 			);
@@ -119,6 +221,57 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		35CC8A771B62391100F28433 /* Oder_01 */ = {
+			isa = PBXGroup;
+			children = (
+				35CC8A821B625D2D00F28433 /* iamge */,
+				35CC8A781B62524D00F28433 /* OrderAppDelegate.h */,
+				35CC8A791B62524D00F28433 /* OrderAppDelegate.m */,
+				35CC8A7B1B62528300F28433 /* OrderTableViewController.h */,
+				35CC8A7C1B62528300F28433 /* OrderTableViewController.m */,
+				35CC8A7E1B6252A700F28433 /* OrderTableViewCell.h */,
+				35CC8A7F1B6252A700F28433 /* OrderTableViewCell.m */,
+			);
+			name = Oder_01;
+			sourceTree = "<group>";
+		};
+		35CC8A821B625D2D00F28433 /* iamge */ = {
+			isa = PBXGroup;
+			children = (
+				35CC8A831B625D4300F28433 /* test.jpg */,
+			);
+			name = iamge;
+			sourceTree = "<group>";
+		};
+		35E39DD01B67B765008336FF /* detailedOderStatus */ = {
+			isa = PBXGroup;
+			children = (
+				35B3DF441B697E3700BCB67A /* image */,
+				35B3DF3E1B69502B00BCB67A /* callToSupermarket */,
+				359226261B692C0C0089D4B0 /* cell */,
+				35E39DD11B67B7DB008336FF /* detailedOrderStatusTableViewController.h */,
+				35E39DD21B67B7DB008336FF /* detailedOrderStatusTableViewController.m */,
+			);
+			name = detailedOderStatus;
+			sourceTree = "<group>";
+		};
+		731FAF42B949740B29D8A567 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2BB0EC3D0050D02B31030547 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7DE61189EA478924AE287E66 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				43DD92A52263243AA397A8CE /* Pods.debug.xcconfig */,
+				CD7C41B969EC11B2FCEEE42C /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -126,9 +279,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 35CC8A711B62376700F28433 /* Build configuration list for PBXNativeTarget "Supermarket_Order_01" */;
 			buildPhases = (
+				E98CA49FD19ECCB2625C1632 /* Check Pods Manifest.lock */,
 				35CC8A4A1B62376700F28433 /* Sources */,
 				35CC8A4B1B62376700F28433 /* Frameworks */,
 				35CC8A4C1B62376700F28433 /* Resources */,
+				7B7D2FB4E54F90CD56267686 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -201,7 +356,14 @@
 			files = (
 				35CC8A5D1B62376700F28433 /* Main.storyboard in Resources */,
 				35CC8A621B62376700F28433 /* LaunchScreen.xib in Resources */,
+				35E39DCF1B67A6E5008336FF /* OrderStatus.plist in Resources */,
+				35E39DDD1B68D332008336FF /* check.png in Resources */,
+				35B3DF481B697FAE00BCB67A /* shop.png in Resources */,
+				359226221B692B830089D4B0 /* 购物袋.plist in Resources */,
+				35B3DF4F1B69895600BCB67A /* 订单详情.plist in Resources */,
+				35E39DDC1B68D332008336FF /* error.png in Resources */,
 				35CC8A5F1B62376700F28433 /* Images.xcassets in Resources */,
+				35CC8A841B625D4300F28433 /* test.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,13 +376,56 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7B7D2FB4E54F90CD56267686 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E98CA49FD19ECCB2625C1632 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		35CC8A4A1B62376700F28433 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				357B448F1B638FFE00BCEA69 /* RatingBar.m in Sources */,
 				35CC8A5A1B62376700F28433 /* ViewController.m in Sources */,
+				35CC8A7D1B62528300F28433 /* OrderTableViewController.m in Sources */,
+				359226251B692C000089D4B0 /* MyEvaluateCell.m in Sources */,
+				35CC8A7A1B62524D00F28433 /* OrderAppDelegate.m in Sources */,
 				35CC8A571B62376700F28433 /* AppDelegate.m in Sources */,
+				35B3DF411B69515E00BCB67A /* UIPopoverListView.m in Sources */,
+				35B3DF4B1B69809C00BCB67A /* purchaseBagCell.m in Sources */,
+				35CC8A801B6252A700F28433 /* OrderTableViewCell.m in Sources */,
+				35E39DD61B67B82A008336FF /* orderStatusCell.m in Sources */,
+				35E39DD31B67B7DB008336FF /* detailedOrderStatusTableViewController.m in Sources */,
+				357B448B1B637B7E00BCEA69 /* OrderEvaluate.m in Sources */,
 				35CC8A541B62376700F28433 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,6 +550,7 @@
 		};
 		35CC8A721B62376700F28433 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 43DD92A52263243AA397A8CE /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Supermarket_Order_01/Info.plist;
@@ -355,6 +561,7 @@
 		};
 		35CC8A731B62376700F28433 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD7C41B969EC11B2FCEEE42C /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Supermarket_Order_01/Info.plist;
@@ -416,6 +623,7 @@
 				35CC8A731B62376700F28433 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		35CC8A741B62376700F28433 /* Build configuration list for PBXNativeTarget "Supermarket_Order_01Tests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +632,7 @@
 				35CC8A761B62376700F28433 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

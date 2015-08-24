@@ -7,23 +7,52 @@
 //
 
 #import "OrderTableViewController.h"
+#import "OrderEvaluate.h"
+#import "detailedOrderStatusTableViewController.h"
+#import "OrderAppDelegate.h"
 
 @interface OrderTableViewController ()
-
+{
+    //获取delegate对象，以访问manager属性
+    OrderAppDelegate* appDelegate;
+    //指定接口地址
+    NSString* orderURL;
+    //后台获取的该用户所有订单
+    NSArray* orders;
+}
 @end
 
 @implementation OrderTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"订 单";
+    appDelegate = [UIApplication sharedApplication].delegate;//为了访问manager属性
+    orderURL = @"http://115.29.197.143:8999/v1.0/orders";
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //使用manager发送get请求,更新用户订单列表
+//    NSDictionary* param = @{@"page":@1};
+    [appDelegate.manager GET:orderURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //将服务器json数据转化成NSArray,赋值给orders属性
+        orders = responseObject;
+        [self.tableView reloadData];
+        NSLog(@"连接后台成功!");
+        NSLog(@"用户订单个数：%lu",(unsigned long)[orders count]);
+        for (int i = 0; i < [orders count]; i++) {
+            NSDictionary* dict = [orders objectAtIndex:i];
+            NSLog(@"超市名称:%@",[dict objectForKey:@"sup_name"]);
+        }
+        //重新加载表格数据
+        [self.tableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"获取订单信息有误: %@",error);
+    }];
 }
-
+//-(void)viewDidAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:animated];
+//    [self.tableView reloadData];
+//}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -32,26 +61,105 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
+
     // Return the number of sections.
-    return 0;
+//    return 5;
+    return [orders count];
 }
-
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 10;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
+
     // Return the number of rows in the section.
-    return 0;
+    return 1;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+
+- (OrderTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //获取订单，存储为dict
+    NSDictionary* dict = [orders objectAtIndex:indexPath.section];
+    //{sup_name,state,total,icon,time}
+    static NSString* cellId = @"cellId";
+    OrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if (cell == nil) {
+        cell = [[OrderTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+    }
+    //订单状态(本地)
+    NSString* filePath = [[NSBundle mainBundle]pathForResource:@"OrderStatus" ofType:@"plist"];
+    NSMutableArray* statusArray = [NSMutableArray arrayWithContentsOfFile:filePath];
     
-    // Configure the cell...
-    
+    //2⃣️订单状态
+    cell.OrderStatus = [dict objectForKey:@"state"];
+    cell.statusLabel.text = cell.OrderStatus;
+    //1⃣️超市名称
+    cell.nameOfSupermarket.text = [dict objectForKey:@"sup_name"];
+    //3⃣️总价
+    cell.priceLabel.text = [dict objectForKey:@"total"];
+    //4⃣️icon-－URL
+    NSURL *icon_url = [NSURL URLWithString:[dict objectForKey:@"icon"]];
+    cell.img = [[UIImageView alloc]initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:icon_url]]];
+    //5⃣️time
+    cell.timeLabel.text = [dict objectForKey:@"time"];
+    //依据订单状态确定按钮文字
+    if ([cell.OrderStatus  isEqual: @"配送中"]) {
+        [cell.statusBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+    } else if([cell.OrderStatus isEqual:@"已送达"]){
+        [cell.statusBtn setTitle:@"订单评价" forState:UIControlStateNormal];
+    }
+    [cell.statusBtn addTarget:self action:@selector(statusBtnResponse:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
-*/
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //获取被点击cell
+    OrderTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    detailedOrderStatusTableViewController* detailedStatusController = [[detailedOrderStatusTableViewController alloc]init];
+    appDelegate.orderID = [NSNumber numberWithInt:indexPath.section];
+    [self.navigationController pushViewController:detailedStatusController animated:YES];
+    
+    //设置下一页面的返回,即为超市名
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:cell.nameOfSupermarket.text  style:UIBarButtonItemStylePlain  target:self  action:nil];
+    self.navigationItem.backBarButtonItem = backButton;
+}
+-(void)statusBtnResponse:(UIButton*)sender
+{
+    if ([sender.titleLabel.text isEqual: @"确认收货"]) {
+        [sender addTarget:self action:@selector(confirmStatusBtn:) forControlEvents:UIControlEventTouchUpInside];
+    } else{
+        [sender addTarget:self action:@selector(evaluateOrder:) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+-(void)confirmStatusBtn:(UIButton*)sender
+{
+    //处理：点击“确认收货”后向后台发送数据，后台更改订单状态，然后[self.table reloadData]刷新tableview
+    [sender setTitle:@"订单评价" forState:UIControlStateNormal];
+    /*
+     
+     
+     ？？？？？？？？？？？？？？？？？？？？
+     此处api还在修改，如何向后台修改订单状态？
+     
+     
+     
+     
+     */
+}
+-(void)evaluateOrder:(UIButton*)sender
+{
+    OrderEvaluate *evalueatController = [[OrderEvaluate alloc]init];
+    [self.navigationController pushViewController:evalueatController animated:YES];
+    
+    //自定义返回按钮（将来换成图片）
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"评价"  style:UIBarButtonItemStylePlain  target:self  action:nil];
+    self.navigationItem.backBarButtonItem = backButton;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 150;
+}
 
 /*
 // Override to support conditional editing of the table view.

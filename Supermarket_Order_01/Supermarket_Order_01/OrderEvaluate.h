@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RatingBar.h"
+@interface OrderEvaluate : UIViewController<UITextViewDelegate>
 
-@interface OrderEvaluate : UIViewController
+@property(strong,nonatomic) UILabel* evaluateLabel;
+@property(strong,nonatomic) UITextView* evaluateView;
+@property(strong,nonatomic) UIButton* submitEvaluateBtn;
+@property(strong,nonatomic) UILabel* ratingLabel;
+@property(strong,nonatomic) UIBarButtonItem* done;
+@property(strong,nonatomic) RatingBar *ratingBar;
+@property(strong,nonatomic) NSNumber* rating;
 
 @end

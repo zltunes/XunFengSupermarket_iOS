@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RemarkCell : UITableViewCell
-
+@property(strong,nonatomic) UITextField* remarkField;
 @end

@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		353B5EA61B63D3E0001C0D90 /* ConfirmTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 353B5EA51B63D3E0001C0D90 /* ConfirmTableViewController.m */; };
+		353B5EB11B63D5C6001C0D90 /* AddressInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 353B5EB01B63D5C6001C0D90 /* AddressInfoCell.m */; };
+		353B5EB71B63D5E9001C0D90 /* RemarkCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 353B5EB61B63D5E9001C0D90 /* RemarkCell.m */; };
+		353B5EBD1B64C5A0001C0D90 /* ZHPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 353B5EBC1B64C5A0001C0D90 /* ZHPickView.m */; };
+		353B5EC01B64CFFD001C0D90 /* 起送时间.plist in Resources */ = {isa = PBXBuildFile; fileRef = 353B5EBF1B64CFFD001C0D90 /* 起送时间.plist */; };
+		355209A71B64E5F90047E768 /* 购物袋.plist in Resources */ = {isa = PBXBuildFile; fileRef = 355209A61B64E5F90047E768 /* 购物袋.plist */; };
+		355209AB1B65255D0047E768 /* OrderPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 355209AA1B65255D0047E768 /* OrderPayViewController.m */; };
+		355209AD1B652D010047E768 /* 订单支付.plist in Resources */ = {isa = PBXBuildFile; fileRef = 355209AC1B652D010047E768 /* 订单支付.plist */; };
 		357B44621B6365A800BCEA69 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 357B44611B6365A800BCEA69 /* main.m */; };
 		357B44651B6365A800BCEA69 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 357B44641B6365A800BCEA69 /* AppDelegate.m */; };
 		357B44681B6365A800BCEA69 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 357B44671B6365A800BCEA69 /* ViewController.m */; };
@@ -14,6 +22,12 @@
 		357B446D1B6365A800BCEA69 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 357B446C1B6365A800BCEA69 /* Images.xcassets */; };
 		357B44701B6365A800BCEA69 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 357B446E1B6365A800BCEA69 /* LaunchScreen.xib */; };
 		357B447C1B6365A800BCEA69 /* OrderConfirmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 357B447B1B6365A800BCEA69 /* OrderConfirmTests.m */; };
+		357B44881B6365DE00BCEA69 /* ConfirmAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 357B44871B6365DE00BCEA69 /* ConfirmAppDelegate.m */; };
+		35B21FA91B807ACC004A479B /* zhifubao.png in Resources */ = {isa = PBXBuildFile; fileRef = 35B21FA81B807ACC004A479B /* zhifubao.png */; };
+		35B21FAB1B807BA8004A479B /* weixin.png in Resources */ = {isa = PBXBuildFile; fileRef = 35B21FAA1B807BA8004A479B /* weixin.png */; };
+		35E39DD91B67B974008336FF /* purchaseBagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E39DD81B67B974008336FF /* purchaseBagCell.m */; };
+		35EA6C0E1B664A7100826C34 /* ZSYPopoverListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35EA6C0D1B664A7100826C34 /* ZSYPopoverListView.m */; };
+		7781DCF34DDB52CCE82DB035 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87BFD5E00E0054D7D08D0788 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +41,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01FEBFB5DF0E2A6CA2E0F49B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		353B5EA41B63D3E0001C0D90 /* ConfirmTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmTableViewController.h; sourceTree = "<group>"; };
+		353B5EA51B63D3E0001C0D90 /* ConfirmTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmTableViewController.m; sourceTree = "<group>"; };
+		353B5EA71B63D503001C0D90 /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
+		353B5EAF1B63D5C6001C0D90 /* AddressInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressInfoCell.h; sourceTree = "<group>"; };
+		353B5EB01B63D5C6001C0D90 /* AddressInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressInfoCell.m; sourceTree = "<group>"; };
+		353B5EB51B63D5E9001C0D90 /* RemarkCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemarkCell.h; sourceTree = "<group>"; };
+		353B5EB61B63D5E9001C0D90 /* RemarkCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemarkCell.m; sourceTree = "<group>"; };
+		353B5EBB1B64C5A0001C0D90 /* ZHPickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHPickView.h; sourceTree = "<group>"; };
+		353B5EBC1B64C5A0001C0D90 /* ZHPickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHPickView.m; sourceTree = "<group>"; };
+		353B5EBF1B64CFFD001C0D90 /* 起送时间.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "起送时间.plist"; sourceTree = "<group>"; };
+		355209A61B64E5F90047E768 /* 购物袋.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "购物袋.plist"; sourceTree = "<group>"; };
+		355209A91B65255D0047E768 /* OrderPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderPayViewController.h; sourceTree = "<group>"; };
+		355209AA1B65255D0047E768 /* OrderPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPayViewController.m; sourceTree = "<group>"; };
+		355209AC1B652D010047E768 /* 订单支付.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "订单支付.plist"; sourceTree = "<group>"; };
 		357B445C1B6365A800BCEA69 /* OrderConfirm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OrderConfirm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		357B44601B6365A800BCEA69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		357B44611B6365A800BCEA69 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -40,6 +69,16 @@
 		357B44751B6365A800BCEA69 /* OrderConfirmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrderConfirmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		357B447A1B6365A800BCEA69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		357B447B1B6365A800BCEA69 /* OrderConfirmTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderConfirmTests.m; sourceTree = "<group>"; };
+		357B44861B6365DE00BCEA69 /* ConfirmAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmAppDelegate.h; sourceTree = "<group>"; };
+		357B44871B6365DE00BCEA69 /* ConfirmAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmAppDelegate.m; sourceTree = "<group>"; };
+		35B21FA81B807ACC004A479B /* zhifubao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhifubao.png; sourceTree = "<group>"; };
+		35B21FAA1B807BA8004A479B /* weixin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weixin.png; sourceTree = "<group>"; };
+		35E39DD71B67B974008336FF /* purchaseBagCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = purchaseBagCell.h; sourceTree = "<group>"; };
+		35E39DD81B67B974008336FF /* purchaseBagCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = purchaseBagCell.m; sourceTree = "<group>"; };
+		35EA6C0C1B664A7100826C34 /* ZSYPopoverListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSYPopoverListView.h; sourceTree = "<group>"; };
+		35EA6C0D1B664A7100826C34 /* ZSYPopoverListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSYPopoverListView.m; sourceTree = "<group>"; };
+		87BFD5E00E0054D7D08D0788 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE61AE9A07812C4351AF50D9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7781DCF34DDB52CCE82DB035 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,12 +100,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		353B5EA81B63D549001C0D90 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				353B5EAF1B63D5C6001C0D90 /* AddressInfoCell.h */,
+				353B5EB01B63D5C6001C0D90 /* AddressInfoCell.m */,
+				353B5EB51B63D5E9001C0D90 /* RemarkCell.h */,
+				353B5EB61B63D5E9001C0D90 /* RemarkCell.m */,
+				35E39DD71B67B974008336FF /* purchaseBagCell.h */,
+				35E39DD81B67B974008336FF /* purchaseBagCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		353B5EBE1B64C5A5001C0D90 /* dataPicker */ = {
+			isa = PBXGroup;
+			children = (
+				353B5EBB1B64C5A0001C0D90 /* ZHPickView.h */,
+				353B5EBC1B64C5A0001C0D90 /* ZHPickView.m */,
+			);
+			name = dataPicker;
+			sourceTree = "<group>";
+		};
+		353B5EC11B64D019001C0D90 /* plist */ = {
+			isa = PBXGroup;
+			children = (
+				355209AC1B652D010047E768 /* 订单支付.plist */,
+				353B5EBF1B64CFFD001C0D90 /* 起送时间.plist */,
+				355209A61B64E5F90047E768 /* 购物袋.plist */,
+			);
+			name = plist;
+			sourceTree = "<group>";
+		};
+		355209A81B6524EA0047E768 /* OrderPay */ = {
+			isa = PBXGroup;
+			children = (
+				35EA6C081B66475800826C34 /* ChoseCouponTableView */,
+				355209A91B65255D0047E768 /* OrderPayViewController.h */,
+				355209AA1B65255D0047E768 /* OrderPayViewController.m */,
+				35B21FAA1B807BA8004A479B /* weixin.png */,
+				35B21FA81B807ACC004A479B /* zhifubao.png */,
+			);
+			name = OrderPay;
+			sourceTree = "<group>";
+		};
 		357B44531B6365A800BCEA69 = {
 			isa = PBXGroup;
 			children = (
 				357B445E1B6365A800BCEA69 /* OrderConfirm */,
 				357B44781B6365A800BCEA69 /* OrderConfirmTests */,
 				357B445D1B6365A800BCEA69 /* Products */,
+				E3226D61BBCDE5E74792D285 /* Pods */,
+				B77509927CA4BCA92EDA603F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,6 +167,9 @@
 		357B445E1B6365A800BCEA69 /* OrderConfirm */ = {
 			isa = PBXGroup;
 			children = (
+				353B5EA71B63D503001C0D90 /* Header.h */,
+				355209A81B6524EA0047E768 /* OrderPay */,
+				357B44851B6365B000BCEA69 /* OderConfirm */,
 				357B44631B6365A800BCEA69 /* AppDelegate.h */,
 				357B44641B6365A800BCEA69 /* AppDelegate.m */,
 				357B44661B6365A800BCEA69 /* ViewController.h */,
@@ -96,6 +185,7 @@
 		357B445F1B6365A800BCEA69 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				353B5EC11B64D019001C0D90 /* plist */,
 				357B44601B6365A800BCEA69 /* Info.plist */,
 				357B44611B6365A800BCEA69 /* main.m */,
 			);
@@ -119,6 +209,45 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		357B44851B6365B000BCEA69 /* OderConfirm */ = {
+			isa = PBXGroup;
+			children = (
+				353B5EBE1B64C5A5001C0D90 /* dataPicker */,
+				353B5EA81B63D549001C0D90 /* Cell */,
+				357B44861B6365DE00BCEA69 /* ConfirmAppDelegate.h */,
+				357B44871B6365DE00BCEA69 /* ConfirmAppDelegate.m */,
+				353B5EA41B63D3E0001C0D90 /* ConfirmTableViewController.h */,
+				353B5EA51B63D3E0001C0D90 /* ConfirmTableViewController.m */,
+			);
+			name = OderConfirm;
+			sourceTree = "<group>";
+		};
+		35EA6C081B66475800826C34 /* ChoseCouponTableView */ = {
+			isa = PBXGroup;
+			children = (
+				35EA6C0C1B664A7100826C34 /* ZSYPopoverListView.h */,
+				35EA6C0D1B664A7100826C34 /* ZSYPopoverListView.m */,
+			);
+			name = ChoseCouponTableView;
+			sourceTree = "<group>";
+		};
+		B77509927CA4BCA92EDA603F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				87BFD5E00E0054D7D08D0788 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E3226D61BBCDE5E74792D285 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				01FEBFB5DF0E2A6CA2E0F49B /* Pods.debug.xcconfig */,
+				AE61AE9A07812C4351AF50D9 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -126,9 +255,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 357B447F1B6365A800BCEA69 /* Build configuration list for PBXNativeTarget "OrderConfirm" */;
 			buildPhases = (
+				1BFA1472F435A49B4844F37A /* Check Pods Manifest.lock */,
 				357B44581B6365A800BCEA69 /* Sources */,
 				357B44591B6365A800BCEA69 /* Frameworks */,
 				357B445A1B6365A800BCEA69 /* Resources */,
+				EB0890D2F894ED434BCE1602 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -199,9 +330,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				353B5EC01B64CFFD001C0D90 /* 起送时间.plist in Resources */,
+				35B21FAB1B807BA8004A479B /* weixin.png in Resources */,
 				357B446B1B6365A800BCEA69 /* Main.storyboard in Resources */,
+				355209A71B64E5F90047E768 /* 购物袋.plist in Resources */,
 				357B44701B6365A800BCEA69 /* LaunchScreen.xib in Resources */,
+				355209AD1B652D010047E768 /* 订单支付.plist in Resources */,
 				357B446D1B6365A800BCEA69 /* Images.xcassets in Resources */,
+				35B21FA91B807ACC004A479B /* zhifubao.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,14 +350,55 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1BFA1472F435A49B4844F37A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EB0890D2F894ED434BCE1602 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		357B44581B6365A800BCEA69 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35EA6C0E1B664A7100826C34 /* ZSYPopoverListView.m in Sources */,
+				35E39DD91B67B974008336FF /* purchaseBagCell.m in Sources */,
+				353B5EA61B63D3E0001C0D90 /* ConfirmTableViewController.m in Sources */,
+				353B5EB71B63D5E9001C0D90 /* RemarkCell.m in Sources */,
 				357B44681B6365A800BCEA69 /* ViewController.m in Sources */,
+				357B44881B6365DE00BCEA69 /* ConfirmAppDelegate.m in Sources */,
 				357B44651B6365A800BCEA69 /* AppDelegate.m in Sources */,
+				353B5EB11B63D5C6001C0D90 /* AddressInfoCell.m in Sources */,
 				357B44621B6365A800BCEA69 /* main.m in Sources */,
+				355209AB1B65255D0047E768 /* OrderPayViewController.m in Sources */,
+				353B5EBD1B64C5A0001C0D90 /* ZHPickView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +522,7 @@
 		};
 		357B44801B6365A800BCEA69 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01FEBFB5DF0E2A6CA2E0F49B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = OrderConfirm/Info.plist;
@@ -355,6 +533,7 @@
 		};
 		357B44811B6365A800BCEA69 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AE61AE9A07812C4351AF50D9 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = OrderConfirm/Info.plist;
@@ -416,6 +595,7 @@
 				357B44811B6365A800BCEA69 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		357B44821B6365A800BCEA69 /* Build configuration list for PBXNativeTarget "OrderConfirmTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +604,7 @@
 				357B44841B6365A800BCEA69 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

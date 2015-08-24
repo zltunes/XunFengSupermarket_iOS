@@ -5,7 +5,7 @@
 //  Created by su xinde on 13-3-13.
 //  Copyright (c) 2013年 su xinde. All rights reserved.
 //
-
+#import <UIKit/UIKit.h>
 @class UIPopoverListView;
 
 @protocol UIPopoverListViewDataSource <NSObject>
@@ -38,9 +38,9 @@
     UITableView *_listView;
     UILabel     *_titleView;
     UIControl   *_overlayView;
-    
-    id<UIPopoverListViewDataSource> _datasource;
-    id<UIPopoverListViewDelegate>   _delegate;
+
+//    id<UIPopoverListViewDataSource> _datasource;
+//    id<UIPopoverListViewDelegate>   _delegate;
     
 }
 

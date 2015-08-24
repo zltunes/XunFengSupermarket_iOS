@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "orderStatusCell.h"
+#import "MyEvaluateCell.h"
+#import "purchaseBagCell.h"
+#import "MyEvaluateCell.h"
 
-@interface detailedOrderStatusTableViewController : UITableViewController
-
+@interface detailedOrderStatusTableViewController : UITableViewController<UIPopoverListViewDataSource, UIPopoverListViewDelegate,UIAlertViewDelegate>
+@property(strong,nonatomic) UIApplication* app;//为实现拨号功能
+@property(strong,nonatomic) NSString* OrderStatus;
+@property(strong,nonatomic) UIBarButtonItem* shareBtn;
+@property(strong,nonatomic) UIBarButtonItem* callBtn;
+@property(strong,nonatomic) UIPopoverListView *poplistview;
 @end
