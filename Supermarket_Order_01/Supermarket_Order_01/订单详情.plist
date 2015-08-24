@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>detailValues</key>
+	<array>
+		<string>1234567890</string>
+		<string>2015-4-8 11:30</string>
+		<string>15651907759</string>
+		<string>东南大学计算机楼</string>
+		<string>12:30</string>
+	</array>
+	<key>detailKeys</key>
+	<array>
+		<string>订单号</string>
+		<string>下单时间</string>
+		<string>手机号码</string>
+		<string>收货地址</string>
+		<string>起送时间</string>
+	</array>
+</dict>
+</plist>

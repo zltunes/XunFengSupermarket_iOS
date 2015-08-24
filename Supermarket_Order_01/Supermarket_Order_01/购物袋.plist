@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>goodscount</key>
+	<array>
+		<string>1</string>
+		<string>2</string>
+		<string>3</string>
+	</array>
+	<key>goods</key>
+	<array>
+		<string>商品1</string>
+		<string>商品2</string>
+		<string>商品3</string>
+	</array>
+	<key>prices</key>
+	<array>
+		<string>15.0</string>
+		<string>16.5</string>
+		<string>17.2</string>
+	</array>
+</dict>
+</plist>
