@@ -7,11 +7,48 @@
 //
 
 #import "OrderAppDelegate.h"
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>
+#import "WXApi.h"
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+#import "WeiboSDK.h"
 
 @implementation OrderAppDelegate
 
 -(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [ShareSDK registerApp:@"9fe7e6337ac0" activePlatforms:@[@(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeQQ),@(SSDKPlatformTypeWechat)] onImport:^(SSDKPlatformType platformType) {
+        switch (platformType) {
+            case SSDKPlatformTypeWechat:
+                [ShareSDKConnector connectWeChat:[WXApi class]];
+                break;
+            case SSDKPlatformTypeQQ:
+                [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
+            case SSDKPlatformTypeSinaWeibo:
+                [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+            default:
+                break;
+        }
+    } onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
+        switch (platformType) {
+                //新浪微博
+            case SSDKPlatformTypeSinaWeibo:
+                [appInfo SSDKSetupSinaWeiboByAppKey:@"2573964743" appSecret:@"816b538e7d806552e0f212ec281f360a" redirectUri:@"https://github.com/seuzl/XunFengSupermarket_iOS" authType:SSDKAuthTypeBoth];
+                break;
+                //微信平台
+            case SSDKPlatformTypeWechat:
+                [appInfo SSDKSetupWeChatByAppId:@"wx1adc6982d78372d6" appSecret:@"289d95b44a2b3a25ee1956c68d9af434"];
+                break;
+                //qq平台
+            case SSDKPlatformTypeQQ:
+                [appInfo SSDKSetupQQByAppId:@"1104759701" appKey:@"k66I0cXnfdcKGkTc" authType:SSDKAuthTypeBoth];
+                break;
+            default:
+                break;
+        }
+    }];
+    
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     //1⃣️初始化viewController:

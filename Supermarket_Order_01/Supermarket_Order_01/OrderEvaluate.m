@@ -28,11 +28,11 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
    
-    self.evaluateLabel = [[UILabel alloc]initWithFrame:CGRectMake(160, 95, 117, 15)];
+    self.evaluateLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/2.5, 95, 117, 15)];
     self.evaluateLabel.text = @"总体评价";
     [self.view addSubview:self.evaluateLabel];
     
-    self.ratingBar = [[RatingBar alloc] initWithFrame:CGRectMake(128,145,164,18)];
+    self.ratingBar = [[RatingBar alloc] initWithFrame:CGRectMake(kWindowWidth/3.3,145,164,18)];
     [self.view addSubview:self.ratingBar];
     
     //是否是指示器
@@ -55,8 +55,9 @@
     self.done = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(finishEdit)];
     
     self.submitEvaluateBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.submitEvaluateBtn.frame = CGRectMake(90, 514, 228.5, 37.5);
-    [self.submitEvaluateBtn setTitle:@"提交评价" forState:UIControlStateNormal];
+    self.submitEvaluateBtn.frame = CGRectMake(30, kWindowHeight-100, kWindowWidth-60,45);
+//    [self.submitEvaluateBtn setTitle:@"提交评价" forState:UIControlStateNormal];
+    [self.submitEvaluateBtn setBackgroundImage:[UIImage imageNamed:@"tijiaopingjia.png"] forState:UIControlStateNormal];
     //提交评价事件
     [self.submitEvaluateBtn addTarget:self action:@selector(submitEvaluate:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.submitEvaluateBtn];

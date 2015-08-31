@@ -22,6 +22,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if(self){
+    self.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"address_backImg"]];
     self.addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(57, 16, 200, 18)];
     self.addressLabel.text = @"东南大学九龙湖校区梅园1";
     [self.contentView addSubview:self.addressLabel];
@@ -29,8 +30,6 @@
     self.phoneNoLabel = [[UILabel alloc]initWithFrame:CGRectMake(57, 40, 200, 18)];
     self.phoneNoLabel.text = @"15651907759";
     [self.contentView addSubview:self.phoneNoLabel];
-    
-    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     }
     return self;

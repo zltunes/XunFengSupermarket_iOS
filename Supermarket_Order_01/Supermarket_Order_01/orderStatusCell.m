@@ -72,41 +72,40 @@
         [self.contentView addSubview:self.orderStatusLabel];
         
         //根据status设置text
-        self.preTimeLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/3, 50, kWindowWidth/2, 25)];
+        self.preTimeLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/4, 50, kWindowWidth/2, 25)];
         [self.contentView addSubview:self.preTimeLabel];
         
         //根据status设置progress
         self.progress = [[UIProgressView alloc]initWithProgressViewStyle:UIProgressViewStyleDefault];
-        self.progress.frame = CGRectMake(20, 111, kWindowWidth-40,5);
+        self.progress.frame = CGRectMake(20, 100, kWindowWidth-40,5);
         [self.progress setTintColor:[UIColor redColor]];
         [self.contentView addSubview:self.progress];
         
         //固定
-        self.dingDanTiJiaoLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/6, 125, 40, 10)];
-//        self.dingDanTiJiaoLabel.textAlignment = NSTextAlignmentCenter;
+        self.dingDanTiJiaoLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/7, 115, 40, 10)];
         self.dingDanTiJiaoLabel.text = @"订单提交";
+//        self.dingDanQuXiaoLabel.font = [UIFont systemFontOfSize:15];
         [self.dingDanTiJiaoLabel sizeToFit];
-//        self.dingDanTiJiaoLabel.numberOfLines = 1;
-//        self.dingDanTiJiaoLabel.adjustsFontSizeToFitWidth = YES;
         self.dingDanTiJiaoLabel.textColor = [UIColor orangeColor];
         [self.contentView addSubview:self.dingDanTiJiaoLabel];
         
         //根据status设置textColor/hiden
-        self.chaoShiJieDanLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/2-20, 125, 40, 10)];
-//        self.chaoShiJieDanLabel.textAlignment = NSTextAlignmentLeft;
+        self.chaoShiJieDanLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/2-20, 115, 40, 10)];
         self.chaoShiJieDanLabel.text = @"超市接单";
+//        self.chaoShiJieDanLabel.font = [UIFont systemFontOfSize:15];
         [self.chaoShiJieDanLabel sizeToFit];
         [self.contentView addSubview:self.chaoShiJieDanLabel];
         
         //根据status设置textColor/hiden
-        self.yiShouHuoLabel = [[UILabel alloc]initWithFrame:CGRectMake(3*kWindowWidth/4, 125, 40, 10)];
+        self.yiShouHuoLabel = [[UILabel alloc]initWithFrame:CGRectMake(3*kWindowWidth/4, 115, 40, 10)];
         self.yiShouHuoLabel.textAlignment = NSTextAlignmentRight;
         self.yiShouHuoLabel.text = @"已收货";
+//        self.yiShouHuoLabel.font = [UIFont systemFontOfSize:15];
         [self.yiShouHuoLabel sizeToFit];
         [self.contentView addSubview:self.yiShouHuoLabel];
         
         //根据status设置hiden
-        self.dingDanQuXiaoLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/2, 125, 40, 10)];
+        self.dingDanQuXiaoLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/2,115, 40, 10)];
 //        self.dingDanQuXiaoLabel.textAlignment = NSTextAlignmentCenter;
         self.dingDanQuXiaoLabel.text = @"订单取消";
         self.dingDanQuXiaoLabel.textColor = [UIColor orangeColor];
@@ -116,8 +115,9 @@
         
         //根据status选择hiden
         self.queRenShouHuoBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.queRenShouHuoBtn.frame = CGRectMake(135, 150, 70, 25);
-        [self.queRenShouHuoBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+        self.queRenShouHuoBtn.frame = CGRectMake(kWindowWidth-270, 150, 70, 25);
+//        [self.queRenShouHuoBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+        [self.queRenShouHuoBtn setBackgroundImage:[UIImage imageNamed:@"querenshouhuo.png"] forState:UIControlStateNormal];
         //button这种设置title的方式是无效的！！！！！！！！！！记住！
 //        self.queRenShouHuoBtn.titleLabel.text = @"确认收货";
         self.queRenShouHuoBtn.hidden = YES;
@@ -125,8 +125,9 @@
         
         //根据status选择hiden
         self.dianHuaCuiDanBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.dianHuaCuiDanBtn.frame = CGRectMake(kWindowWidth/2+35, 150, 70, 25);
-        [self.dianHuaCuiDanBtn setTitle:@"电话催单" forState:UIControlStateNormal];
+        self.dianHuaCuiDanBtn.frame = CGRectMake(kWindowWidth-180, 150, 70, 25);
+//        [self.dianHuaCuiDanBtn setTitle:@"电话催单" forState:UIControlStateNormal];
+        [self.dianHuaCuiDanBtn setBackgroundImage:[UIImage imageNamed:@"dianhuacuidan.png"] forState:UIControlStateNormal];
         self.dianHuaCuiDanBtn.hidden = YES;
         //定制事件
         [self.dianHuaCuiDanBtn addTarget:self action:@selector(cuidan:) forControlEvents:UIControlEventTouchUpInside];
@@ -134,8 +135,9 @@
         
         //根据status选择hiden
         self.quXiaoDingDanBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.quXiaoDingDanBtn.frame = CGRectMake(300, 150, 70, 25);
-        [self.quXiaoDingDanBtn setTitle:@"取消订单" forState:UIControlStateNormal];
+        self.quXiaoDingDanBtn.frame = CGRectMake(kWindowWidth-90, 150, 70, 25);
+//        [self.quXiaoDingDanBtn setTitle:@"取消订单" forState:UIControlStateNormal];
+        [self.quXiaoDingDanBtn setBackgroundImage:[UIImage imageNamed:@"quxiaodingdan.png"] forState:UIControlStateNormal];
         self.quXiaoDingDanBtn.hidden = YES;
         [self.contentView addSubview:self.quXiaoDingDanBtn];
         //取消订单事件
@@ -143,15 +145,17 @@
 
         //根据status选择hiden
         self.pingJiaBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.pingJiaBtn.frame = CGRectMake(300, 150, 70, 25);
-        [self.pingJiaBtn setTitle:@"评价" forState:UIControlStateNormal];
+        self.pingJiaBtn.frame = CGRectMake(kWindowWidth-90, 150, 70, 25);
+//        [self.pingJiaBtn setTitle:@"评价" forState:UIControlStateNormal];
+        [self.pingJiaBtn setBackgroundImage:[UIImage imageNamed:@"pingjia.png"] forState:UIControlStateNormal];
         self.pingJiaBtn.hidden = YES;
         [self.contentView addSubview:self.pingJiaBtn];
         
         //根据status选择hiden
         self.dingDanTousuBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.dingDanTousuBtn.frame = CGRectMake(300, 150, 70, 25);
-        [self.dingDanTousuBtn setTitle:@"订单投诉" forState:UIControlStateNormal];
+        self.dingDanTousuBtn.frame = CGRectMake(kWindowWidth-90, 150, 70, 25);
+//        [self.dingDanTousuBtn setTitle:@"订单投诉" forState:UIControlStateNormal];
+        [self.dingDanTousuBtn setBackgroundImage:[UIImage imageNamed:@"dingdantousu.png"] forState:UIControlStateNormal];
         self.dingDanTousuBtn.hidden = YES;
         [self.contentView addSubview:self.dingDanTousuBtn];
     }

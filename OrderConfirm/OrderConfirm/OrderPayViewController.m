@@ -27,7 +27,7 @@
     delegate = [UIApplication sharedApplication].delegate;
     couponsURL = @"http://115.29.197.143:8999/v1.0/coupons";
     myBalanceURL = @"http://115.29.197.143:8999/v1.0/user";
-    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight-137) style:UITableViewStylePlain];
+    self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight-100) style:UITableViewStylePlain];
     self.table.delegate = self;
     self.table.dataSource = self;
     [self hideExcessLine:self.table];
@@ -38,15 +38,18 @@
     UIBarButtonItem* customBackBatButton = [[UIBarButtonItem alloc]initWithTitle:@"< 订单支付" style:UIBarButtonItemStylePlain target:self action:@selector(returnToOrderConfirm:)];
     self.navigationItem.leftBarButtonItem = customBackBatButton;
     
+    
     //btn将来换成图片,btn处理有三步：
     //1⃣️btn type
     self.confirmPayBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     //2⃣️btn 位置
-    self.confirmPayBtn.frame = CGRectMake(3, 500, kWindowWidth-6, 36);
-    //3⃣️btn title
-    [self.confirmPayBtn setTitle:@"确认支付" forState:UIControlStateNormal];
+    self.confirmPayBtn.frame = CGRectMake(20, 0.85*kWindowHeight, kWindowWidth-40, 45);
+    //3⃣️btn 背景图片
+    UIImage* img = [UIImage imageNamed:@"querenzhifu.png"];
+//    [self.confirmPayBtn setTitle:@"确认支付" forState:UIControlStateNormal];
+    [self.confirmPayBtn setBackgroundImage:img forState:UIControlStateNormal];
     //4⃣️btn 事件
-//    [self.confirmPayBtn addTarget:self action:@selector(toPay:) forControlEvents:UIControlEventTouchUpInside];
+    [self.confirmPayBtn addTarget:self action:@selector(toPay:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.confirmPayBtn];
 }
 
@@ -115,6 +118,7 @@
                 cell.textLabel.text = [left objectAtIndex:2];
                 self.toPayValue = [delegate.viewController.totalgoodsPrice floatValue] - couponCount - self.banlance;
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%g 元",self.toPayValue];
+                cell.detailTextLabel.textColor = [UIColor orangeColor];
             }else if (rowNo ==1){
                 //优惠券
                 //此栏还有诸多问题
@@ -131,12 +135,14 @@
                 cell.imageView.image = [UIImage imageNamed:@"zhifubao.png"];
                 cell.textLabel.text = @"支付宝支付";
                 cell.detailTextLabel.text = @"推荐有支付宝账户的用户使用";
+                cell.detailTextLabel.textColor = [UIColor grayColor];
 //                //设置复选框
 //                cell.accessoryType = UITableViewCellAccessoryCheckmark;
             } else {
-                cell.imageView.image = [UIImage imageNamed:@"weixin.png"];
+                cell.imageView.image = [UIImage imageNamed:@"weixin.jpeg"];
                 cell.textLabel.text = @"微信支付";
                 cell.detailTextLabel.text = @"推荐安装微信5.0及以上版本的用户使用";
+                cell.detailTextLabel.textColor = [UIColor grayColor];
                 //复选框
 //                cell.accessoryType = UITableViewCellAccessoryCheckmark;
             }
@@ -212,6 +218,7 @@
         }
         self.lastIndexPath = indexPath;
     }
+    [self.table deselectRowAtIndexPath:indexPath animated:YES];
 }
 - (NSInteger)popoverListView:(ZSYPopoverListView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -277,8 +284,9 @@
     }
 }
 //去付款
-//-(void)toPay:(id)sender
-//{
-//    UIAlertView* payAlertView = [UIAlertView alloc]initWithTitle:@"" message:<#(NSString *)#> delegate:<#(id)#> cancelButtonTitle:<#(NSString *)#> otherButtonTitles:<#(NSString *), ...#>, nil
-//}
+-(void)toPay:(id)sender
+{
+    UIAlertView* payAlertView = [[UIAlertView alloc]initWithTitle:@"支付成功！" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
+    [payAlertView show];
+}
 @end

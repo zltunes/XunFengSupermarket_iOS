@@ -13,9 +13,11 @@
 @property(strong,nonatomic) UILabel* timeLabel;
 @property(strong,nonatomic) NSString* OrderStatus;
 @property(strong,nonatomic) UILabel* statusLabel;
-@property(strong,nonatomic) UIButton* statusBtn;
+@property(strong,nonatomic) UIButton* querenshouhuoBtn;
+@property(strong,nonatomic) UIButton* pingjiaBtn;
 @property(strong,nonatomic) UIImageView* img;
 @property(strong,nonatomic) UILabel* nameOfSupermarket;
 @property(strong,nonatomic) UILabel* priceLabel;
+@property(strong,nonatomic) UIImageView* xiantiao;
 
 @end

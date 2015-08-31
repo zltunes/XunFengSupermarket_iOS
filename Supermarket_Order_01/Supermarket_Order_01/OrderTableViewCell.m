@@ -8,6 +8,7 @@
 
 #import "OrderTableViewCell.h"
 #import "Header.h"
+#import "OrderEvaluate.h"
 @implementation OrderTableViewCell
 
 - (void)awakeFromNib {
@@ -26,32 +27,48 @@
     if (self) {
         self.contentView.backgroundColor = [UIColor whiteColor];
         
-        self.timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(0,0, kWindowWidth/2, 30)];
+        self.timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(20,5, kWindowWidth/2, 25)];
         self.timeLabel.textAlignment = NSTextAlignmentLeft;
-//        self.timeLabel.text = @"今天12:00";
+        self.timeLabel.text = @"今天       12:00";
+        self.timeLabel.font = [UIFont systemFontOfSize:15.0];
+        self.timeLabel.textColor = [UIColor grayColor];
         [self.contentView addSubview:self.timeLabel];
         
-        self.statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/2, 0, kWindowWidth/2,30)];
+        self.statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/2, 5, kWindowWidth/2-20,30)];
         self.statusLabel.textAlignment = NSTextAlignmentRight;
-        self.statusLabel.text = nil;
+        self.statusLabel.textColor = [UIColor orangeColor];
+        self.statusLabel.font = [UIFont systemFontOfSize:15.0];
         [self.contentView addSubview:self.statusLabel];
         
-        self.statusBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        self.statusBtn.frame = CGRectMake(kWindowWidth-75, 109, 75, 25);
-        [self.statusBtn setTitle:nil forState:UIControlStateNormal];
-        [self.contentView addSubview:self.statusBtn];
+        self.xiantiao = [[UIImageView alloc]initWithFrame:CGRectMake(20, 35, kWindowWidth-40, 0.5)];
+        self.xiantiao.backgroundColor = [UIColor orangeColor];
+        [self.contentView addSubview:self.xiantiao];
+        
+        
+        self.querenshouhuoBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        self.querenshouhuoBtn.frame = CGRectMake(kWindowWidth-95, 109, 75, 25);
+        [self.querenshouhuoBtn setBackgroundImage:[UIImage imageNamed:@"querenshouhuo"] forState:UIControlStateNormal];
+        self.querenshouhuoBtn.hidden = YES;
+        [self.contentView addSubview:self.querenshouhuoBtn];
+        
+        self.pingjiaBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        self.pingjiaBtn.frame = CGRectMake(kWindowWidth-95, 109, 75, 25);
+        [self.pingjiaBtn setBackgroundImage:[UIImage imageNamed:@"pingjia"] forState:UIControlStateNormal];
+        self.pingjiaBtn.hidden = YES;
+        [self.contentView addSubview:self.pingjiaBtn];
 
-//        self.img = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"test.jpg"]];
-        self.img.frame = CGRectMake(21, 40, 60, 60);
+        self.img = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"supermarket.png"]];
+        self.img.frame = CGRectMake(21, 45, 60, 60);
         [self.contentView addSubview:self.img];
         
-        self.nameOfSupermarket = [[UILabel alloc]initWithFrame:CGRectMake(123, 45, 75, 14)];
-//        self.nameOfSupermarket.text = @"世纪华联";
+        self.nameOfSupermarket = [[UILabel alloc]initWithFrame:CGRectMake(123, 50, 75, 14)];
+        self.nameOfSupermarket.text = @"世纪华联";
         self.nameOfSupermarket.textAlignment = NSTextAlignmentLeft;
         [self.contentView addSubview:self.nameOfSupermarket];
         
-        self.priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(123, 70, 75, 10)];
-//        self.priceLabel.text = @"￥99.0";
+        self.priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(123, 80, 75, 10)];
+        self.priceLabel.text = @"￥99.0";
+        self.priceLabel.textColor = [UIColor grayColor];
         self.priceLabel.textAlignment = NSTextAlignmentLeft;
         [self.contentView addSubview:self.priceLabel];
         
@@ -59,5 +76,4 @@
     }
     return  self;
 }
-
 @end

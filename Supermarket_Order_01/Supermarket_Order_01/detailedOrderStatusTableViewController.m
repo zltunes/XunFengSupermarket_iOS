@@ -8,6 +8,8 @@
 
 #import "detailedOrderStatusTableViewController.h"
 #import "OrderAppDelegate.h"
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDKUI.h>
 
 @interface detailedOrderStatusTableViewController ()
 {
@@ -59,8 +61,21 @@ NSString* orderDetailURL;
 //    self.OrderStatus = @"已送达";
 //    self.OrderStatus = @"已取消";
 //    self.OrderStatus = @"订单完成";
-    self.shareBtn = [[UIBarButtonItem alloc]initWithTitle:@"share" style:UIBarButtonItemStylePlain target:self action:@selector(share:)];
-    self.callBtn = [[UIBarButtonItem alloc]initWithTitle:@"call" style:UIBarButtonItemStylePlain target:self action:@selector(call:)];
+//    self.shareBtn = [[UIBarButtonItem alloc]initWithTitle:@"share" style:UIBarButtonItemStylePlain target:self action:@selector(share:)];
+    UIImage* shareimg = [UIImage imageNamed:@"share_icon.jpeg"];
+    UIImage* callimg = [UIImage imageNamed:@"call_icon.jpeg"];
+    UIImageView* shareimgview = [[UIImageView alloc]initWithImage:shareimg];
+    UIImageView* callimgview = [[UIImageView alloc]initWithImage:callimg];
+    //创建手势（单击）
+    shareimgview.userInteractionEnabled = YES;
+    callimgview.userInteractionEnabled = YES;
+    UITapGestureRecognizer* shareGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(share:)];
+    UITapGestureRecognizer* callGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(call:)];
+    [shareimgview addGestureRecognizer:shareGesture];
+    [callimgview addGestureRecognizer:callGesture];
+    self.shareBtn = [[UIBarButtonItem alloc]initWithCustomView:shareimgview];
+//    self.callBtn = [[UIBarButtonItem alloc]initWithTitle:@"call" style:UIBarButtonItemStylePlain target:self action:@selector(call:)];
+    self.callBtn = [[UIBarButtonItem alloc]initWithCustomView:callimgview];
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:self.callBtn,self.shareBtn,nil];
     self.app = [UIApplication sharedApplication];
     [super viewDidLoad];
@@ -70,7 +85,43 @@ NSString* orderDetailURL;
 //分享给好友
 -(void)share:(id)sender
 {
-    //下载二维码
+    //构造分享参数
+    NSArray* imageArray = @[[UIImage imageNamed:@"supermarket.png"]];
+    NSMutableDictionary* shareParams = [NSMutableDictionary dictionary];
+    [shareParams SSDKSetupShareParamsByText:@"迅蜂超市"
+                                     images:imageArray
+                                        url:[NSURL URLWithString:@"https://www.github.com/seuzl/XunFengSupermarket_iOS"]
+                                      title:@"XunFengSupermarket_iOS"
+                                       type:SSDKContentTypeApp];
+    //qq空间单独制作
+    [shareParams SSDKSetupQQParamsByText:@"qq空间分享"
+                                   title:@"XunFengSupermarket_iOS"
+                                     url:[NSURL URLWithString:@"https://www.github.com/seuzl/XunFengSupermarket_iOS"]
+                              thumbImage:nil
+                                   image:imageArray
+                                    type:SSDKContentTypeApp
+                      forPlatformSubType:SSDKPlatformSubTypeQZone];
+    [ShareSDK showShareActionSheet:sender
+                             items:nil
+                       shareParams:shareParams
+               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                   switch (state) {
+                       case SSDKResponseStateBegin:
+                           NSLog(@"分享开始!");
+                           break;
+                       case SSDKResponseStateSuccess:
+                           NSLog(@"分享成功!");
+                           break;
+                        case SSDKResponseStateFail:
+                           NSLog(@"分享失败!");
+                           break;
+                        case SSDKResponseStateCancel:
+                           NSLog(@"分享结束!");
+                           break;
+                       default:
+                           break;
+                   }
+               }];
 }
 -(void)call:(id)sender
 {
@@ -138,6 +189,7 @@ NSString* orderDetailURL;
             ordercell.checkORerrorImg.image = [UIImage imageNamed:@"check.png"];
             ordercell.orderStatusLabel.text = @"付款成功，等待超市接单";
             ordercell.preTimeLabel.text = @"预计接单时间：12:30";//后台
+            [ordercell.preTimeLabel sizeToFit];
             ordercell.chaoShiJieDanLabel.textColor = [UIColor grayColor];
             ordercell.yiShouHuoLabel.textColor = [UIColor grayColor];
             ordercell.quXiaoDingDanBtn.hidden = NO;
@@ -146,6 +198,7 @@ NSString* orderDetailURL;
             ordercell.checkORerrorImg.image = [UIImage imageNamed:@"check.png"];
             ordercell.orderStatusLabel.text = @"超市已接单，提货配送中";
             ordercell.preTimeLabel.text = @"预计送达时间：12:30";//后台
+            [ordercell.preTimeLabel sizeToFit];
             ordercell.chaoShiJieDanLabel.textColor = [UIColor orangeColor];
             ordercell.yiShouHuoLabel.textColor = [UIColor grayColor];
             ordercell.queRenShouHuoBtn.hidden = NO;
@@ -156,6 +209,7 @@ NSString* orderDetailURL;
         }else if ([self.OrderStatus isEqual:@"已送达"]){
             ordercell.checkORerrorImg.image = [UIImage imageNamed:@"check.png"];
             ordercell.orderStatusLabel.text = @"您已收货，记得评价哦";
+            
             ordercell.chaoShiJieDanLabel.textColor = [UIColor orangeColor];
             ordercell.yiShouHuoLabel.textColor = [UIColor orangeColor];
             ordercell.queRenShouHuoBtn.hidden = YES;
@@ -173,7 +227,7 @@ NSString* orderDetailURL;
             ordercell.chaoShiJieDanLabel.hidden = YES;
             ordercell.yiShouHuoLabel.hidden = YES;
             ordercell.dingDanQuXiaoLabel.hidden = NO;
-            ordercell.dingDanQuXiaoLabel.frame = CGRectMake(0.65*kWindowWidth, 125, 40, 10);
+            ordercell.dingDanQuXiaoLabel.frame = CGRectMake(0.65*kWindowWidth, 115, 40, 10);
             [ordercell.dingDanQuXiaoLabel sizeToFit];
             [ordercell.progress setProgress:1.0f];
         }else{
@@ -328,9 +382,8 @@ self.navigationItem.backBarButtonItem = backButton;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1) {
-        NSLog(@"进入超市详情页面!");
-    }
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
 }
 
 

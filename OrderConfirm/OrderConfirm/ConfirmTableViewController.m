@@ -68,15 +68,23 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     self.goodsCount = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, kWindowWidth/4, 45)];
     self.goodsCount.text = [NSString stringWithFormat:@"%d  份",goodcount];
     self.totalPrice = [[UILabel alloc]initWithFrame:CGRectMake(10+kWindowWidth/4, 0, kWindowWidth/4, 45)];
+    self.totalPrice.textColor = [UIColor orangeColor];
     self.totalPrice.text = [NSString stringWithFormat:@"￥ %g",totalprice];
+    self.totalPrice.font = [UIFont boldSystemFontOfSize:18.0];
     
     UIBarButtonItem* bn1 = [[UIBarButtonItem alloc]initWithCustomView:self.goodsCount];
     UIBarButtonItem* bn2 = [[UIBarButtonItem alloc]initWithCustomView:self.totalPrice];
     
     UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
-    UIBarButtonItem* bn4 = [[UIBarButtonItem alloc]initWithTitle:@"去下单" style:UIBarButtonItemStylePlain target:self action:@selector(clicked:)];
-    
+
+    UIImage* quxiadanimg = [UIImage imageNamed:@"quxiadan.png"];
+    UIButton* btn4 = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn4.frame = CGRectMake(0.8*kWindowWidth, kWindowHeight-10, 55, 25);
+    [btn4 setBackgroundImage:quxiadanimg forState:UIControlStateNormal];
+    btn4.userInteractionEnabled = YES;
+    UITapGestureRecognizer* quxiadan = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clicked:)];
+    [btn4 addGestureRecognizer:quxiadan];
+    UIBarButtonItem* bn4 = [[UIBarButtonItem alloc]initWithCustomView:btn4];
     self.toolbar.items = [NSArray arrayWithObjects:bn1,bn2,flexItem,bn4,nil];
 
     [self.view addSubview:self.table];
@@ -242,6 +250,7 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
 //tableViewCell点击事件设定
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.table deselectRowAtIndexPath:indexPath animated:YES];
     //section1点击时弹出ZHPicker
     if (indexPath.section == 1) {
         _indexPath=indexPath;

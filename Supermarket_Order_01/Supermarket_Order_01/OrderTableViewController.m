@@ -32,6 +32,7 @@
     
     //使用manager发送get请求,更新用户订单列表
 //    NSDictionary* param = @{@"page":@1};
+    /*
     [appDelegate.manager GET:orderURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //将服务器json数据转化成NSArray,赋值给orders属性
         orders = responseObject;
@@ -47,6 +48,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"获取订单信息有误: %@",error);
     }];
+     */
 }
 //-(void)viewDidAppear:(BOOL)animated
 //{
@@ -63,8 +65,8 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
     // Return the number of sections.
-//    return 5;
-    return [orders count];
+    return 5;
+//    return [orders count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -79,7 +81,7 @@
 
 - (OrderTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //获取订单，存储为dict
-    NSDictionary* dict = [orders objectAtIndex:indexPath.section];
+//    NSDictionary* dict = [orders objectAtIndex:indexPath.section];
     //{sup_name,state,total,icon,time}
     static NSString* cellId = @"cellId";
     OrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
@@ -88,62 +90,58 @@
     }
     //订单状态(本地)
     NSString* filePath = [[NSBundle mainBundle]pathForResource:@"OrderStatus" ofType:@"plist"];
-    NSMutableArray* statusArray = [NSMutableArray arrayWithContentsOfFile:filePath];
+    NSArray* statusArray = [NSMutableArray arrayWithContentsOfFile:filePath];
     
     //2⃣️订单状态
-    cell.OrderStatus = [dict objectForKey:@"state"];
+//    cell.OrderStatus = [dict objectForKey:@"state"];
+    cell.OrderStatus = [statusArray objectAtIndex:indexPath.section];
     cell.statusLabel.text = cell.OrderStatus;
     //1⃣️超市名称
-    cell.nameOfSupermarket.text = [dict objectForKey:@"sup_name"];
+//    cell.nameOfSupermarket.text = [dict objectForKey:@"sup_name"];
     //3⃣️总价
-    cell.priceLabel.text = [dict objectForKey:@"total"];
+//    cell.priceLabel.text = [dict objectForKey:@"total"];
     //4⃣️icon-－URL
-    NSURL *icon_url = [NSURL URLWithString:[dict objectForKey:@"icon"]];
-    cell.img = [[UIImageView alloc]initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:icon_url]]];
+//    NSURL *icon_url = [NSURL URLWithString:[dict objectForKey:@"icon"]];
+//    cell.img = [[UIImageView alloc]initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:icon_url]]];
     //5⃣️time
-    cell.timeLabel.text = [dict objectForKey:@"time"];
+//    cell.timeLabel.text = [dict objectForKey:@"time"];
     //依据订单状态确定按钮文字
     if ([cell.OrderStatus  isEqual: @"配送中"]) {
-        [cell.statusBtn setTitle:@"确认收货" forState:UIControlStateNormal];
+        cell.querenshouhuoBtn.hidden = NO;
+        cell.querenshouhuoBtn.userInteractionEnabled = YES;
+        UITapGestureRecognizer* ges = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(confirmStatusBtn:)];
+        [cell.querenshouhuoBtn addGestureRecognizer:ges];
     } else if([cell.OrderStatus isEqual:@"已送达"]){
-        [cell.statusBtn setTitle:@"订单评价" forState:UIControlStateNormal];
+        cell.pingjiaBtn.hidden = NO;
+        cell.pingjiaBtn.userInteractionEnabled = YES;
+        UITapGestureRecognizer* ges = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(evaluateOrder:)];
+        [cell.pingjiaBtn addGestureRecognizer:ges];
     }
-    [cell.statusBtn addTarget:self action:@selector(statusBtnResponse:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     //获取被点击cell
     OrderTableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
     detailedOrderStatusTableViewController* detailedStatusController = [[detailedOrderStatusTableViewController alloc]init];
-    appDelegate.orderID = [NSNumber numberWithInt:indexPath.section];
+    appDelegate.orderID = [NSNumber numberWithLong:indexPath.section];
+ 
     [self.navigationController pushViewController:detailedStatusController animated:YES];
     
     //设置下一页面的返回,即为超市名
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:cell.nameOfSupermarket.text  style:UIBarButtonItemStylePlain  target:self  action:nil];
     self.navigationItem.backBarButtonItem = backButton;
 }
--(void)statusBtnResponse:(UIButton*)sender
-{
-    if ([sender.titleLabel.text isEqual: @"确认收货"]) {
-        [sender addTarget:self action:@selector(confirmStatusBtn:) forControlEvents:UIControlEventTouchUpInside];
-    } else{
-        [sender addTarget:self action:@selector(evaluateOrder:) forControlEvents:UIControlEventTouchUpInside];
-    }
-}
+
 -(void)confirmStatusBtn:(UIButton*)sender
 {
     //处理：点击“确认收货”后向后台发送数据，后台更改订单状态，然后[self.table reloadData]刷新tableview
-    [sender setTitle:@"订单评价" forState:UIControlStateNormal];
+//    sender.hidden = YES;
+    NSLog(@"querenshouhuoBtn");
     /*
-     
-     
      ？？？？？？？？？？？？？？？？？？？？
      此处api还在修改，如何向后台修改订单状态？
-     
-     
-     
-     
      */
 }
 -(void)evaluateOrder:(UIButton*)sender
@@ -155,7 +153,6 @@
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"评价"  style:UIBarButtonItemStylePlain  target:self  action:nil];
     self.navigationItem.backBarButtonItem = backButton;
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 150;
