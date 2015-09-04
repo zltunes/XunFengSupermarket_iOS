@@ -9,6 +9,7 @@
 #import "OrderPayViewController.h"
 #import "Header.h"
 #import "ConfirmAppDelegate.h"
+#import "PraiseView.h"
 
 @interface OrderPayViewController ()
 {
@@ -20,12 +21,14 @@
 @end
 
 @implementation OrderPayViewController
-@synthesize couponCount;
+
 - (void)viewDidLoad{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     delegate = [UIApplication sharedApplication].delegate;
     couponsURL = @"http://115.29.197.143:8999/v1.0/coupons";
+    //[{id,price,state,timelimit}]
+    
     myBalanceURL = @"http://115.29.197.143:8999/v1.0/user";
     self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight-100) style:UITableViewStylePlain];
     self.table.delegate = self;
@@ -92,7 +95,7 @@
     NSMutableArray* left = dict[@"payleft"];
     if (!indexPath.section) {
         cell = [tableView dequeueReusableCellWithIdentifier:cell0];
-        if (!cell) {
+//        if (!cell) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cell0];
             if (!rowNo) {
                 //订单总价
@@ -116,18 +119,22 @@
                 //还需支付
                 //需要判断是不是首次下单!!!!!!!!
                 cell.textLabel.text = [left objectAtIndex:2];
-                self.toPayValue = [delegate.viewController.totalgoodsPrice floatValue] - couponCount - self.banlance;
+                self.toPayValue = [delegate.viewController.totalgoodsPrice floatValue] - self.couponCount - self.banlance;
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%g 元",self.toPayValue];
                 cell.detailTextLabel.textColor = [UIColor orangeColor];
             }else if (rowNo ==1){
                 //优惠券
-                //此栏还有诸多问题
+                if (self.couponCount) {
+                    cell.textLabel.text = [NSString stringWithFormat:@"%d 元购物券",self.couponCount];
+                }
+                else{
                 cell.textLabel.text = @"我的购物券";
+                }
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 self.couponCell = cell;
             }
         }
-    } else {
+    else {
         cell = [tableView dequeueReusableCellWithIdentifier:cell1];
         if (!cell) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cell1];
@@ -148,8 +155,10 @@
             }
         }
     }
+    
     return cell;
 }
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger num = 0;
@@ -193,15 +202,22 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //section0:row1被点击后选择购物券
-    if (!indexPath.section) {
+    if (indexPath.section == 0) {
         if(indexPath.row == 1){
-        ZSYPopoverListView *listView = [[ZSYPopoverListView alloc] initWithFrame:CGRectMake(0, 0, 300, 200)];
-        listView.titleName.text = @"选择优惠券";
-        listView.datasource = self;
-        listView.delegate = self;
+            //获取购物券张数
+            [delegate.manager GET:couponsURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSLog(@"获取购物券成功!购物券张数:%lu",(unsigned long)[responseObject count]);
+                couponsArray = [[NSArray alloc]initWithArray:responseObject];
+                ZSYPopoverListView *listView = [[ZSYPopoverListView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+                listView.titleName.text = @"选择优惠券";
+                listView.delegate = self;
+                listView.datasource = self;
+                [listView show];
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"获取购物券失败!%@",error);
+            }];
         self.couponCount = 0;//选择购物券前购物券先清零
-        self.couponCell.textLabel.text = @"我的购物券";
-        [listView show];
+//        self.couponCell.textLabel.text = @"我的购物券";
         }
     }
     //section1:选择支付方式
@@ -222,24 +238,10 @@
 }
 - (NSInteger)popoverListView:(ZSYPopoverListView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    /*
-     问题：为什么这个函数执行了3次？？？？？？？?????????????????????????????????????????????????????
-     */
-    
-    //后台get数据
-    //[{id,price,state,timelimit}]
-    [delegate.manager GET:couponsURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"获取购物券成功!购物券张数:%lu",(unsigned long)[responseObject count]);
-        couponsArray = responseObject;
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"获取购物券失败!%@",error);
-    }];
     return [couponsArray count];
 }
 /*
- 
  优惠券选择栏
- 
  */
 - (UITableViewCell *)popoverListView:(ZSYPopoverListView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -250,13 +252,11 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
     }
     cell.accessoryType = UITableViewCellAccessoryNone;
-//    cell.textLabel.text = [NSString stringWithFormat:@"-dsds---%ld------", (long)indexPath.row];
-    //模拟优惠券－－－－从后台获取，此处三张图片模拟012元
-//        cell.imageView.image = [UIImage imageNamed:@"zhifubao.png"];
-//        cell.textLabel.text = @"有效期至2015-07-24";
     for (int i = 0; i<[couponsArray count]; i++) {
+        NSLog(@"%d",i);
         NSDictionary* dic = [couponsArray objectAtIndex:i];
-        cell.textLabel.text = [dic objectForKey:@"price"];//显示购物券面额
+         NSLog(@"%@",[dic objectForKey:@"price"]);
+        cell.textLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]];
         //先要判断购物券state，此处暂时不知道state是怎么表示的
         cell.detailTextLabel.text = [NSString stringWithFormat:@"有效期至%@",[dic objectForKey:@"timelimit"]];
     }
@@ -269,24 +269,44 @@
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
 //        NSLog(@"select:%ld", (long)indexPath.row);//模拟选中优惠券,012元
         NSDictionary* dict = [couponsArray objectAtIndex:indexPath.row];//默认购物券顺序是按返回顺序排的
-        self.couponCount += (NSInteger)[dict objectForKey:@"price"];//默认price为integer
+        self.couponCount += [[dict objectForKey:@"price"] intValue];//默认price为integer
     } else {
         //已被选的再点击则放弃
         cell.accessoryType = UITableViewCellAccessoryNone;
 //        NSLog(@"diselect:%ld",(long)indexPath.row);//模拟放弃选中优惠券
         NSDictionary* dict = [couponsArray objectAtIndex:indexPath.row];
-        self.couponCount -= (NSInteger)[dict objectForKey:@"price"];
+        self.couponCount -= [[dict objectForKey:@"price"] intValue];
     }
-    if (self.couponCount) {
-        self.couponCell.textLabel.text = [NSString stringWithFormat:@"%ld元购物券",(long)self.couponCount];
-    }else{
-        self.couponCell.textLabel.text = @"我的购物券";
-    }
+    
+    [self.table reloadData];
 }
 //去付款
 -(void)toPay:(id)sender
 {
     UIAlertView* payAlertView = [[UIAlertView alloc]initWithTitle:@"支付成功！" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
-    [payAlertView show];
+    UIAlertView* warning = [[UIAlertView alloc]initWithTitle:@"至少选择一种支付方式！" message:nil delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
+    NSIndexPath* indexPath1 = [NSIndexPath indexPathForRow:0 inSection:1];
+    NSIndexPath* indexPath2 = [NSIndexPath indexPathForRow:1 inSection:1];
+    UITableViewCell* chosePayCell1 = [self.table cellForRowAtIndexPath:indexPath1];
+    UITableViewCell* chosePayCell2 = [self.table cellForRowAtIndexPath:indexPath2];
+    //两种支付方式必须选一种
+    if (!((chosePayCell1.accessoryType == UITableViewCellAccessoryNone) && (chosePayCell2.accessoryType == UITableViewCellAccessoryNone))){
+        //创建订单支付信息
+//        /v1.0/order/{o_id}/pay
+        NSString* payURL1 =
+        [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/order/%@",delegate.viewController.order_id];
+        NSString* payURL2 = [n]
+        NSLog(@"payURL%@",payURL);
+        [delegate.manager POST:payURL parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            NSLog(@"支付成功!");
+        } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+            NSLog(@"支付失败:%@",error);
+        }];
+        [payAlertView show];
+    }else{
+        [warning show];
+    }
+    
+    
 }
 @end

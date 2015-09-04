@@ -29,7 +29,6 @@
         
         self.timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(20,5, kWindowWidth/2, 25)];
         self.timeLabel.textAlignment = NSTextAlignmentLeft;
-        self.timeLabel.text = @"今天       12:00";
         self.timeLabel.font = [UIFont systemFontOfSize:15.0];
         self.timeLabel.textColor = [UIColor grayColor];
         [self.contentView addSubview:self.timeLabel];
@@ -61,13 +60,11 @@
         self.img.frame = CGRectMake(21, 45, 60, 60);
         [self.contentView addSubview:self.img];
         
-        self.nameOfSupermarket = [[UILabel alloc]initWithFrame:CGRectMake(123, 50, 75, 14)];
-        self.nameOfSupermarket.text = @"世纪华联";
+        self.nameOfSupermarket = [[UILabel alloc]initWithFrame:CGRectMake(123, 50, 100, 14)];
         self.nameOfSupermarket.textAlignment = NSTextAlignmentLeft;
         [self.contentView addSubview:self.nameOfSupermarket];
         
-        self.priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(123, 80, 75, 10)];
-        self.priceLabel.text = @"￥99.0";
+        self.priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(123, 80, 80, 10)];
         self.priceLabel.textColor = [UIColor grayColor];
         self.priceLabel.textAlignment = NSTextAlignmentLeft;
         [self.contentView addSubview:self.priceLabel];

@@ -18,6 +18,7 @@ OrderAppDelegate* appDelegate;
 //指定接口地址
 NSString* orderDetailURL;
     NSDictionary* dict;
+    NSArray* goodsArray;
 }
 @end
 /*
@@ -32,36 +33,40 @@ NSString* orderDetailURL;
 
 - (void)viewDidLoad {
     appDelegate = [UIApplication sharedApplication].delegate;//为了访问manager属性
-    orderDetailURL = [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/order/%@",appDelegate.orderID];//获取{oid}oid即为上一次访问后台获取NSArray的数组角标
+    orderDetailURL = [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/order/%d",appDelegate.orderID];//获取{oid}oid即为上一次访问后台获取NSArray的数组角标
     /*获取订单详情返回值
-    {name,total,time,start_time,phone_num,address,state,goods:[{id,name,quantity,price},… ]}
+    {id,sup_id,comment,name,total,time,start_time,phone_num,address,state,goods:[{id,name,quantity,price},… ]}
      8项数据
      */
     //获取订单状态
     [appDelegate.manager GET:orderDetailURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //将服务器json数据转化成NSDictionary,赋值给orders属性
         dict = responseObject;
-        NSLog(@"连接后台成功!");
-//        for (int i = 0; i < [orders count]; i++) {
-//            NSLog(@"%@",[NSString stringWithFormat:@"第%d个订单",i]);
-//            //            NSDictionary* dict = [orders objectAtIndex:i];
-//            //            NSLog(@"%@",[dict objectForKey:@"sup_name"]);
-//        }
+        //1⃣️state
+        NSString* status = [dict objectForKey:@"state"];
+        if ([status isEqualToString:@"paid"]) {
+            self.OrderStatus = @"等待超市接单";
+        } else if([status isEqualToString:@"on way"]){
+            self.OrderStatus = @"配送中";
+        }else if ([status isEqualToString:@"received"]){
+            self.OrderStatus = @"已送达";
+        }else if ([status isEqualToString:@"successed"]){
+            self.OrderStatus = @"订单完成";
+        }else if([status isEqualToString:@"canceled"]){
+            self.OrderStatus = @"已取消";
+        }
+        goodsArray = [dict objectForKey:@"goods"];
+        NSLog(@"获取订单详情成功!");
         //重新加载表格数据
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"获取订单信息有误: %@",error);
     }];
-
-    //先向后台获取订单状态
-    //1⃣️state:待定,默认为string
-    self.OrderStatus = [dict objectForKey:@"state"];
 //    self.OrderStatus = @"等待超市接单";
-    self.OrderStatus = @"配送中";
+//    self.OrderStatus = @"配送中";
 //    self.OrderStatus = @"已送达";
 //    self.OrderStatus = @"已取消";
 //    self.OrderStatus = @"订单完成";
-//    self.shareBtn = [[UIBarButtonItem alloc]initWithTitle:@"share" style:UIBarButtonItemStylePlain target:self action:@selector(share:)];
     UIImage* shareimg = [UIImage imageNamed:@"share_icon.jpeg"];
     UIImage* callimg = [UIImage imageNamed:@"call_icon.jpeg"];
     UIImageView* shareimgview = [[UIImageView alloc]initWithImage:shareimg];
@@ -74,7 +79,6 @@ NSString* orderDetailURL;
     [shareimgview addGestureRecognizer:shareGesture];
     [callimgview addGestureRecognizer:callGesture];
     self.shareBtn = [[UIBarButtonItem alloc]initWithCustomView:shareimgview];
-//    self.callBtn = [[UIBarButtonItem alloc]initWithTitle:@"call" style:UIBarButtonItemStylePlain target:self action:@selector(call:)];
     self.callBtn = [[UIBarButtonItem alloc]initWithCustomView:callimgview];
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:self.callBtn,self.shareBtn,nil];
     self.app = [UIApplication sharedApplication];
@@ -147,7 +151,6 @@ NSString* orderDetailURL;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -157,23 +160,14 @@ NSString* orderDetailURL;
     static NSString* cell3 = @"cell3";
     static NSString* cell4 = @"cell4";
     static NSString* cell5 = @"cell5";
-//    UITableView* cell = nil;
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     //包装费\配送费
     float packPrice = 0.0;
     float sendPrice = 0.5;
-    //plist模拟商品
-    NSString* filePath = [[NSBundle mainBundle]pathForResource:@"购物袋" ofType:@"plist"];
-    NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
-    NSArray* goods = dict[@"goods"];
-    NSArray* goodscount = dict[@"goodscount"];
-    NSArray* prices = dict[@"prices"];
     NSString* detailPath = [[NSBundle mainBundle]pathForResource:@"订单详情" ofType:@"plist"];
     NSDictionary* detailDict = [NSDictionary dictionaryWithContentsOfFile:detailPath];
     NSArray* detailKeys = detailDict[@"detailKeys"];
-//    NSLog(@"%@",[detailKeys objectAtIndex:0]);
-    NSArray* detailValues = detailDict[@"detailValues"];
     UITableViewCell* cell;
     //1:状态详情
     if (!section) {
@@ -188,20 +182,22 @@ NSString* orderDetailURL;
         if ([self.OrderStatus isEqual:@"等待超市接单"]) {
             ordercell.checkORerrorImg.image = [UIImage imageNamed:@"check.png"];
             ordercell.orderStatusLabel.text = @"付款成功，等待超市接单";
-            ordercell.preTimeLabel.text = @"预计接单时间：12:30";//后台
+            ordercell.preTimeLabel.text = @"预计接单时间：12:30";//后台!!!!!!!!!
             [ordercell.preTimeLabel sizeToFit];
             ordercell.chaoShiJieDanLabel.textColor = [UIColor grayColor];
             ordercell.yiShouHuoLabel.textColor = [UIColor grayColor];
             ordercell.quXiaoDingDanBtn.hidden = NO;
+            ordercell.dingDanTousuBtn.hidden = YES;
             [ordercell.progress setProgress:0.33];
         }else if ([self.OrderStatus isEqual:@"配送中"]){
             ordercell.checkORerrorImg.image = [UIImage imageNamed:@"check.png"];
             ordercell.orderStatusLabel.text = @"超市已接单，提货配送中";
-            ordercell.preTimeLabel.text = @"预计送达时间：12:30";//后台
+            ordercell.preTimeLabel.text = @"预计送达时间：12:30";//后台!!!!!!!!!!
             [ordercell.preTimeLabel sizeToFit];
             ordercell.chaoShiJieDanLabel.textColor = [UIColor orangeColor];
             ordercell.yiShouHuoLabel.textColor = [UIColor grayColor];
             ordercell.queRenShouHuoBtn.hidden = NO;
+            ordercell.dingDanTousuBtn.hidden = YES;
             [ordercell.queRenShouHuoBtn addTarget:self action:@selector(queRenShouHuo:) forControlEvents:UIControlEventTouchUpInside];
             ordercell.dianHuaCuiDanBtn.hidden = NO;
             ordercell.quXiaoDingDanBtn.hidden = NO;
@@ -209,12 +205,12 @@ NSString* orderDetailURL;
         }else if ([self.OrderStatus isEqual:@"已送达"]){
             ordercell.checkORerrorImg.image = [UIImage imageNamed:@"check.png"];
             ordercell.orderStatusLabel.text = @"您已收货，记得评价哦";
-            
             ordercell.chaoShiJieDanLabel.textColor = [UIColor orangeColor];
             ordercell.yiShouHuoLabel.textColor = [UIColor orangeColor];
             ordercell.queRenShouHuoBtn.hidden = YES;
             ordercell.quXiaoDingDanBtn.hidden = YES;
             ordercell.dianHuaCuiDanBtn.hidden = YES;
+            ordercell.dingDanTousuBtn.hidden = YES;
             ordercell.preTimeLabel.hidden = YES;
             ordercell.pingJiaBtn.hidden = NO;
             [ordercell.pingJiaBtn addTarget:self action:@selector(evaluate:) forControlEvents:UIControlEventTouchUpInside];
@@ -246,7 +242,7 @@ NSString* orderDetailURL;
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell1];
         }
         cell.imageView.image = [UIImage imageNamed:@"shop.png"];
-        cell.textLabel.text = @"世纪华联超市";//超市名称，从后台获取？
+        cell.textLabel.text = [dict objectForKey:@"name"];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     }else if(section == 2){
@@ -256,10 +252,10 @@ NSString* orderDetailURL;
         if (!purchaseCell) {
             purchaseCell = [[purchaseBagCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell3];
         }
-        //plist模拟商品
-        purchaseCell.goodsNameLabel.text = [goods objectAtIndex:row];
-        purchaseCell.goodsCountLabel.text = [goodscount objectAtIndex:row];
-        purchaseCell.totalPriceLabel.text = [prices objectAtIndex:row];
+        NSDictionary* goodDict = [goodsArray objectAtIndex:row];
+        purchaseCell.goodsNameLabel.text = [goodDict objectForKey:@"name"];
+        purchaseCell.goodsCountLabel.text = [NSString stringWithFormat:@"%@",[goodDict objectForKey:@"quantity"]];
+        purchaseCell.totalPriceLabel.text =[NSString stringWithFormat:@"%@",[goodDict objectForKey:@"price"]];
         return purchaseCell;
     }else if(section == 3){
         //包装配送费
@@ -277,7 +273,7 @@ NSString* orderDetailURL;
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%g",sendPrice];
         }else{
             cell.textLabel.text = @"合计";
-            cell.detailTextLabel.text = @"30";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[dict objectForKey:@"total"]];
             cell.detailTextLabel.textColor = [UIColor orangeColor];
         }
         return cell;
@@ -287,7 +283,25 @@ NSString* orderDetailURL;
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cell4];
         }
         cell.textLabel.text = [detailKeys objectAtIndex:row];
-        cell.detailTextLabel.text = [detailValues objectAtIndex:row];
+        switch (row) {
+            case 0:
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",[dict objectForKey:@"id"]];
+                break;
+            case 1:
+                cell.detailTextLabel.text = [dict objectForKey:@"time"];
+                break;
+            case 2:
+                cell.detailTextLabel.text = [dict objectForKey:@"phone_num"];
+                break;
+            case 3:
+                cell.detailTextLabel.text = [dict objectForKey:@"address"];
+                break;
+            case 4:
+                cell.detailTextLabel.text = [dict objectForKey:@"start_time"];
+                break;
+            default:
+                break;
+        }
         cell.textLabel.textColor = [UIColor grayColor];
         cell.detailTextLabel.textColor = [UIColor grayColor];
         return cell;
@@ -297,7 +311,7 @@ NSString* orderDetailURL;
             cell = [[MyEvaluateCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell5];
         }
         cell.myEvaluateView.textColor = [UIColor grayColor];
-        cell.myEvaluateView.text = @"从后台获取我的评价。";
+        cell.myEvaluateView.text = [[dict objectForKey:@"comment"] objectForKey:@"content"];
         return cell;
     }
 }
@@ -323,10 +337,14 @@ self.navigationItem.backBarButtonItem = backButton;
 //确认收货事件
 -(void)queRenShouHuo:(id)sender
 {
-    //向后台发送数据后刷新订单状态Orderstatus
+    NSString* confirmReceivedURL = [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/user/order/%d",appDelegate.orderID];
+    [appDelegate.manager PUT:confirmReceivedURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"订单详情界面确认收货成功！");
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"订单详情界面确认收货失败!%@",error);
+    }];
     self.OrderStatus = @"已送达";
     [self.tableView reloadData];
-    //为什么还需要以下代码？该隐藏的没隐藏
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if ([self.OrderStatus isEqual:@"订单完成"]) {
@@ -335,11 +353,10 @@ self.navigationItem.backBarButtonItem = backButton;
         return 5;
     }
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger rows = 1;
     if (section==2) {
-        rows = 3;//看后台
+        rows = [goodsArray count];
     }else if(section==3){
         rows = 3;//固定
     }else if (section == 4){
@@ -386,9 +403,6 @@ self.navigationItem.backBarButtonItem = backButton;
     
 }
 
-
-
-
 //以下函数为实现UIPopoverListView协议
 - (UITableViewCell *)popoverListView:(UIPopoverListView *)popoverListView
                     cellForIndexPath:(NSIndexPath *)indexPath
@@ -419,7 +433,6 @@ self.navigationItem.backBarButtonItem = backButton;
 - (void)popoverListView:(UIPopoverListView *)popoverListView
      didSelectIndexPath:(NSIndexPath *)indexPath
 {
-    
     UIWebView* callWebView = [[UIWebView alloc]init];
     NSURL *telURL = nil;
     //使用UIWebView加载tel:开头的URL打电话，而且电话结束后回到本应用，以留住用户！！

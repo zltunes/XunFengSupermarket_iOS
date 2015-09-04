@@ -12,12 +12,8 @@
 
 @interface OrderEvaluate ()
 {
-    //获取delegate对象，以访问manager属性和orderID
+    //获取delegate对象，以访问manager属性和orderID\sup_id
     OrderAppDelegate* appDelegate;
-    //指定[创建评论]接口地址
-    /*
-     sup_id怎么获取？？？？？？
-     */
     NSString* orderCommentsCreateURL;
 }
 @end
@@ -56,7 +52,6 @@
     
     self.submitEvaluateBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.submitEvaluateBtn.frame = CGRectMake(30, kWindowHeight-100, kWindowWidth-60,45);
-//    [self.submitEvaluateBtn setTitle:@"提交评价" forState:UIControlStateNormal];
     [self.submitEvaluateBtn setBackgroundImage:[UIImage imageNamed:@"tijiaopingjia.png"] forState:UIControlStateNormal];
     //提交评价事件
     [self.submitEvaluateBtn addTarget:self action:@selector(submitEvaluate:) forControlEvents:UIControlEventTouchUpInside];
@@ -68,17 +63,21 @@
     if(self.rating!=0){//可以没有评价，但一定要有评分才可提交后台
     appDelegate = [UIApplication sharedApplication].delegate;
     //指定[创建评论]接口地址
-    /*
-     sup_id怎么获取？？？？？？暂时用0占位
-     */
-    orderCommentsCreateURL = @"http://115.29.197.143:8999/v1.0/supermarket/0/comment";
-    NSDictionary* param = @{@"o_id":appDelegate.orderID,@"content":self.evaluateView.text,@"stars":self.rating};
+    NSString* commentCreateURL1 = [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/supermarket/%d",appDelegate.superID];
+    NSString* commentCreateURL2 = @"/comment";
+        orderCommentsCreateURL = [commentCreateURL1 stringByAppendingString:commentCreateURL2];
+    NSDictionary* param = @{@"o_id":[NSNumber numberWithInt:appDelegate.orderID],@"content":self.evaluateView.text,@"stars":self.rating};
     [appDelegate.manager POST:orderCommentsCreateURL parameters:param
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"评价提交成功!");
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"评价提交失败:%@",error);
         }];
+    //评价成功后回到detailed界面
+        
+        
+        
+        
     }
 }
 //为导航栏设置右边按钮[开始编辑评论时]

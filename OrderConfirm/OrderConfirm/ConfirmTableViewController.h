@@ -12,9 +12,11 @@
 @interface ConfirmTableViewController : UIViewController<ZHPickViewDelegate,UITableViewDataSource,UITableViewDelegate>
 @property(strong,nonatomic)UITableView* table;
 @property(nonatomic,strong)ZHPickView *pickview;
+@property(nonatomic,strong)NSMutableArray* start_timeArr;
 @property(nonatomic,strong)NSIndexPath *indexPath;
 @property(strong,nonatomic)UIToolbar *toolbar;
 @property(strong,nonatomic)UILabel *goodsCount;
 @property(strong,nonatomic)UILabel *totalPrice;
 @property(strong,nonatomic)NSNumber* totalgoodsPrice;//向支付界面传值
+@property(strong,nonatomic)NSString* order_id;
 @end

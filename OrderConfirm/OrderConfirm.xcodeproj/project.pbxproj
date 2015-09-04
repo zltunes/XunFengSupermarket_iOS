@@ -24,8 +24,10 @@
 		357B44701B6365A800BCEA69 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 357B446E1B6365A800BCEA69 /* LaunchScreen.xib */; };
 		357B447C1B6365A800BCEA69 /* OrderConfirmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 357B447B1B6365A800BCEA69 /* OrderConfirmTests.m */; };
 		357B44881B6365DE00BCEA69 /* ConfirmAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 357B44871B6365DE00BCEA69 /* ConfirmAppDelegate.m */; };
+		35A9815D1B93F5CE008C14C6 /* 转盘.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35A9815C1B93F5CE008C14C6 /* 转盘.jpg */; };
+		35A9815F1B93F5D9008C14C6 /* start.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A9815E1B93F5D9008C14C6 /* start.png */; };
 		35B21FA91B807ACC004A479B /* zhifubao.png in Resources */ = {isa = PBXBuildFile; fileRef = 35B21FA81B807ACC004A479B /* zhifubao.png */; };
-		35C9EADD1B90333C004A4B92 /* weixin.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 35C9EADC1B90333C004A4B92 /* weixin.jpeg */; settings = {ASSET_TAGS = (); }; };
+		35C9EADD1B90333C004A4B92 /* weixin.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 35C9EADC1B90333C004A4B92 /* weixin.jpeg */; };
 		35D537721B8F24A000189D09 /* quxiadan.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D537711B8F24A000189D09 /* quxiadan.png */; };
 		35D537741B8F44DE00189D09 /* querenzhifu.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D537731B8F44DE00189D09 /* querenzhifu.png */; };
 		35D537761B8F44F200189D09 /* tijiaopingjia.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D537751B8F44F200189D09 /* tijiaopingjia.png */; };
@@ -76,6 +78,8 @@
 		357B447B1B6365A800BCEA69 /* OrderConfirmTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderConfirmTests.m; sourceTree = "<group>"; };
 		357B44861B6365DE00BCEA69 /* ConfirmAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmAppDelegate.h; sourceTree = "<group>"; };
 		357B44871B6365DE00BCEA69 /* ConfirmAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmAppDelegate.m; sourceTree = "<group>"; };
+		35A9815C1B93F5CE008C14C6 /* 转盘.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "转盘.jpg"; sourceTree = "<group>"; };
+		35A9815E1B93F5D9008C14C6 /* start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start.png; sourceTree = "<group>"; };
 		35B21FA81B807ACC004A479B /* zhifubao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhifubao.png; sourceTree = "<group>"; };
 		35C9EADC1B90333C004A4B92 /* weixin.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = weixin.jpeg; sourceTree = "<group>"; };
 		35D537711B8F24A000189D09 /* quxiadan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quxiadan.png; sourceTree = "<group>"; };
@@ -111,6 +115,8 @@
 		353176521B8DB68A00C13414 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				35A9815E1B93F5D9008C14C6 /* start.png */,
+				35A9815C1B93F5CE008C14C6 /* 转盘.jpg */,
 				353176531B8DBD6B00C13414 /* address_backImg.png */,
 				35B21FA81B807ACC004A479B /* zhifubao.png */,
 				35C9EADC1B90333C004A4B92 /* weixin.jpeg */,
@@ -351,11 +357,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35A9815D1B93F5CE008C14C6 /* 转盘.jpg in Resources */,
 				353176541B8DBD6B00C13414 /* address_backImg.png in Resources */,
 				353B5EC01B64CFFD001C0D90 /* 起送时间.plist in Resources */,
 				35D537761B8F44F200189D09 /* tijiaopingjia.png in Resources */,
 				35C9EADD1B90333C004A4B92 /* weixin.jpeg in Resources */,
 				357B446B1B6365A800BCEA69 /* Main.storyboard in Resources */,
+				35A9815F1B93F5D9008C14C6 /* start.png in Resources */,
 				35D537721B8F24A000189D09 /* quxiadan.png in Resources */,
 				355209A71B64E5F90047E768 /* 购物袋.plist in Resources */,
 				357B44701B6365A800BCEA69 /* LaunchScreen.xib in Resources */,
@@ -550,10 +558,11 @@
 			baseConfigurationReference = 0E245F61C1AAA758503DA523 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OrderConfirm/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -565,10 +574,11 @@
 			baseConfigurationReference = BE920BB8A06EB64CD1411B74 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = OrderConfirm/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

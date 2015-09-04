@@ -18,7 +18,8 @@
 {
     ConfirmAppDelegate *delegate;
     NSString* orderCreateURL;
-    NSString* start_time;//起送时间
+    NSString* start_timeURL;
+    NSNumber* start_time_id;//起送时间
     NSString* remark;//备注
     RemarkCell* remarkCell;
     int goodcount;
@@ -39,9 +40,9 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     packPrice = 0.0;
     goodcount = 0;
     totalprice = packPrice + sendPrice;
-    remark = @"备注";
-    start_time = @"现在送出";
-    
+    remark = @"我的备注";
+    start_time_id = [NSNumber numberWithInt:1];
+    self.start_timeArr = [[NSMutableArray alloc]init];
     [super viewDidLoad];
     
     delegate = [UIApplication sharedApplication].delegate;
@@ -90,6 +91,19 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     [self.view addSubview:self.table];
     [self.view addSubview:self.toolbar];
     
+    delegate = [UIApplication sharedApplication].delegate;
+    start_timeURL = @"http://115.29.197.143:8999/v1.0/supermarket/7/times";//sup_id暂定为2，需从上一界面获取(delegate属性？)
+    [delegate.manager GET:start_timeURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"获取start_time成功!start_time个数: %lu",(unsigned long)[responseObject count]);
+        NSMutableArray* timearr = responseObject;
+        for (int i = 0; i<[timearr count]; i++) {
+            NSString* timestr = [[timearr objectAtIndex:i] objectForKey:@"time"];
+            self.start_timeArr = [self.start_timeArr arrayByAddingObject:timestr];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"获取start_time失败:%@",error);
+    }];
+    
 }
 -(void)hideExcessLine:(UITableView *)tableView{
     
@@ -97,7 +111,7 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     view.backgroundColor=[UIColor clearColor];
     [tableView setTableFooterView:view];
 }
--(void)viewDidAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.table reloadData];
@@ -185,7 +199,7 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cell1];
             cell.textLabel.text = @"起送时间";//名称应和plistname相同
-            cell.detailTextLabel.text = @"现在送出";
+            cell.detailTextLabel.text = @"点击选择";
         }
         return cell;
     }
@@ -258,14 +272,24 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
         UITableViewCell * cell=[self.table cellForRowAtIndexPath:indexPath];//获取当前cell,为其制定picker
         _pickview=[[ZHPickView alloc] initPickviewWithPlistName:cell.textLabel.text isHaveNavControler:NO];
         _pickview.delegate=self;
+        
+        
+        
+        
+        
+    
         [_pickview show];
     }
 }
+/*
+ start_time_id
+ */
 -(void)toobarDonBtnHaveClick:(ZHPickView *)pickView resultString:(NSString *)resultString{
     
     UITableViewCell* cell=[self.table cellForRowAtIndexPath:_indexPath];
     cell.detailTextLabel.text=resultString;
-    start_time = resultString;
+//    start_time_id = resultString;
+    
 }
 //点击“去下单”按钮,先向后台创建order，再跳转到支付界面
 -(void)clicked:(id)sender
@@ -275,37 +299,36 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
      post参数
      {adr_id,start_time,remark,cou_id，sup_id,
      goods:[{gid,quantity},…]}
+     返回：
+     ord_id
      */
-    NSNumber* adr_id = [NSNumber numberWithInt:0];//跳转到“我的地址”界面后进行选择的地址
-    NSNumber* cou_id = [NSNumber numberWithInt:0];//我拥有的该超市的coupon
+    NSNumber* adr_id = [NSNumber numberWithInt:10];//跳转到“我的地址”界面后进行选择的地址
+    NSNumber* cou_id = [NSNumber numberWithInt:1];//我拥有的该超市的coupon
     remark = remarkCell.remarkField.text;
-    NSNumber* sup_id = [NSNumber numberWithInt:2];//现有超市id=2,需从上一界面获取
+    NSNumber* sup_id = [NSNumber numberWithInt:7];//现有超市id=2,需从上一界面获取
     /*
      此处模拟三种商品，具体整合时参考前一界面
      */
     
-    NSNumber* num1 = [NSNumber numberWithInt:1];
-    NSNumber* num2 = [NSNumber numberWithInt:2];
-    NSNumber* num3 = [NSNumber numberWithInt:3];
+    NSNumber* num1 = [NSNumber numberWithInt:9];
+    NSNumber* num2 = [NSNumber numberWithInt:10];
+    NSNumber* num3 = [NSNumber numberWithInt:11];
 
     NSDictionary* good0 = @{@"gid":num1,@"quantity":num1};
     NSDictionary* good1 = @{@"gid":num2,@"quantity":num2};
     NSDictionary* good2 = @{@"gid":num3,@"quantity":num3};
     
     NSArray* goods = @[good0,good1,good2];
-    
-    NSDictionary* param = @{@"adr_id":adr_id,@"start_time":start_time,@"remark":remark,@"cou_id":cou_id,@"sup_id":sup_id,@"goods":goods};
+    //创建订单
+    NSDictionary* param = @{@"adr_id":adr_id,@"start_time_id":start_time_id,@"remark":remark,@"cou_id":cou_id,@"sup_id":sup_id,@"goods":goods};
     [delegate.manager POST:orderCreateURL parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"创建订单成功!");
+        self.order_id = responseObject;
+        NSLog(@"创建订单成功，返回order_id!%@",self.order_id);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"创建订单失败：%@",error);
     }];
     //跳转到支付界面
     delegate.payViewController = [[OrderPayViewController alloc]init];
     [self.navigationController pushViewController:delegate.payViewController animated:YES];
-//    //自定义返回按钮（将来换成图片）
-    //由于bakcBarButton事件不可自定义，此处弃用
-//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"订单支付"  style:UIBarButtonItemStylePlain  target:self  action:nil];//backBarbutton不可自定义事件
-//    self.navigationItem.backBarButtonItem = backButton;
 }
 @end

@@ -19,5 +19,7 @@
 @property(strong,nonatomic) UILabel* nameOfSupermarket;
 @property(strong,nonatomic) UILabel* priceLabel;
 @property(strong,nonatomic) UIImageView* xiantiao;
+@property int orderID;
+@property int superID;
 
 @end

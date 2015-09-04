@@ -75,7 +75,7 @@
 //    self.manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     
     //Access_token
-     [self.manager.requestSerializer setValue:@"b07f18c8-3f14-11e5-82bd-00163e021195" forHTTPHeaderField:@"Access_token"];
+     [self.manager.requestSerializer setValue:@"4244b7ac-4fbb-11e5-82bd-00163e021195" forHTTPHeaderField:@"Access_token"];
     
     //申明返回的结果是json类型
     self.manager.responseSerializer = [AFJSONResponseSerializer serializer];

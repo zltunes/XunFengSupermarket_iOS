@@ -16,6 +16,6 @@
 @property(strong,nonatomic) UINavigationController *naviController;
 @property(strong,nonatomic) OrderTableViewController *viewController;
 @property(strong,nonatomic) AFHTTPRequestOperationManager* manager;
-@property(strong,nonatomic) NSNumber* orderID;//订单id
-@property(strong,nonatomic) NSNumber* superID;//超市id
+@property int orderID;//订单id
+@property int superID;//超市id
 @end
