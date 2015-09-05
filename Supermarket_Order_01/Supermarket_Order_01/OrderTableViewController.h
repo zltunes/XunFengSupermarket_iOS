@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "OrderTableViewCell.h"
-@interface OrderTableViewController : UITableViewController
-
+@interface OrderTableViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+//@property(strong,nonatomic) UINavigationBar* navbar_order;
+//@property(strong,nonatomic) UINavigationItem* navitem_order;
+@property(strong,nonatomic) UITableView* table;
 @end

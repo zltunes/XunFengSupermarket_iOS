@@ -23,8 +23,22 @@
 @implementation OrderTableViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    self.navigationItem.title = @"订 单";
+//    self.navbar_order=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
+//    self.navbar_order.tintColor =[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
+//    UIImageView *view1=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
+//    [view1 setBackgroundColor:[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0]];
+//    [self.navbar_order addSubview:view1];
+    
+//    self.navitem_order = [[UINavigationItem alloc]initWithTitle:@"订  单"];
+//    self.navitem_order.titleView.tintColor = [UIColor whiteColor];
+//    [self.navbar_order pushNavigationItem:self.navitem_order animated:YES];
+//    [self.view addSubview:self.navbar_order];
+//    self.navigationController.navigationItem.title = @"订 单";
+    self.table=[[UITableView alloc]initWithFrame:CGRectMake(0, 0,kWindowWidth, kWindowHeight)];
+    self.table.delegate=self;
+    self.table.dataSource=self;
+    [self.view addSubview:self.table];
+    
     }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -37,7 +51,7 @@
             NSLog(@"获取订单详情成功!");
             //将服务器json数据转化成NSArray,赋值给orders属性
             ordersArray = responseObject;
-            [self.tableView reloadData];
+            [self.table reloadData];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"获取订单信息有误: %@",error);
         }];
@@ -146,13 +160,13 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"确认收货失败！%@",error);
     }];
-    [self.tableView reloadData];
+    [self.table reloadData];
 }
 -(void)evaluateOrder:(UIButton*)sender
 {
     UITapGestureRecognizer* ges = sender;
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:[ges.view tag]];
-    OrderTableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    OrderTableViewCell* cell = [self.table cellForRowAtIndexPath:indexPath];
     //向评价页面传送order_id   super_id
     appDelegate.orderID = cell.orderID;
     appDelegate.superID = cell.superID;

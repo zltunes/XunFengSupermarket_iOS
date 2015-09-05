@@ -302,7 +302,6 @@ NSString* orderDetailURL;
             default:
                 break;
         }
-        cell.textLabel.textColor = [UIColor grayColor];
         cell.detailTextLabel.textColor = [UIColor grayColor];
         return cell;
     }else{
