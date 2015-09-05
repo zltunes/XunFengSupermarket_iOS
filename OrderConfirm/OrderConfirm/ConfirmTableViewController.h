@@ -18,5 +18,5 @@
 @property(strong,nonatomic)UILabel *goodsCount;
 @property(strong,nonatomic)UILabel *totalPrice;
 @property(strong,nonatomic)NSNumber* totalgoodsPrice;//向支付界面传值
-@property(strong,nonatomic)NSString* order_id;
+@property int order_id;
 @end

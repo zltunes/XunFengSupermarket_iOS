@@ -95,7 +95,6 @@
     NSMutableArray* left = dict[@"payleft"];
     if (!indexPath.section) {
         cell = [tableView dequeueReusableCellWithIdentifier:cell0];
-//        if (!cell) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cell0];
             if (!rowNo) {
                 //订单总价
@@ -143,15 +142,11 @@
                 cell.textLabel.text = @"支付宝支付";
                 cell.detailTextLabel.text = @"推荐有支付宝账户的用户使用";
                 cell.detailTextLabel.textColor = [UIColor grayColor];
-//                //设置复选框
-//                cell.accessoryType = UITableViewCellAccessoryCheckmark;
             } else {
                 cell.imageView.image = [UIImage imageNamed:@"weixin.jpeg"];
                 cell.textLabel.text = @"微信支付";
                 cell.detailTextLabel.text = @"推荐安装微信5.0及以上版本的用户使用";
                 cell.detailTextLabel.textColor = [UIColor grayColor];
-                //复选框
-//                cell.accessoryType = UITableViewCellAccessoryCheckmark;
             }
         }
     }
@@ -267,13 +262,11 @@
     UITableViewCell *cell = [tableView popoverCellForRowAtIndexPath:indexPath];
     if (cell.accessoryType == UITableViewCellAccessoryNone) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
-//        NSLog(@"select:%ld", (long)indexPath.row);//模拟选中优惠券,012元
         NSDictionary* dict = [couponsArray objectAtIndex:indexPath.row];//默认购物券顺序是按返回顺序排的
         self.couponCount += [[dict objectForKey:@"price"] intValue];//默认price为integer
     } else {
         //已被选的再点击则放弃
         cell.accessoryType = UITableViewCellAccessoryNone;
-//        NSLog(@"diselect:%ld",(long)indexPath.row);//模拟放弃选中优惠券
         NSDictionary* dict = [couponsArray objectAtIndex:indexPath.row];
         self.couponCount -= [[dict objectForKey:@"price"] intValue];
     }
@@ -294,9 +287,9 @@
         //创建订单支付信息
 //        /v1.0/order/{o_id}/pay
         NSString* payURL1 =
-        [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/order/%@",delegate.viewController.order_id];
-        NSString* payURL2 = [n]
-        NSLog(@"payURL%@",payURL);
+        [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/order/%d",delegate.viewController.order_id];
+        NSString* payURL2 = @"/pay";
+        NSString* payURL = [payURL1 stringByAppendingPathComponent:payURL2];
         [delegate.manager POST:payURL parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             NSLog(@"支付成功!");
         } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {

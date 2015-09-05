@@ -41,7 +41,7 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     goodcount = 0;
     totalprice = packPrice + sendPrice;
     remark = @"我的备注";
-    start_time_id = [NSNumber numberWithInt:1];
+    start_time_id = [NSNumber numberWithInt:7];
     self.start_timeArr = [[NSMutableArray alloc]init];
     [super viewDidLoad];
     
@@ -58,7 +58,6 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     }
     self.totalgoodsPrice = [NSNumber numberWithFloat:totalprice];//向支付界面传值总价
     self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight-45)];
-//    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self hideExcessLine:self.table];
     self.table.dataSource = self;
     self.table.delegate = self;
@@ -272,12 +271,6 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
         UITableViewCell * cell=[self.table cellForRowAtIndexPath:indexPath];//获取当前cell,为其制定picker
         _pickview=[[ZHPickView alloc] initPickviewWithPlistName:cell.textLabel.text isHaveNavControler:NO];
         _pickview.delegate=self;
-        
-        
-        
-        
-        
-    
         [_pickview show];
     }
 }
@@ -322,8 +315,10 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     //创建订单
     NSDictionary* param = @{@"adr_id":adr_id,@"start_time_id":start_time_id,@"remark":remark,@"cou_id":cou_id,@"sup_id":sup_id,@"goods":goods};
     [delegate.manager POST:orderCreateURL parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.order_id = responseObject;
-        NSLog(@"创建订单成功，返回order_id!%@",self.order_id);
+        NSLog([NSString stringWithFormat:@"********%@",
+               [responseObject objectForKey:@"ord_id"]]);
+        self.order_id = [[responseObject objectForKey:@"ord_id"] intValue];
+        NSLog(@"创建订单成功，返回order_id!%d",self.order_id);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"创建订单失败：%@",error);
     }];
