@@ -56,7 +56,7 @@
         self.pingjiaBtn.hidden = YES;
         [self.contentView addSubview:self.pingjiaBtn];
 
-        self.img = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"supermarket.png"]];
+        self.img = [[UIImageView alloc]init];
         self.img.frame = CGRectMake(21, 45, 60, 60);
         [self.contentView addSubview:self.img];
         

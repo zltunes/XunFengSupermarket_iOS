@@ -15,6 +15,7 @@
 {
     ConfirmAppDelegate* delegate;
     NSString* couponsURL;
+    NSString* deleteOrderURL;
     NSString* myBalanceURL;//账户余额
     NSArray* couponsArray;
 }
@@ -28,7 +29,6 @@
     delegate = [UIApplication sharedApplication].delegate;
     couponsURL = @"http://115.29.197.143:8999/v1.0/coupons";
     //[{id,price,state,timelimit}]
-    
     myBalanceURL = @"http://115.29.197.143:8999/v1.0/user";
     self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight-100) style:UITableViewStylePlain];
     self.table.delegate = self;
@@ -65,9 +65,15 @@
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    //点击“是”放弃付款返回上一页面
+    //点击“是”放弃付款返回上一页面并取消该订单（用户自己取消）
     if (buttonIndex) {
-        [self.navigationController popViewControllerAnimated:self];
+        deleteOrderURL = [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/user/order/%d",delegate.viewController.order_id];
+        [delegate.manager DELETE:deleteOrderURL parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            NSLog(@"拒绝支付,取消订单成功！");
+            [self.navigationController popViewControllerAnimated:self];
+        } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
+            NSLog(@"拒绝支付，取消订单失败!%@",error);
+        }];
     }
 }
 
@@ -116,8 +122,14 @@
                 }];
             }else if (rowNo == 3){
                 //还需支付
-                //需要判断是不是首次下单!!!!!!!!
+                //需要判断是不是首次下单
                 cell.textLabel.text = [left objectAtIndex:2];
+                
+                //从orderTableViewControler的ordersArray获取数量
+                
+                
+                
+                
                 self.toPayValue = [delegate.viewController.totalgoodsPrice floatValue] - self.couponCount - self.banlance;
             cell.detailTextLabel.text = [NSString stringWithFormat:@"%g 元",self.toPayValue];
                 cell.detailTextLabel.textColor = [UIColor orangeColor];
@@ -289,7 +301,7 @@
         NSString* payURL1 =
         [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/order/%d",delegate.viewController.order_id];
         NSString* payURL2 = @"/pay";
-        NSString* payURL = [payURL1 stringByAppendingPathComponent:payURL2];
+        NSString* payURL = [payURL1 stringByAppendingString:payURL2];
         [delegate.manager POST:payURL parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             NSLog(@"支付成功!");
         } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {

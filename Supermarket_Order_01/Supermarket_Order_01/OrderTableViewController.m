@@ -11,6 +11,7 @@
 #import "detailedOrderStatusTableViewController.h"
 #import "OrderAppDelegate.h"
 #import "MJRefresh.h"
+#import "UIImageView+WebCache.h"
 
 @interface OrderTableViewController ()
 {
@@ -154,7 +155,9 @@
     [cell.priceLabel sizeToFit];
     //5⃣️icon-－URL
     NSURL *icon_url = [NSURL URLWithString:[orderdict objectForKey:@"icon"]];
-    cell.img = [[UIImageView alloc]initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:icon_url]]];
+//    cell.img = [[UIImageView alloc]initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:icon_url]]];
+//    cell.img = [[UIImageView alloc]init];
+    [cell.img sd_setImageWithURL:icon_url placeholderImage:[UIImage imageNamed:@"supermarket.png"]];
     //6⃣️time
     cell.timeLabel.text = [orderdict objectForKey:@"time"];
     //依据订单状态确定按钮文字
@@ -171,10 +174,8 @@
         cell.pingjiaBtn.userInteractionEnabled = YES;
         
         UITapGestureRecognizer* ges = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(evaluateOrder:)];
-        NSLog(@"section:%ld",indexPath.section);
-        [ges.view setTag:indexPath.section];
-        NSLog(@"设定的tag:%ld",[ges.view tag]);
         [cell.pingjiaBtn addGestureRecognizer:ges];
+        ges.view.tag = indexPath.section;
 
     }else{
         cell.querenshouhuoBtn.hidden = YES;
@@ -203,7 +204,7 @@
 {
     UITapGestureRecognizer* ges = sender;
     //确认收货/v1.0/user/order/{oid}-----此处用tag标记oid
-    NSString* confirmReceived = [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/user/order/%ld",(long)[ges.view tag]];
+    NSString* confirmReceived = [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/user/order/%ld",(long)ges.view.tag];
     [appDelegate.manager PUT:confirmReceived parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"确认收货成功！");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -63,9 +63,6 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     self.table.dataSource = self;
     self.table.delegate = self;
     
-    //关于toolbar
-//    self.toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0,kWindowHeight-45,kWindowWidth, 45)];
-//    self.toolbar.backgroundColor = [UIColor grayColor];
     self.bottomView = [[UIView alloc]initWithFrame:CGRectMake(0,kWindowHeight-45,kWindowWidth, 45)];
     self.bottomView.backgroundColor = [UIColor lightGrayColor];
     self.goodsCount = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, kWindowWidth/4, 45)];
@@ -74,11 +71,6 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     self.totalPrice.textColor = [UIColor orangeColor];
     self.totalPrice.text = [NSString stringWithFormat:@"￥ %g",totalprice];
     self.totalPrice.font = [UIFont boldSystemFontOfSize:18.0];
-    
-//    UIBarButtonItem* bn1 = [[UIBarButtonItem alloc]initWithCustomView:self.goodsCount];
-//    UIBarButtonItem* bn2 = [[UIBarButtonItem alloc]initWithCustomView:self.totalPrice];
-//    
-//    UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 
     UIImage* quxiadanimg = [[UIImage imageNamed:@"quxiadan.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.btn4 = [[UIButton buttonWithType:UIButtonTypeRoundedRect]retain];
