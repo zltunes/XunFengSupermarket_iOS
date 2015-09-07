@@ -19,9 +19,9 @@
     ConfirmAppDelegate *delegate;
     NSString* orderCreateURL;
     NSString* start_timeURL;
-    NSNumber* start_time_id;//起送时间
     NSString* remark;//备注
     RemarkCell* remarkCell;
+    int start_time_id;//起送时间
     int goodcount;
     float totalprice;
     float packPrice;
@@ -41,8 +41,9 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     goodcount = 0;
     totalprice = packPrice + sendPrice;
     remark = @"我的备注";
-    start_time_id = [NSNumber numberWithInt:7];
-    self.start_timeArr = [[NSMutableArray alloc]init];
+    self.start_timeStringArr = [[NSMutableArray alloc]init];
+    self.start_timeIDArr = [[NSMutableArray alloc]init];
+    self.timearr = [[NSMutableArray alloc]init];
     [super viewDidLoad];
     
     delegate = [UIApplication sharedApplication].delegate;
@@ -63,8 +64,10 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     self.table.delegate = self;
     
     //关于toolbar
-    self.toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0,kWindowHeight-45,kWindowWidth, 45)];
-    self.toolbar.backgroundColor = [UIColor grayColor];
+//    self.toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0,kWindowHeight-45,kWindowWidth, 45)];
+//    self.toolbar.backgroundColor = [UIColor grayColor];
+    self.bottomView = [[UIView alloc]initWithFrame:CGRectMake(0,kWindowHeight-45,kWindowWidth, 45)];
+    self.bottomView.backgroundColor = [UIColor lightGrayColor];
     self.goodsCount = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, kWindowWidth/4, 45)];
     self.goodsCount.text = [NSString stringWithFormat:@"%d  份",goodcount];
     self.totalPrice = [[UILabel alloc]initWithFrame:CGRectMake(10+kWindowWidth/4, 0, kWindowWidth/4, 45)];
@@ -72,37 +75,39 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     self.totalPrice.text = [NSString stringWithFormat:@"￥ %g",totalprice];
     self.totalPrice.font = [UIFont boldSystemFontOfSize:18.0];
     
-    UIBarButtonItem* bn1 = [[UIBarButtonItem alloc]initWithCustomView:self.goodsCount];
-    UIBarButtonItem* bn2 = [[UIBarButtonItem alloc]initWithCustomView:self.totalPrice];
-    
-    UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+//    UIBarButtonItem* bn1 = [[UIBarButtonItem alloc]initWithCustomView:self.goodsCount];
+//    UIBarButtonItem* bn2 = [[UIBarButtonItem alloc]initWithCustomView:self.totalPrice];
+//    
+//    UIBarButtonItem* flexItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 
-    UIImage* quxiadanimg = [UIImage imageNamed:@"quxiadan.png"];
-    UIButton* btn4 = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn4.frame = CGRectMake(0.8*kWindowWidth, kWindowHeight-10, 55, 25);
-    [btn4 setBackgroundImage:quxiadanimg forState:UIControlStateNormal];
-    btn4.userInteractionEnabled = YES;
+    UIImage* quxiadanimg = [[UIImage imageNamed:@"quxiadan.png"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.btn4 = [[UIButton buttonWithType:UIButtonTypeRoundedRect]retain];
+    self.btn4.frame = CGRectMake(0.8*kWindowWidth,10, 55, 27);
+    [self.btn4 setImage:quxiadanimg forState:UIControlStateNormal];
+    self.btn4.userInteractionEnabled = YES;
     UITapGestureRecognizer* quxiadan = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(clicked:)];
-    [btn4 addGestureRecognizer:quxiadan];
-    UIBarButtonItem* bn4 = [[UIBarButtonItem alloc]initWithCustomView:btn4];
-    self.toolbar.items = [NSArray arrayWithObjects:bn1,bn2,flexItem,bn4,nil];
-
+    [self.btn4 addGestureRecognizer:quxiadan];
+//    UIBarButtonItem* bn4 = [[UIBarButtonItem alloc]initWithCustomView:btn4];
+//    self.toolbar.items = [NSArray arrayWithObjects:bn1,bn2,flexItem,bn4,nil];
+    [self.bottomView addSubview:self.goodsCount];
+    [self.bottomView addSubview:self.totalPrice];
+    [self.bottomView addSubview:self.btn4];
     [self.view addSubview:self.table];
-    [self.view addSubview:self.toolbar];
+    [self.view addSubview:self.bottomView];
     
     delegate = [UIApplication sharedApplication].delegate;
-    start_timeURL = @"http://115.29.197.143:8999/v1.0/supermarket/7/times";//sup_id暂定为2，需从上一界面获取(delegate属性？)
+    start_timeURL = @"http://115.29.197.143:8999/v1.0/supermarket/7/times";
     [delegate.manager GET:start_timeURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"获取start_time成功!start_time个数: %lu",(unsigned long)[responseObject count]);
-        NSMutableArray* timearr = responseObject;
-        for (int i = 0; i<[timearr count]; i++) {
-            NSString* timestr = [[timearr objectAtIndex:i] objectForKey:@"time"];
-            self.start_timeArr = [self.start_timeArr arrayByAddingObject:timestr];
+        self.timearr = responseObject;
+        for (int i = 0; i<[self.timearr count]; i++) {
+            NSString* timestr = [[self.timearr objectAtIndex:i] objectForKey:@"time"];
+            self.start_timeStringArr = [self.start_timeStringArr arrayByAddingObject:timestr];
+            self.start_timeIDArr = [self.start_timeIDArr arrayByAddingObject:[[self.timearr objectAtIndex:i] objectForKey:@"id"]];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"获取start_time失败:%@",error);
     }];
-    
 }
 -(void)hideExcessLine:(UITableView *)tableView{
     
@@ -281,8 +286,13 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     
     UITableViewCell* cell=[self.table cellForRowAtIndexPath:_indexPath];
     cell.detailTextLabel.text=resultString;
-//    start_time_id = resultString;
-    
+    //根据resultString获取对应的start_time_id
+    for (int i = 0; i < [self.timearr count]; i++) {
+        if ([resultString isEqualToString:[self.start_timeStringArr objectAtIndex:i]]) {
+            start_time_id = [[self.start_timeIDArr objectAtIndex:i] intValue];
+            break;
+        }
+    }
 }
 //点击“去下单”按钮,先向后台创建order，再跳转到支付界面
 -(void)clicked:(id)sender
@@ -312,11 +322,10 @@ float prices[] = {10.1,10.2,10.3};//商品单价，实际从上一界面获取
     NSDictionary* good2 = @{@"gid":num3,@"quantity":num3};
     
     NSArray* goods = @[good0,good1,good2];
+    
     //创建订单
-    NSDictionary* param = @{@"adr_id":adr_id,@"start_time_id":start_time_id,@"remark":remark,@"cou_id":cou_id,@"sup_id":sup_id,@"goods":goods};
+    NSDictionary* param = @{@"adr_id":adr_id,@"start_time_id":[NSNumber numberWithInt:start_time_id],@"remark":remark,@"cou_id":cou_id,@"sup_id":sup_id,@"goods":goods};
     [delegate.manager POST:orderCreateURL parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog([NSString stringWithFormat:@"********%@",
-               [responseObject objectForKey:@"ord_id"]]);
         self.order_id = [[responseObject objectForKey:@"ord_id"] intValue];
         NSLog(@"创建订单成功，返回order_id!%d",self.order_id);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

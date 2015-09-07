@@ -103,6 +103,7 @@
 {
     _phone=phone;
     _areaCode=areaCode;
+    
 }
 
 -(void)submit
@@ -131,12 +132,13 @@
         //如果报接受类型不一致请替换一致text/html或别的
         manager.responseSerializer.acceptableContentTypes =  [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];;
         //传入的参数
-        NSDictionary *parameters = @{@"phone_num":@"15850605107",@"code":self.verifyCodeField.text};
+        NSDictionary *parameters = @{@"phone_num":self.phonestr,@"code":self.verifyCodeField.text};
         //你的接口地址
         NSString *url=@"http://115.29.197.143:8999/v1.0/auth/register";
         //发送请求
         [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"JSON: %@", responseObject);
+           
             PwdViewController *pwdvc=[[PwdViewController alloc]init];
             pwdvc.register_token=responseObject[@"register_token"];
             [self presentViewController:pwdvc animated:NO completion:nil];

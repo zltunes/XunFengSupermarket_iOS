@@ -16,4 +16,5 @@
 @property(nonatomic,strong)UITextField *pwdfield;
 @property(nonatomic,strong)UITextField *verifypwdField;
 @property(nonatomic,strong)NSString *register_token;
+@property(nonatomic,strong)UIAlertView *alert;
 @end

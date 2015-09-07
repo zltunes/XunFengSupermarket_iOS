@@ -59,6 +59,7 @@
     self.naviController_sup = [[UINavigationController alloc]initWithRootViewController:self.vc1];
     self.naviController_sup.navigationBar.barTintColor = [UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
     self.vc1.title = @"超  市";
+    
 //    UIImage* sup_selected = [UIImage imageNamed:@"sup_selected.png"];
 //    UIImage* sup_noselected = [UIImage imageNamed:@"sup_noselected.png"];
 //    [self.vc1.tabBarItem setImageInsets:UIEdgeInsetsMake(5.0, 0.0, -7.0, 0.0)];
@@ -73,6 +74,7 @@
     self.naviController_order = [[UINavigationController alloc]initWithRootViewController:self.viewController];
     self.naviController_order.navigationBar.barTintColor = [UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
     self.viewController.title = @"订  单";
+    
 //    UIImage* order_selected = [UIImage imageNamed:@"order_selected"];
 //    UIImage* order_noselected = [UIImage imageNamed:@"order_noselected.png"];
 //    [self.viewController.tabBarItem setImageInsets:UIEdgeInsetsMake(5.0, 0.0, -7.0, 0.0)];
@@ -85,6 +87,7 @@
     //3.初始化“我的”界面
     self.vc3 = [[myViewController alloc]init];
     self.vc3.title = @"我的";
+    
 //    UIImage* my_selected = [UIImage imageNamed:@"my_selected"];
 //    UIImage* my_noselected = [UIImage imageNamed:@"my_noselected.png"];
 //    [self.vc3.tabBarItem setImageInsets:UIEdgeInsetsMake(5.0, 0.0, -7.0, 0.0)];

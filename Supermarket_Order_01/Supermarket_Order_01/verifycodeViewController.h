@@ -14,5 +14,6 @@
 @property(nonatomic,strong)UIButton *codebtn;
 @property(nonatomic,strong)UIButton*pwdbtn;
 @property(nonatomic,strong)UITextField *verifyCodeField;
+@property(nonatomic,strong)NSString *phonestr;
 -(void)setPhone:(NSString*)phone AndAreaCode:(NSString*)areaCode;
 @end

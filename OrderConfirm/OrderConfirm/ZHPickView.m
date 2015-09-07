@@ -12,7 +12,6 @@
 @interface ZHPickView ()<UIPickerViewDelegate,UIPickerViewDataSource>
 {
     ConfirmAppDelegate* confirmAppdelegate;
-    NSString* start_timeURL;
 }
 @property(nonatomic,copy)NSString *plistName;
 @property(nonatomic,strong)NSArray *plistArray;
@@ -35,7 +34,6 @@
 @end
 
 @implementation ZHPickView
-
 -(NSArray *)plistArray{
     if (_plistArray==nil) {
         _plistArray=[[NSArray alloc] init];
@@ -97,28 +95,9 @@
 
 //
 -(NSArray *)getTimeArray{
-    //可供选择的起送时间
-//    NSString *path= [[NSBundle mainBundle] pathForResource:plistName ofType:@"plist"];
-//    NSArray * array=[[NSArray alloc] initWithContentsOfFile:path];
-//    NSArray *timearr = [[NSArray alloc]init];
-//    _timeArray = [[NSMutableArray alloc]init];
     confirmAppdelegate = [UIApplication sharedApplication].delegate;
-    /*
-    start_timeURL = @"http://115.29.197.143:8999/v1.0/supermarket/2/times";//sup_id暂定为2，需从上一界面获取(delegate属性？)
-    [confirmAppdelegate.manager GET:start_timeURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"获取start_time成功!start_time个数: %lu",(unsigned long)[responseObject count]);
-        NSMutableArray* timearr = responseObject;
-        for (int i = 0; i<[timearr count]; i++) {
-            NSString* timestr = [[timearr objectAtIndex:i] objectForKey:@"time"];
-            _timeArray = [_timeArray arrayByAddingObject:timestr];
-            NSLog(@"起送时间：%@",[_timeArray objectAtIndex:i]);
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"获取start_time失败:%@",error);
-    }];
-     */
-    [self setArrayClass:confirmAppdelegate.viewController.start_timeArr];
-    return confirmAppdelegate.viewController.start_timeArr;
+    [self setArrayClass:confirmAppdelegate.viewController.start_timeStringArr];
+    return confirmAppdelegate.viewController.start_timeStringArr;
 }
 
 -(void)setArrayClass:(NSArray *)array{

@@ -10,52 +10,95 @@
 #import "OrderEvaluate.h"
 #import "detailedOrderStatusTableViewController.h"
 #import "OrderAppDelegate.h"
+#import "MJRefresh.h"
 
 @interface OrderTableViewController ()
 {
     //获取delegate对象，以访问manager属性
     OrderAppDelegate* appDelegate;
     //订单数组，数组元素为字典
-    NSArray* ordersArray;
+    NSMutableArray* ordersArray;
+    NSString* ordersURL;//获取所有订单
+    int page_count;
 }
 @end
 
 @implementation OrderTableViewController
 
 - (void)viewDidLoad {
-//    self.navbar_order=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
-//    self.navbar_order.tintColor =[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
-//    UIImageView *view1=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
-//    [view1 setBackgroundColor:[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0]];
-//    [self.navbar_order addSubview:view1];
-    
-//    self.navitem_order = [[UINavigationItem alloc]initWithTitle:@"订  单"];
-//    self.navitem_order.titleView.tintColor = [UIColor whiteColor];
-//    [self.navbar_order pushNavigationItem:self.navitem_order animated:YES];
-//    [self.view addSubview:self.navbar_order];
-//    self.navigationController.navigationItem.title = @"订 单";
+
     self.table=[[UITableView alloc]initWithFrame:CGRectMake(0, 0,kWindowWidth, kWindowHeight)];
     self.table.delegate=self;
     self.table.dataSource=self;
+
+    //mjrefresh下拉刷新
+    self.table.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing)];
+    [self.table.header beginRefreshing];
+    //mjrefresh上拉加载
+    self.table.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
     [self.view addSubview:self.table];
     
-    }
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    ordersArray = [[NSArray alloc]init];
+    page_count = 1;
+    ordersArray = [[NSMutableArray alloc]init];
     appDelegate = [UIApplication sharedApplication].delegate;//为了访问manager属性
-    //先获取所有订单，每个订单为一个dict，所有dict存在一个array中
-        NSString* ordersURL = @"http://115.29.197.143:8999/v1.0/orders";
-        [appDelegate.manager GET:ordersURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"获取订单详情成功!");
-            //将服务器json数据转化成NSArray,赋值给orders属性
-            ordersArray = responseObject;
-            [self.table reloadData];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"获取订单信息有误: %@",error);
-        }];
+    //先获取page1订单，每个订单为一个dict，所有dict存在一个array中
+    ordersURL = @"http://115.29.197.143:8999/v1.0/orders";
+    [appDelegate.manager GET:ordersURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"获取订单详情成功!");
+        //将服务器json数据转化成NSArray,赋值给orders属性
+        ordersArray = responseObject;
+        [self.table reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"获取订单信息有误: %@",error);
+    }];
+    
+    }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self setHidesBottomBarWhenPushed:NO];
+    [super viewDidDisappear:animated];
 }
+//下拉刷新
+- (void)headerRefreshing
+{
+    //下拉永远获取的是page1订单
+    ordersURL = @"http://115.29.197.143:8999/v1.0/orders";
+    [appDelegate.manager GET:ordersURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"获取订单详情成功!");
+        //将服务器json数据转化成NSArray,赋值给orders属性
+        ordersArray = responseObject;
+        [self.table reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"获取订单信息有误: %@",error);
+    }];
+    page_count = 1;
+    [self.table reloadData];
+    [self.table.header endRefreshing];
+}
+//上拉加载
+-(void)footerRefreshing
+{
+    page_count += 1;
+    NSDictionary* param = @{@"page":[NSNumber numberWithInt:page_count]};
+    NSString* order_nextPage_URL = @"http://115.29.197.143:8999/v1.0/orders";
+    [appDelegate.manager GET:order_nextPage_URL parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"获取第%d页10个订单成功！",page_count);
+        NSArray* newarr = responseObject;
+        if ([newarr count]==1) {
+            NSDictionary* dic = [newarr objectAtIndex:0];
+            if ([[dic objectForKey:@"state"] isEqualToString:@"error"]) {
+                [self.table.footer noticeNoMoreData];
+            }
+        }else{
+        ordersArray = [ordersArray arrayByAddingObjectsFromArray:newarr];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"获取第%d页10个订单失败！",page_count);
+    }];
+    [self.table reloadData];
+    [self.table.footer endRefreshing];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -126,9 +169,13 @@
         cell.querenshouhuoBtn.hidden = YES;
         cell.pingjiaBtn.hidden = NO;
         cell.pingjiaBtn.userInteractionEnabled = YES;
+        
         UITapGestureRecognizer* ges = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(evaluateOrder:)];
+        NSLog(@"section:%ld",indexPath.section);
         [ges.view setTag:indexPath.section];
+        NSLog(@"设定的tag:%ld",[ges.view tag]);
         [cell.pingjiaBtn addGestureRecognizer:ges];
+
     }else{
         cell.querenshouhuoBtn.hidden = YES;
         cell.pingjiaBtn.hidden = YES;
@@ -143,14 +190,16 @@
     appDelegate.orderID = cell.orderID;
     appDelegate.superID = cell.superID;
     detailedOrderStatusTableViewController* detailedStatusController = [[detailedOrderStatusTableViewController alloc]init];
+    [self setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:detailedStatusController animated:YES];
-    
+
     //设置下一页面的返回,即为超市名
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:cell.nameOfSupermarket.text  style:UIBarButtonItemStylePlain  target:self  action:nil];
     self.navigationItem.backBarButtonItem = backButton;
+    [self.table deselectRowAtIndexPath:indexPath animated:YES];
 }
 
--(void)confirmStatusBtn:(UIButton*)sender
+-(void)confirmStatusBtn:(UITapGestureRecognizer*)sender
 {
     UITapGestureRecognizer* ges = sender;
     //确认收货/v1.0/user/order/{oid}-----此处用tag标记oid
@@ -162,10 +211,11 @@
     }];
     [self.table reloadData];
 }
--(void)evaluateOrder:(UIButton*)sender
+-(void)evaluateOrder:(UITapGestureRecognizer*)sender
 {
     UITapGestureRecognizer* ges = sender;
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:[ges.view tag]];
+    NSLog(@"点击评价后tag:%ld",[ges.view tag]);
     OrderTableViewCell* cell = [self.table cellForRowAtIndexPath:indexPath];
     //向评价页面传送order_id   super_id
     appDelegate.orderID = cell.orderID;

@@ -10,7 +10,7 @@
 #import "AFNetworking/AFNetworking.h"
 #import "AFNetworking/AFHTTPRequestOperation.h"
 #import "AFNetworking/AFHTTPSessionManager.h"
-
+#import "myViewController.h"
 @interface PwdViewController (){
     UINavigationBar *navbar;
     UINavigationItem*navitem;
@@ -77,6 +77,7 @@
         
         _pwdfield=[[UITextField alloc]initWithFrame:CGRectMake(85, 160, 200, 25)];
         _pwdfield.placeholder=@"6-32位字母符号组合" ;
+    _pwdfield.secureTextEntry=YES;
         [self.view addSubview:_pwdfield];
     
     UIImageView *phoneview2=[[UIImageView alloc]initWithFrame:CGRectMake(55, 195, 25, 25)];
@@ -106,6 +107,11 @@
         
         // Do any additional setup after loading the view.
     }
+
+
+-(void)back{
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
     // Do any additional setup after loading the view.
 -(void)setpwd{
    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -117,15 +123,25 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
     //传入的参数
     NSDictionary *parameters = @{@"register_token":self.register_token,@"password":self.pwdfield.text};
-    NSLog(self.register_token);
     //你的接口地址
     NSString *url=@"http://115.29.197.143:8999/v1.0/user";
     //发送请求
     [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
+        _alert = [[UIAlertView alloc] initWithTitle:nil message:@"注册成功！" delegate:self cancelButtonTitle:nil otherButtonTitles:nil, nil];
+        [NSTimer scheduledTimerWithTimeInterval:1.5f target:self selector: @selector(performDismiss:)  userInfo:nil repeats:NO];
+        [_alert show];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
+}
+
+-(void)performDismiss:(id)sender{
+    [_alert dismissWithClickedButtonIndex:0 animated:NO];
+    myViewController *myvc=[[myViewController alloc]init];
+    [self presentViewController:myvc animated:NO completion:nil];
+
 }
 
 - (void)didReceiveMemoryWarning {

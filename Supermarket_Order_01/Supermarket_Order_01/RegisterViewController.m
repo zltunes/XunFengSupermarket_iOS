@@ -147,6 +147,7 @@
 
         
         verifycodeViewController* verify=[[verifycodeViewController alloc] init];
+        verify.phonestr=self.phonefield.text;
         [self presentViewController:verify animated:NO completion:nil];
         //NSString* str2=@"86";
        /* [verify setPhone:self.phonefield.text AndAreaCode:str2];

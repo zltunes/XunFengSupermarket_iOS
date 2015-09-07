@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		352C966E1B9BD22A005487FB /* FastLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 352C96671B9BD22A005487FB /* FastLoginViewController.m */; settings = {ASSET_TAGS = (); }; };
+		352C966F1B9BD22A005487FB /* PwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 352C96691B9BD22A005487FB /* PwdViewController.m */; settings = {ASSET_TAGS = (); }; };
+		352C96701B9BD22A005487FB /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 352C966B1B9BD22A005487FB /* RegisterViewController.m */; settings = {ASSET_TAGS = (); }; };
+		352C96711B9BD22A005487FB /* verifycodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 352C966D1B9BD22A005487FB /* verifycodeViewController.m */; settings = {ASSET_TAGS = (); }; };
 		3552DD5D1B90380E00416F82 /* call_icon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 3552DD5C1B90380E00416F82 /* call_icon.jpeg */; settings = {ASSET_TAGS = (); }; };
 		3552DD5F1B90381400416F82 /* share_icon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 3552DD5E1B90381400416F82 /* share_icon.jpeg */; settings = {ASSET_TAGS = (); }; };
 		357B448B1B637B7E00BCEA69 /* OrderEvaluate.m in Sources */ = {isa = PBXBuildFile; fileRef = 357B448A1B637B7E00BCEA69 /* OrderEvaluate.m */; };
@@ -106,13 +110,9 @@
 		35FF848E1B9AE86E0049C117 /* HelpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35FF84861B9AE86E0049C117 /* HelpTableViewCell.xib */; settings = {ASSET_TAGS = (); }; };
 		35FF848F1B9AE86E0049C117 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FF84881B9AE86E0049C117 /* AboutViewController.m */; settings = {ASSET_TAGS = (); }; };
 		35FF84901B9AE86E0049C117 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FF848A1B9AE86E0049C117 /* HelpViewController.m */; settings = {ASSET_TAGS = (); }; };
-		35FF84911B9AE86E0049C117 /* FastLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FF848C1B9AE86E0049C117 /* FastLoginViewController.m */; settings = {ASSET_TAGS = (); }; };
 		35FF84AA1B9AE8910049C117 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FF84931B9AE8910049C117 /* FeedbackViewController.m */; settings = {ASSET_TAGS = (); }; };
 		35FF84AB1B9AE8910049C117 /* CouponTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FF84951B9AE8910049C117 /* CouponTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		35FF84AC1B9AE8910049C117 /* CouponViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FF84971B9AE8910049C117 /* CouponViewController.m */; settings = {ASSET_TAGS = (); }; };
-		35FF84AD1B9AE8910049C117 /* PwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FF84991B9AE8910049C117 /* PwdViewController.m */; settings = {ASSET_TAGS = (); }; };
-		35FF84AE1B9AE8910049C117 /* verifycodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FF849B1B9AE8910049C117 /* verifycodeViewController.m */; settings = {ASSET_TAGS = (); }; };
-		35FF84AF1B9AE8910049C117 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FF849D1B9AE8910049C117 /* RegisterViewController.m */; settings = {ASSET_TAGS = (); }; };
 		35FF84B01B9AE8910049C117 /* EditAddrViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FF849F1B9AE8910049C117 /* EditAddrViewController.m */; settings = {ASSET_TAGS = (); }; };
 		35FF84B11B9AE8910049C117 /* NewAddrViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FF84A11B9AE8910049C117 /* NewAddrViewController.m */; settings = {ASSET_TAGS = (); }; };
 		35FF84B21B9AE8910049C117 /* AddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35FF84A31B9AE8910049C117 /* AddressTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
@@ -140,6 +140,14 @@
 
 /* Begin PBXFileReference section */
 		2BB0EC3D0050D02B31030547 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		352C96661B9BD22A005487FB /* FastLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastLoginViewController.h; sourceTree = "<group>"; };
+		352C96671B9BD22A005487FB /* FastLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastLoginViewController.m; sourceTree = "<group>"; };
+		352C96681B9BD22A005487FB /* PwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PwdViewController.h; sourceTree = "<group>"; };
+		352C96691B9BD22A005487FB /* PwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PwdViewController.m; sourceTree = "<group>"; };
+		352C966A1B9BD22A005487FB /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		352C966B1B9BD22A005487FB /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		352C966C1B9BD22A005487FB /* verifycodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = verifycodeViewController.h; sourceTree = "<group>"; };
+		352C966D1B9BD22A005487FB /* verifycodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = verifycodeViewController.m; sourceTree = "<group>"; };
 		3552DD5C1B90380E00416F82 /* call_icon.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = call_icon.jpeg; sourceTree = "<group>"; };
 		3552DD5E1B90381400416F82 /* share_icon.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = share_icon.jpeg; sourceTree = "<group>"; };
 		357B44891B637B7E00BCEA69 /* OrderEvaluate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderEvaluate.h; sourceTree = "<group>"; };
@@ -275,20 +283,12 @@
 		35FF84881B9AE86E0049C117 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		35FF84891B9AE86E0049C117 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		35FF848A1B9AE86E0049C117 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
-		35FF848B1B9AE86E0049C117 /* FastLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FastLoginViewController.h; sourceTree = "<group>"; };
-		35FF848C1B9AE86E0049C117 /* FastLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FastLoginViewController.m; sourceTree = "<group>"; };
 		35FF84921B9AE8910049C117 /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
 		35FF84931B9AE8910049C117 /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
 		35FF84941B9AE8910049C117 /* CouponTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CouponTableViewCell.h; sourceTree = "<group>"; };
 		35FF84951B9AE8910049C117 /* CouponTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponTableViewCell.m; sourceTree = "<group>"; };
 		35FF84961B9AE8910049C117 /* CouponViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CouponViewController.h; sourceTree = "<group>"; };
 		35FF84971B9AE8910049C117 /* CouponViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CouponViewController.m; sourceTree = "<group>"; };
-		35FF84981B9AE8910049C117 /* PwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PwdViewController.h; sourceTree = "<group>"; };
-		35FF84991B9AE8910049C117 /* PwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PwdViewController.m; sourceTree = "<group>"; };
-		35FF849A1B9AE8910049C117 /* verifycodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = verifycodeViewController.h; sourceTree = "<group>"; };
-		35FF849B1B9AE8910049C117 /* verifycodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = verifycodeViewController.m; sourceTree = "<group>"; };
-		35FF849C1B9AE8910049C117 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
-		35FF849D1B9AE8910049C117 /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		35FF849E1B9AE8910049C117 /* EditAddrViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditAddrViewController.h; sourceTree = "<group>"; };
 		35FF849F1B9AE8910049C117 /* EditAddrViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditAddrViewController.m; sourceTree = "<group>"; };
 		35FF84A01B9AE8910049C117 /* NewAddrViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewAddrViewController.h; sourceTree = "<group>"; };
@@ -645,16 +645,18 @@
 				35FF84831B9AE82F0049C117 /* persopn首页 */,
 				35FF84921B9AE8910049C117 /* FeedbackViewController.h */,
 				35FF84931B9AE8910049C117 /* FeedbackViewController.m */,
+				352C96661B9BD22A005487FB /* FastLoginViewController.h */,
+				352C96671B9BD22A005487FB /* FastLoginViewController.m */,
+				352C96681B9BD22A005487FB /* PwdViewController.h */,
+				352C96691B9BD22A005487FB /* PwdViewController.m */,
+				352C966A1B9BD22A005487FB /* RegisterViewController.h */,
+				352C966B1B9BD22A005487FB /* RegisterViewController.m */,
+				352C966C1B9BD22A005487FB /* verifycodeViewController.h */,
+				352C966D1B9BD22A005487FB /* verifycodeViewController.m */,
 				35FF84941B9AE8910049C117 /* CouponTableViewCell.h */,
 				35FF84951B9AE8910049C117 /* CouponTableViewCell.m */,
 				35FF84961B9AE8910049C117 /* CouponViewController.h */,
 				35FF84971B9AE8910049C117 /* CouponViewController.m */,
-				35FF84981B9AE8910049C117 /* PwdViewController.h */,
-				35FF84991B9AE8910049C117 /* PwdViewController.m */,
-				35FF849A1B9AE8910049C117 /* verifycodeViewController.h */,
-				35FF849B1B9AE8910049C117 /* verifycodeViewController.m */,
-				35FF849C1B9AE8910049C117 /* RegisterViewController.h */,
-				35FF849D1B9AE8910049C117 /* RegisterViewController.m */,
 				35FF849E1B9AE8910049C117 /* EditAddrViewController.h */,
 				35FF849F1B9AE8910049C117 /* EditAddrViewController.m */,
 				35FF84A01B9AE8910049C117 /* NewAddrViewController.h */,
@@ -674,8 +676,6 @@
 				35FF84881B9AE86E0049C117 /* AboutViewController.m */,
 				35FF84891B9AE86E0049C117 /* HelpViewController.h */,
 				35FF848A1B9AE86E0049C117 /* HelpViewController.m */,
-				35FF848B1B9AE86E0049C117 /* FastLoginViewController.h */,
-				35FF848C1B9AE86E0049C117 /* FastLoginViewController.m */,
 			);
 			name = PersonView;
 			sourceTree = "<group>";
@@ -916,30 +916,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35FF84AD1B9AE8910049C117 /* PwdViewController.m in Sources */,
 				35FF848F1B9AE86E0049C117 /* AboutViewController.m in Sources */,
 				357B448F1B638FFE00BCEA69 /* RatingBar.m in Sources */,
-				35FF84AE1B9AE8910049C117 /* verifycodeViewController.m in Sources */,
 				35FF848D1B9AE86E0049C117 /* HelpTableViewCell.m in Sources */,
 				35FF84B21B9AE8910049C117 /* AddressTableViewCell.m in Sources */,
+				352C96711B9BD22A005487FB /* verifycodeViewController.m in Sources */,
 				35FF84B01B9AE8910049C117 /* EditAddrViewController.m in Sources */,
 				35CC8A5A1B62376700F28433 /* ViewController.m in Sources */,
+				352C966F1B9BD22A005487FB /* PwdViewController.m in Sources */,
 				35FF84B41B9AE8910049C117 /* MyLogisticsTableViewCell.m in Sources */,
 				35CC8A7D1B62528300F28433 /* OrderTableViewController.m in Sources */,
 				359226251B692C000089D4B0 /* MyEvaluateCell.m in Sources */,
 				35FF84901B9AE86E0049C117 /* HelpViewController.m in Sources */,
 				35FF84B51B9AE8910049C117 /* mylogisticsViewController.m in Sources */,
 				35FF84B11B9AE8910049C117 /* NewAddrViewController.m in Sources */,
-				35FF84AF1B9AE8910049C117 /* RegisterViewController.m in Sources */,
+				352C96701B9BD22A005487FB /* RegisterViewController.m in Sources */,
 				35CC8A7A1B62524D00F28433 /* OrderAppDelegate.m in Sources */,
 				35FF84821B9AE3E30049C117 /* myTableViewCell.m in Sources */,
 				35CC8A571B62376700F28433 /* AppDelegate.m in Sources */,
-				35FF84911B9AE86E0049C117 /* FastLoginViewController.m in Sources */,
 				35B3DF411B69515E00BCB67A /* UIPopoverListView.m in Sources */,
 				35B3DF4B1B69809C00BCB67A /* purchaseBagCell.m in Sources */,
 				35FF847B1B9AE2EC0049C117 /* ViewController1.m in Sources */,
 				35FF84811B9AE3E30049C117 /* myViewController.m in Sources */,
 				35FF84AB1B9AE8910049C117 /* CouponTableViewCell.m in Sources */,
+				352C966E1B9BD22A005487FB /* FastLoginViewController.m in Sources */,
 				35FF84AC1B9AE8910049C117 /* CouponViewController.m in Sources */,
 				35CC8A801B6252A700F28433 /* OrderTableViewCell.m in Sources */,
 				35E39DD61B67B82A008336FF /* orderStatusCell.m in Sources */,
@@ -1094,7 +1094,7 @@
 					"$(PROJECT_DIR)/SMS_SDK",
 				);
 				INFOPLIST_FILE = Supermarket_Order_01/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1122,7 +1122,7 @@
 					"$(PROJECT_DIR)/SMS_SDK",
 				);
 				INFOPLIST_FILE = Supermarket_Order_01/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

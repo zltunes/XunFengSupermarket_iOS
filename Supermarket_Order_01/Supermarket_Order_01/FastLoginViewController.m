@@ -95,6 +95,7 @@
     
     _verifypwdField=[[UITextField alloc]initWithFrame:CGRectMake(85, 195, 200, 25)];
     _verifypwdField.placeholder=@"请输入您的验证码" ;
+    _verifypwdField.secureTextEntry=YES;
     [self.view addSubview:_verifypwdField];
     
     UIImageView *line=[[UIImageView alloc]initWithFrame:CGRectMake(70, 188, 200, 1)];
