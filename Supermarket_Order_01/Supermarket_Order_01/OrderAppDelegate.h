@@ -40,5 +40,6 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
-
+//access_token
+@property(strong,nonatomic) NSString* access_token;
 @end

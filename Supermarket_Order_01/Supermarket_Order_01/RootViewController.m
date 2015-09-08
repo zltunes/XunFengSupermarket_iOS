@@ -60,7 +60,7 @@
     NSMutableArray *detailArray = [NSMutableArray array];
     _detailArray = detailArray;
 
-    //第二页面的cell（待改）
+    [self hideExcessLine:self.marketTableView];
    
 }
 
@@ -87,7 +87,11 @@
     cell.data = _result2[indexPath.row];
     return cell;
 }
-
+-(void)hideExcessLine:(UITableView *)tableView{
+    UIView *view=[[UIView alloc] init];
+    view.backgroundColor=[UIColor clearColor];
+    [tableView setTableFooterView:view];
+}
 //点击单元格进入超市详情
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     

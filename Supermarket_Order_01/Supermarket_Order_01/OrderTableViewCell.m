@@ -36,6 +36,7 @@
         self.statusLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/2, 5, kWindowWidth/2-20,30)];
         self.statusLabel.textAlignment = NSTextAlignmentRight;
         self.statusLabel.textColor = [UIColor orangeColor];
+        
         self.statusLabel.font = [UIFont systemFontOfSize:15.0];
         [self.contentView addSubview:self.statusLabel];
         

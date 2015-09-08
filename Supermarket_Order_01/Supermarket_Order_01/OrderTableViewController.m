@@ -65,16 +65,15 @@
     //下拉永远获取的是page1订单
     ordersURL = @"http://115.29.197.143:8999/v1.0/orders";
     [appDelegate.manager GET:ordersURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"获取订单详情成功!");
+        NSLog(@"获取所有订单成功!");
         //将服务器json数据转化成NSArray,赋值给orders属性
         ordersArray = responseObject;
         [self.table reloadData];
+        page_count = 1;
+        [self.table.header endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"获取订单信息有误: %@",error);
+        NSLog(@"获取所有订单失败: %@",error);
     }];
-    page_count = 1;
-    [self.table reloadData];
-    [self.table.header endRefreshing];
 }
 //上拉加载
 -(void)footerRefreshing
@@ -83,21 +82,22 @@
     NSDictionary* param = @{@"page":[NSNumber numberWithInt:page_count]};
     NSString* order_nextPage_URL = @"http://115.29.197.143:8999/v1.0/orders";
     [appDelegate.manager GET:order_nextPage_URL parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"获取第%d页10个订单成功！",page_count);
         NSArray* newarr = responseObject;
         if ([newarr count]==1) {
+            //意味着该页没有订单了
             NSDictionary* dic = [newarr objectAtIndex:0];
             if ([[dic objectForKey:@"state"] isEqualToString:@"error"]) {
                 [self.table.footer noticeNoMoreData];
+                page_count -= 1;
             }
         }else{
         ordersArray = [ordersArray arrayByAddingObjectsFromArray:newarr];
         }
+        [self.table reloadData];
+        [self.table.footer endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"获取第%d页10个订单失败！",page_count);
     }];
-    [self.table reloadData];
-    [self.table.footer endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -113,7 +113,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 10;
+    return 5;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 

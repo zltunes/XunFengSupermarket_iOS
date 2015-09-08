@@ -264,19 +264,19 @@
 
 - (void)didSelect:(id)sender{
     if([_totalPrice.text isEqualToString:@"0.0"]){
-        NSLog(@"choose");
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"至少选购一款商品!" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
     }
+    else
+    {
     self.searchCtrl.active = NO;
-    
-    NSLog(@"传递的数据:sup_id%d",self.marId);
-    NSLog(@"传递的数据:totalGoodsPrice:%g",[self.totalPrice.text floatValue]);
-    
     ConfirmTableViewController* confirmOrderViewController = [[ConfirmTableViewController alloc]init];
     confirmOrderViewController.sup_id = self.marId;
     confirmOrderViewController.totalGoodsPrice = [self.totalPrice.text floatValue];
     confirmOrderViewController.goodsArr = self.toZL;
     [self setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:confirmOrderViewController animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

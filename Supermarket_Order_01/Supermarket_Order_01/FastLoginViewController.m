@@ -11,6 +11,8 @@
 #import "AFNetworking/AFNetworking.h"
 #import "AFNetworking/AFHTTPRequestOperation.h"
 #import "AFNetworking/AFHTTPSessionManager.h"
+#import "myViewController.h"
+#import "OrderAppDelegate.h"
 @interface FastLoginViewController (){
     UINavigationBar *navbar;
     UINavigationItem*navitem;
@@ -19,6 +21,7 @@
     UIAlertView *alert;
     UIButton *submitbtn;
     int flag;
+    OrderAppDelegate* appdelegate;
     //flag为0，快捷登录；1 普通登录
    // UIImageView *phoneview3;
 }
@@ -29,6 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    appdelegate = [UIApplication sharedApplication].delegate;
     navbar=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
     navbar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
     
@@ -193,6 +197,11 @@
     //发送请求
     [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
+        //登录成功后！
+        NSDictionary* dict = responseObject;
+        appdelegate.access_token = [dict objectForKey:@"access_token"];
+        myViewController* myviewcontroller = [[myViewController alloc]init];
+        [self presentViewController:myviewcontroller animated:NO completion:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];

@@ -56,6 +56,10 @@
     [self.view addSubview:tableview];
     // Do any additional setup after loading the view.
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [self setHidesBottomBarWhenPushed:NO];
+    [super viewDidDisappear:animated];
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 5;
 }
