@@ -46,7 +46,7 @@ NSString* orderDetailURL;
         NSString* status = [dict objectForKey:@"state"];
         if ([status isEqualToString:@"paid"]) {
             self.OrderStatus = @"等待超市接单";
-        } else if([status isEqualToString:@"on way"]){
+        } else if([status isEqualToString:@"accepted"]){
             self.OrderStatus = @"配送中";
         }else if ([status isEqualToString:@"received"]){
             self.OrderStatus = @"已送达";
@@ -328,6 +328,7 @@ NSString* orderDetailURL;
 -(void)evaluate:(id)sender
 {
 OrderEvaluate *evalueatController = [[OrderEvaluate alloc]init];
+    [self setHidesBottomBarWhenPushed:YES];
 [self.navigationController pushViewController:evalueatController animated:YES];
 //自定义返回按钮（将来换成图片）
 UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"评价"  style:UIBarButtonItemStylePlain  target:self  action:nil];
@@ -338,12 +339,12 @@ self.navigationItem.backBarButtonItem = backButton;
 {
     NSString* confirmReceivedURL = [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/user/order/%d",appDelegate.orderID];
     [appDelegate.manager PUT:confirmReceivedURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"订单详情界面确认收货成功！");
+        NSLog(@"订单详情界面确认收货成功！id%d",appDelegate.orderID);
+        self.OrderStatus = @"已送达";
+        [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"订单详情界面确认收货失败!%@",error);
     }];
-    self.OrderStatus = @"已送达";
-    [self.tableView reloadData];
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if ([self.OrderStatus isEqual:@"订单完成"]) {

@@ -1,23 +1,23 @@
 //
-//  ViewController1.m
-//  mysupermarket
+//  ClickDetailVC.m
+//  Final1
 //
-//  Created by 程茹洁 on 15/7/15.
-//  Copyright (c) 2015年 程茹洁. All rights reserved.
+//  Created by 浩然 on 15/8/14.
+//  Copyright (c) 2015年 ZHR. All rights reserved.
 //
 
-#import "ViewController1.h"
+#import "ClickDetailVC.h"
 
-@interface ViewController1 ()
+@interface ClickDetailVC ()
 
 @end
 
-@implementation ViewController1
+@implementation ClickDetailVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor=[UIColor redColor];
     // Do any additional setup after loading the view.
+    self.view.frame = CGRectMake(100, 100, 100, 100);
 }
 
 - (void)didReceiveMemoryWarning {

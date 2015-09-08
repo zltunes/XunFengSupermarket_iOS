@@ -134,7 +134,7 @@
     NSString* status = [orderdict objectForKey:@"state"];
     if ([status isEqualToString:@"paid"]) {
         cell.OrderStatus = @"等待超市接单";
-    } else if([status isEqualToString:@"on way"]){
+    } else if([status isEqualToString:@"accepted"]){
         cell.OrderStatus = @"配送中";
     }else if ([status isEqualToString:@"received"]){
         cell.OrderStatus = @"已送达";

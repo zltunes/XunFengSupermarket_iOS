@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>现在送出</string>
+	<string>08:00</string>
+	<string>09:00</string>
+	<string>10:00</string>
+	<string>11:00</string>
+	<string>12:00</string>
+	<string>13:00</string>
+	<string>14:00</string>
+	<string>15:00</string>
+	<string>16:00</string>
+	<string>17:00</string>
+	<string>18:00</string>
+	<string>19:00</string>
+	<string>20:00</string>
+	<string>21:00</string>
+	<string>22:00</string>
+</array>
+</plist>

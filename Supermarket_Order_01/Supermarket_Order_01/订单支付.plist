@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>payright</key>
+	<array>
+		<string>11.5元</string>
+		<string>0元</string>
+		<string>6.5元</string>
+	</array>
+	<key>payleft</key>
+	<array>
+		<string>订单总价</string>
+		<string>我的余额</string>
+		<string>还需支付（首单减￥5！）</string>
+	</array>
+</dict>
+</plist>
