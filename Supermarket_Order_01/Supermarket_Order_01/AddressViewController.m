@@ -48,7 +48,7 @@
     [self.backbtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [backitem setCustomView:self.backbtn];
     [self.navitem setLeftBarButtonItem:backitem];
-    self.tableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 70, self.view.bounds.size.width, 86*[self.datasource count])];
+    self.tableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 70, self.view.bounds.size.width, self.view.bounds.size.height)];
     [self.tableview registerClass:[AddressTableViewCell class] forCellReuseIdentifier:@"cell"];
     self.tableview.backgroundColor=[UIColor whiteColor];
     self.tableview.delegate=self;
@@ -73,9 +73,16 @@
     // 网络访问是异步的,回调是主线程的,因此程序员不用管在主线程更新UI的事情
     [manager GET:@"http://115.29.197.143:8999/v1.0/user/addresses" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            self.datasource=responseObject;
+//            self.tableview.frame=CGRectMake(0, 70, self.view.bounds.size.width, 86*[self.datasource count]);
+//            [self.tableview reloadData];
+//        });
         dispatch_async(dispatch_get_main_queue(), ^{
             self.datasource=responseObject;
-            self.tableview.frame=CGRectMake(0, 70, self.view.bounds.size.width, 86*[self.datasource count]);
+            
+            //self.tableview.contentSize=CGSizeMake( self.view.bounds.size.width, 86*[self.datasource count]);
+            self.tableview.frame=CGRectMake(0, 70, self.view.bounds.size.width, self.view.bounds.size.height-70);
             [self.tableview reloadData];
         });
         

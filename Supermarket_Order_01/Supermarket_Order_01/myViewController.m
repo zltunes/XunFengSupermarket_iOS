@@ -15,7 +15,10 @@
 #import "HelpViewController.h"
 #import "FeedbackViewController.h"
 #import "FastLoginViewController.h"
-@interface myViewController ()
+@interface myViewController (){
+    NSString *filename;
+    NSMutableDictionary *plistdic;
+}
 @end
 
 @implementation myViewController
@@ -54,11 +57,38 @@
     tableview.dataSource=self;
     tableview.scrollEnabled=NO;
     [self.view addSubview:tableview];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    filename= [documentsDirectory stringByAppendingPathComponent:@"personinfo.plist"];
+    plistdic=[[[NSMutableDictionary alloc]initWithContentsOfFile:filename]mutableCopy];
+    if(plistdic==nil){
+        _islogin=NO;
+        plistdic=[[NSMutableDictionary alloc]init];
+        NSMutableArray *values=[[NSMutableArray alloc]initWithCapacity:10];;
+        NSMutableArray *keys=[[NSMutableArray alloc]initWithCapacity:10];
+        //_plistdic=[NSMutableDictionary dictionaryWithObjects:@"no",@"1.0",@"0",nil,@"0",nil forKeys:@"launch",@"version",@"count",@"userid",@"login","captain"];
+    
+            [values addObject:@"0"];
+        [values addObject:@"0"];
+        
+        
+            [keys addObject:@"islogin"];
+        [keys addObject:@"tel"];
+    
+        plistdic = [NSMutableDictionary dictionaryWithObjects:values forKeys:keys];
+        [plistdic writeToFile:filename atomically:YES];
+    }
+    else{
+        if([[plistdic objectForKey:@"islogin"]isEqualToString:@"1"])
+            _islogin=YES;
+        else
+            _islogin=NO;
+            
+    }
+    
+
     // Do any additional setup after loading the view.
-}
-- (void)viewWillDisappear:(BOOL)animated {
-    [self setHidesBottomBarWhenPushed:NO];
-    [super viewDidDisappear:animated];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 5;
@@ -87,8 +117,12 @@
     [cell setupcell];
  
     if(indexPath.section==0){
-        UILabel *label1=[[UILabel alloc]initWithFrame:CGRectMake(18,10 , 100, 20)];
-        [label1 setText:@"我的账户"];
+        NSString *str=@"我的账户   ";
+        if(_islogin==YES){
+            str=[str stringByAppendingString:[plistdic objectForKey:@"tel"]];
+        }
+        UILabel *label1=[[UILabel alloc]initWithFrame:CGRectMake(18,10 , 280, 20)];
+        [label1 setText:str];
         [cell addSubview:label1];
     }
     //NSUInteger row = [indexPath row];
@@ -131,8 +165,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section==0){
+        if(_islogin==NO){
         FastLoginViewController *regvc=[[FastLoginViewController alloc]init];
-        [self presentViewController:regvc animated:NO completion:nil];
+            [self presentViewController:regvc animated:NO completion:nil];
+        }
+    
+            
     }
     if(indexPath.section==1){
         mylogisticsViewController *logisticsvc=[[mylogisticsViewController alloc]init];

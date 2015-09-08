@@ -12,5 +12,5 @@
 @property(nonatomic,strong)UINavigationBar *navbar;
 @property(nonatomic,strong)UINavigationItem *navitem;
 @property(nonatomic,strong)UITableView *tableview;
-
+@property bool islogin;
 @end

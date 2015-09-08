@@ -10,6 +10,7 @@
 #import "Header.h"
 #import "OrderAppDelegate.h"
 #import "PraiseView.h"
+#import "detailedOrderStatusTableViewController.h"
 
 @interface OrderPayViewController ()
 {
@@ -303,15 +304,18 @@
         NSString* payURL2 = @"/pay";
         NSString* payURL = [payURL1 stringByAppendingString:payURL2];
         [delegate.manager POST:payURL parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-            NSLog(@"支付成功!");
+            delegate.orderID = self.order_id;
+            detailedOrderStatusTableViewController* detailView = [[detailedOrderStatusTableViewController alloc]init];
+            //下一页返回按钮返回订单首页
+//            UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"详情"  style:UIBarButtonItemStylePlain  target:self  action:@selector(detailBack)];
+//            self.navigationController.navigationBar.topItem.leftBarButtonItem = backButton;
+            [self.navigationController pushViewController:detailView animated:YES];
+            
         } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
             NSLog(@"支付失败:%@",error);
         }];
-        [payAlertView show];
     }else{
         [warning show];
     }
-    
-    
 }
 @end

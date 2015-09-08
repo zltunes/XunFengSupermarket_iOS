@@ -10,6 +10,7 @@
 #import "OrderAppDelegate.h"
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKUI/ShareSDKUI.h>
+#import "OrderTableViewController.h"
 
 @interface detailedOrderStatusTableViewController ()
 {
@@ -32,8 +33,9 @@ NSString* orderDetailURL;
 @implementation detailedOrderStatusTableViewController
 
 - (void)viewDidLoad {
+    self.title = @"订单详情";
     appDelegate = [UIApplication sharedApplication].delegate;//为了访问manager属性
-    orderDetailURL = [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/order/%d",appDelegate.orderID];//获取{oid}oid即为上一次访问后台获取NSArray的数组角标
+    orderDetailURL = [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/order/%d",appDelegate.orderID];
     /*获取订单详情返回值
     {id,sup_id,comment,name,total,time,start_time,phone_num,address,state,goods:[{id,name,quantity,price},… ]}
      8项数据
@@ -82,9 +84,18 @@ NSString* orderDetailURL;
     self.callBtn = [[UIBarButtonItem alloc]initWithCustomView:callimgview];
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:self.callBtn,self.shareBtn,nil];
     self.app = [UIApplication sharedApplication];
+    
+    UIBarButtonItem* customBackBatButton = [[UIBarButtonItem alloc]initWithTitle:@"<" style:UIBarButtonItemStylePlain target:self action:@selector(returnToOrderTableView:)];
+    customBackBatButton.tintColor = [UIColor blueColor];
+    self.navigationItem.leftBarButtonItem = customBackBatButton;
+    
     [super viewDidLoad];
     [self hideExcessLine:self.tableView];
 
+}
+-(void)returnToOrderTableView:(id)sender
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 //分享给好友
 -(void)share:(id)sender
@@ -330,9 +341,9 @@ NSString* orderDetailURL;
 OrderEvaluate *evalueatController = [[OrderEvaluate alloc]init];
     [self setHidesBottomBarWhenPushed:YES];
 [self.navigationController pushViewController:evalueatController animated:YES];
-//自定义返回按钮（将来换成图片）
-UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"评价"  style:UIBarButtonItemStylePlain  target:self  action:nil];
-self.navigationItem.backBarButtonItem = backButton;
+//自定义返回按钮
+//UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"评价"  style:UIBarButtonItemStylePlain  target:self  action:nil];
+//self.navigationItem.backBarButtonItem = backButton;
 }
 //确认收货事件
 -(void)queRenShouHuo:(id)sender
