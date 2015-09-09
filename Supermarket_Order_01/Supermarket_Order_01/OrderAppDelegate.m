@@ -19,6 +19,7 @@
 
 -(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
     [SMS_SDK registerApp:@"9fe7e6337ac0" withSecret:@"a914aca08f774bf058efdd61fd95f963"];//mob后台获取
     [ShareSDK registerApp:@"9fe7e6337ac0" activePlatforms:@[@(SSDKPlatformTypeSinaWeibo),@(SSDKPlatformTypeQQ),@(SSDKPlatformTypeWechat)] onImport:^(SSDKPlatformType platformType) {
         switch (platformType) {
@@ -57,7 +58,7 @@
     //1.初始化“超市”界面
     self.rootViewController = [[RootViewController alloc]init];
     self.naviController_sup = [[UINavigationController alloc]initWithRootViewController:self.rootViewController];
-    self.naviController_sup.navigationBar.barTintColor = [UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
+    self.naviController_sup.navigationBar.barTintColor = [UIColor colorWithRed:255.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
     [self.naviController_sup.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
     self.rootViewController.title = @"超  市";
     
@@ -73,7 +74,7 @@
     //2.初始化“订单”界面
     self.viewController = [[OrderTableViewController alloc]init];
     self.naviController_order = [[UINavigationController alloc]initWithRootViewController:self.viewController];
-    self.naviController_order.navigationBar.barTintColor = [UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
+    self.naviController_order.navigationBar.barTintColor = [UIColor colorWithRed:255.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
     [self.naviController_order.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
     self.viewController.title = @"订  单";
     
@@ -88,7 +89,10 @@
     
     //3.初始化“我的”界面
     self.vc3 = [[myViewController alloc]init];
-    self.vc3.title = @"我的";
+    self.naviController_vc3 = [[UINavigationController alloc]initWithRootViewController:self.vc3];
+        self.naviController_vc3.navigationBar.barTintColor = [UIColor colorWithRed:255.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
+    [self.naviController_vc3.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
+    self.vc3.title = @"我  的";
     
 //    UIImage* my_selected = [UIImage imageNamed:@"my_selected"];
 //    UIImage* my_noselected = [UIImage imageNamed:@"my_noselected.png"];
@@ -102,14 +106,42 @@
     //4.初始化tabbarcontroller
     self.tabbarcontroller=[[UITabBarController alloc]init];
     self.tabbarcontroller.delegate=self;
-    self.tabbarcontroller.viewControllers=[NSArray arrayWithObjects:self.naviController_sup,self.naviController_order,self.vc3,nil];
+    self.tabbarcontroller.viewControllers=[NSArray arrayWithObjects:self.naviController_sup,self.naviController_order,self.naviController_vc3,nil];
     
     
     //5.设置窗口以tabbarcontroller为根视图控制器
     self.window.rootViewController=self.tabbarcontroller;
     
-    [self.window makeKeyAndVisible];
-    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    self.filename= [documentsDirectory stringByAppendingPathComponent:@"personinfo.plist"];
+    self.plistdic=[[[NSMutableDictionary alloc]initWithContentsOfFile:self.filename]mutableCopy];
+    if(self.plistdic==nil){
+        self.islogin=NO;
+        self.plistdic=[[NSMutableDictionary alloc]init];
+        NSMutableArray *values=[[NSMutableArray alloc]initWithCapacity:10];;
+        NSMutableArray *keys=[[NSMutableArray alloc]initWithCapacity:10];
+        
+        [values addObject:@"0"];
+        [values addObject:@"0"];
+        [values addObject:@""];
+        
+        [keys addObject:@"islogin"];
+        [keys addObject:@"tel"];
+        [keys addObject:@"access_token"];
+        
+        self.plistdic = [NSMutableDictionary dictionaryWithObjects:values forKeys:keys];
+        [self.plistdic writeToFile:self.filename atomically:YES];
+
+    }
+    else{
+        if([[self.plistdic objectForKey:@"islogin"]isEqualToString:@"1"])
+            _islogin=YES;
+        else
+            _islogin=NO;
+        self.access_token = [self.plistdic objectForKey:@"access_token"];
+        NSLog(@"access_token:%@",self.access_token);
+    }
     /*
      后台请求部分
      */
@@ -121,13 +153,14 @@
     self.manager.requestSerializer=[AFJSONRequestSerializer serializer];
     
     //Access_token
-     [self.manager.requestSerializer setValue:@"4244b7ac-4fbb-11e5-82bd-00163e021195" forHTTPHeaderField:@"Access_token"];
+     [self.manager.requestSerializer setValue:self.access_token forHTTPHeaderField:@"access_token"];
     
     //申明返回的结果是json类型
     self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
 //    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
-    
+  
+    [self.window makeKeyAndVisible];
     return YES;
 }
 -(UIImage *)reSizeImage:(UIImage *)image toSize:(CGSize)reSize

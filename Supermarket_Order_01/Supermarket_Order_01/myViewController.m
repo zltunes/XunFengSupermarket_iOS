@@ -15,9 +15,12 @@
 #import "HelpViewController.h"
 #import "FeedbackViewController.h"
 #import "FastLoginViewController.h"
+#import "OrderAppDelegate.h"
+
 @interface myViewController (){
-    NSString *filename;
-    NSMutableDictionary *plistdic;
+    OrderAppDelegate* delegate;
+    UIButton *logoutbtn;
+    UILabel *label1;
 }
 @end
 
@@ -28,6 +31,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationItem setHidesBackButton:YES];
+    delegate = [UIApplication sharedApplication].delegate;
+     self.islogin = delegate.islogin;
     self.view.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
    navbar=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
    navbar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
@@ -35,8 +41,7 @@
    UIImageView *view1=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
     [view1 setBackgroundColor:[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0]];
     [self.navbar addSubview:view1];
-   //self.navigationController.navigationBar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
-    //self.navigationItem.title=@"我的";
+
     navitem=[[UINavigationItem alloc]initWithTitle:nil];
     [navbar pushNavigationItem:navitem animated:NO];
     UIBarButtonItem *rightitem=[[UIBarButtonItem alloc]initWithTitle:@"修改密码" style:UIBarButtonItemStylePlain target:self action:@selector(changepwd)];
@@ -49,46 +54,63 @@
                              [UIFont systemFontOfSize:20.0], NSFontAttributeName
                              ,nil];
     
-    //self.navigationController.navigationBar.titleTextAttributes = attrdic;
     navbar.titleTextAttributes=attrdic;
     tableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, 400)];
     [tableview registerClass:[myTableViewCell class] forCellReuseIdentifier:@"cell"];
     tableview.delegate=self;
     tableview.dataSource=self;
     tableview.scrollEnabled=NO;
+    logoutbtn=[[UIButton alloc]initWithFrame:CGRectMake(50, self.view.bounds.size.height-120, self.view.bounds.size.width-100, 80)];
+    [logoutbtn setTitle:@"退出登录" forState:UIControlStateNormal];
+    [self.view addSubview:logoutbtn];
+    [logoutbtn addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
+    [logoutbtn setTitleColor:[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+    
+    if(!_islogin)
+        [logoutbtn setHidden:YES];
     [self.view addSubview:tableview];
     
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    filename= [documentsDirectory stringByAppendingPathComponent:@"personinfo.plist"];
-    plistdic=[[[NSMutableDictionary alloc]initWithContentsOfFile:filename]mutableCopy];
-    if(plistdic==nil){
-        _islogin=NO;
-        plistdic=[[NSMutableDictionary alloc]init];
-        NSMutableArray *values=[[NSMutableArray alloc]initWithCapacity:10];;
-        NSMutableArray *keys=[[NSMutableArray alloc]initWithCapacity:10];
-        //_plistdic=[NSMutableDictionary dictionaryWithObjects:@"no",@"1.0",@"0",nil,@"0",nil forKeys:@"launch",@"version",@"count",@"userid",@"login","captain"];
-    
-            [values addObject:@"0"];
-        [values addObject:@"0"];
-        
-        
-            [keys addObject:@"islogin"];
-        [keys addObject:@"tel"];
-    
-        plistdic = [NSMutableDictionary dictionaryWithObjects:values forKeys:keys];
-        [plistdic writeToFile:filename atomically:YES];
-    }
-    else{
-        if([[plistdic objectForKey:@"islogin"]isEqualToString:@"1"])
-            _islogin=YES;
-        else
-            _islogin=NO;
-            
-    }
-    
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsDirectory = [paths objectAtIndex:0];
+//    filename= [documentsDirectory stringByAppendingPathComponent:@"personinfo.plist"];
+//    plistdic=[[[NSMutableDictionary alloc]initWithContentsOfFile:filename]mutableCopy];
+//    if(plistdic==nil){
+//        _islogin=NO;
+//        plistdic=[[NSMutableDictionary alloc]init];
+//        NSMutableArray *values=[[NSMutableArray alloc]initWithCapacity:10];;
+//        NSMutableArray *keys=[[NSMutableArray alloc]initWithCapacity:10];
+//    
+//                [values addObject:@"0"];
+//            [values addObject:@"0"];
+//        [values addObject:@""];
+//        
+//                [keys addObject:@"islogin"];
+//            [keys addObject:@"tel"];
+//        [keys addObject:@"access_token"];
+//    
+//        plistdic = [NSMutableDictionary dictionaryWithObjects:values forKeys:keys];
+//        [plistdic writeToFile:filename atomically:YES];
+//    }
+//    else{
+//        if([[plistdic objectForKey:@"islogin"]isEqualToString:@"1"])
+//            _islogin=YES;
+//        else
+//            _islogin=NO;
+//            
+//    }
+    _islogin = delegate.islogin;
+}
 
-    // Do any additional setup after loading the view.
+-(void)logout{
+    NSLog(@"退出！");
+    [delegate.plistdic setObject:@"0" forKey:@"islogin"];
+    [delegate.plistdic setObject:@"" forKey:@"access_token"];
+    [delegate.plistdic setObject:@"" forKey:@"tel"];
+    [delegate.plistdic writeToFile:delegate.filename atomically:NO];
+    self.islogin = NO;
+    [logoutbtn setHidden:YES];
+    [label1 setHidden:YES];
+    [self.tableview reloadData];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 5;
@@ -117,11 +139,11 @@
     [cell setupcell];
  
     if(indexPath.section==0){
-        NSString *str=@"我的账户   ";
+        NSString *str=@"    我的账户   ";
         if(_islogin==YES){
-            str=[str stringByAppendingString:[plistdic objectForKey:@"tel"]];
+            str=[str stringByAppendingString:[delegate.plistdic objectForKey:@"tel"]];
         }
-        UILabel *label1=[[UILabel alloc]initWithFrame:CGRectMake(18,10 , 280, 20)];
+        label1=[[UILabel alloc]initWithFrame:CGRectMake(18,10 , 280, 20)];
         [label1 setText:str];
         [cell addSubview:label1];
     }
@@ -162,12 +184,17 @@
     
     return cell;
 }
-
+- (void)viewWillDisappear:(BOOL)animated {
+    [self setHidesBottomBarWhenPushed:NO];
+    [super viewDidDisappear:animated];
+}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section==0){
         if(_islogin==NO){
         FastLoginViewController *regvc=[[FastLoginViewController alloc]init];
-            [self presentViewController:regvc animated:NO completion:nil];
+            self.hidesBottomBarWhenPushed = YES;
+//            [self presentViewController:regvc animated:NO completion:nil];
+            [self.navigationController pushViewController:regvc animated:YES];
         }
     
             

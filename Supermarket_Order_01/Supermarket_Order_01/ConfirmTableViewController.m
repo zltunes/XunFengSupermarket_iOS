@@ -177,9 +177,13 @@
     /*
      以下均为本地模拟，实际从上一界面获取
      */
-//    NSString* filePath = [[NSBundle mainBundle]pathForResource:@"购物袋" ofType:@"plist"];
+//    NSString* filePath = [[NSBundle mainBundle]pathForResource:@"personinfo" ofType:@"plist"];
 //    NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
-//    NSArray* goods = dict[@"goods"];
+    
+    
+    
+    
+    //    NSArray* goods = dict[@"goods"];
     
     if (indexPath.section == 0) {
         //收货地址及电话
@@ -297,9 +301,9 @@
      返回：
      ord_id
      */
-    NSNumber* adr_id = [NSNumber numberWithInt:10];//跳转到“我的地址”界面后进行选择的地址
+    NSNumber* adr_id = [NSNumber numberWithInt:11];//跳转到“我的地址”界面后进行选择的地址
     //问题！！
-    NSNumber* cou_id = [NSNumber numberWithInt:1];//我拥有的该超市的coupon，这个应该下一界面支付的时候再用
+    NSNumber* cou_id = [NSNumber numberWithInt:2];//我拥有的该超市的coupon，这个应该下一界面支付的时候再用
     remark = remarkCell.remarkField.text;
     NSNumber* sup_id = [NSNumber numberWithInt:self.sup_id];
 

@@ -12,6 +12,7 @@
 #import "OrderAppDelegate.h"
 #import "MJRefresh.h"
 #import "UIImageView+WebCache.h"
+#import "FastLoginViewController.h"
 
 @interface OrderTableViewController ()
 {
@@ -27,33 +28,54 @@
 @implementation OrderTableViewController
 
 - (void)viewDidLoad {
+        appDelegate = [UIApplication sharedApplication].delegate;//为了访问manager属性
+    if (!appDelegate.islogin) {
+//        UIButton* registerORloginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//        registerORloginBtn.frame = CGRectMake(kWindowWidth/4, kWindowHeight/6, kWindowWidth/2, 50);
+//        [registerORloginBtn setTitle:@"先去注册/登录!" forState:UIControlStateNormal];
+//        [registerORloginBtn addTarget:self action:@selector(toRegisterOrLogin) forControlEvents:UIControlEventTouchUpInside];
+//        [self.view addSubview:registerORloginBtn];
+        UILabel* label = [[UILabel alloc]init];
+        label.frame = CGRectMake(kWindowWidth/3, kWindowHeight/6, kWindowWidth/2, 50);
+        label.text = @"请先注册/登录!";
+        [self.view addSubview:label];
+    }
+    else{//已登录
+        self.table=[[UITableView alloc]initWithFrame:CGRectMake(0, 0,kWindowWidth, kWindowHeight)];
+        self.table.delegate=self;
+        self.table.dataSource=self;
+        [self.view addSubview:self.table];
 
-    self.table=[[UITableView alloc]initWithFrame:CGRectMake(0, 0,kWindowWidth, kWindowHeight)];
-    self.table.delegate=self;
-    self.table.dataSource=self;
 
     //mjrefresh下拉刷新
     self.table.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing)];
     [self.table.header beginRefreshing];
     //mjrefresh上拉加载
     self.table.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
-    [self.view addSubview:self.table];
+
     
     page_count = 1;
     ordersArray = [[NSMutableArray alloc]init];
-    appDelegate = [UIApplication sharedApplication].delegate;//为了访问manager属性
+
     //先获取page1订单，每个订单为一个dict，所有dict存在一个array中
     ordersURL = @"http://115.29.197.143:8999/v1.0/orders";
     [appDelegate.manager GET:ordersURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"获取订单详情成功!");
+        NSLog(@"获取所有订单成功!");
         //将服务器json数据转化成NSArray,赋值给orders属性
         ordersArray = responseObject;
         [self.table reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"获取订单信息有误: %@",error);
+        NSLog(@"获取所有订单有误: %@",error);
     }];
     
     }
+}
+-(void)toRegisterOrLogin
+{
+    FastLoginViewController *regvc=[[FastLoginViewController alloc]init];
+    [self presentViewController:regvc animated:NO completion:nil];
+}
+
 -(void)viewWillDisappear:(BOOL)animated
 {
     [self setHidesBottomBarWhenPushed:NO];
@@ -84,7 +106,7 @@
     [appDelegate.manager GET:order_nextPage_URL parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSArray* newarr = responseObject;
         if ([newarr count]==1) {
-            //意味着该页没有订单了
+            //意味着该页没有订单了，此处需要与后台商量，没有订单应该返回error!
             NSDictionary* dic = [newarr objectAtIndex:0];
             if ([[dic objectForKey:@"state"] isEqualToString:@"error"]) {
                 [self.table.footer noticeNoMoreData];

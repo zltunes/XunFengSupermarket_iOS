@@ -23,6 +23,7 @@
 //三个tab各自设置一个navigationController
 @property(strong,nonatomic) UINavigationController *naviController_order;//order导航栏控制器
 @property(strong,nonatomic) UINavigationController *naviController_sup;//sup导航栏控制器
+@property(strong,nonatomic) UINavigationController *naviController_vc3;//vc3导航栏控制器
 
 //三个rootViewController
 @property(strong,nonatomic) RootViewController* rootViewController;//超市首页
@@ -41,5 +42,9 @@
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 //access_token
+//存储access_token的plist文件
+@property bool islogin;
+@property(strong,nonatomic) NSString* filename;
+@property(strong,nonatomic) NSMutableDictionary* plistdic;
 @property(strong,nonatomic) NSString* access_token;
 @end
