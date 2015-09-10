@@ -112,7 +112,6 @@
 - (void)connectBackGround{
     NSString *url = [NSString stringWithFormat:@"%@%d",@"http://115.29.197.143:8999/v1.0/supermarket/",self.marId];
     [AFtools JSONDataWithUrl:url parameters:nil HttpHeader:nil success:^(id responseObject){
-        NSLog(@"%@",responseObject);
         self.dic = responseObject;
         [self reloadTextData];
            } fail:^{

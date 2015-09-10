@@ -10,9 +10,13 @@
 #import "AFNetworking/AFNetworking.h"
 #import "AFNetworking/AFHTTPRequestOperation.h"
 #import "AFNetworking/AFHTTPSessionManager.h"
+#import "OrderAppDelegate.h"
+#import "AddressViewController.h"
+
 @interface EditAddrViewController (){
     UINavigationBar *navbar;
     UINavigationItem*navitem;
+    OrderAppDelegate* appdelegate;
 }
 
 @end
@@ -20,6 +24,7 @@
 @implementation EditAddrViewController
 
 - (void)viewDidLoad {
+    appdelegate = [UIApplication sharedApplication].delegate;
     [super viewDidLoad];
     navbar=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
     navbar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
@@ -90,21 +95,25 @@
 }
 
 -(void)save{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
-    //申明返回的结果是json类型
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    //申明请求的数据是json类型
-    manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
-    [manager.requestSerializer setValue:@"4244b7ac-4fbb-11e5-82bd-00163e021195"forHTTPHeaderField:@"Access_token"];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
+//    //申明返回的结果是json类型
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//    //申明请求的数据是json类型
+//    manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
+//    [manager.requestSerializer setValue:@"4244b7ac-4fbb-11e5-82bd-00163e021195"forHTTPHeaderField:@"Access_token"];
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
     NSDictionary *parameters = @{@"phone_num":self.phonefield.text,@"address":self.addressfield.text};
-    // 网络访问是异步的,回调是主线程的,因此程序员不用管在主线程更新UI的事情
     NSString *url=[@"http://115.29.197.143:8999/v1.0/user/address/" stringByAppendingString:self.addrid];
-    [manager PUT:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
+    [appdelegate.manager PUT:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        AddressViewController* addressViewController = [[AddressViewController alloc]init];
+        [[addressViewController.addressArr objectAtIndex:self.editAddress_arrindex] setObject:self.phonefield.text forKey:@"address"];
+        [[addressViewController.addressArr objectAtIndex:self.editAddress_arrindex] setObject:self.phonefield.text forKey:@"phone_num"];
+        [addressViewController.tableview reloadData];
+        [self presentViewController:addressViewController animated:NO completion:nil];
+//        [self dismissViewControllerAnimated:NO completion:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
+        NSLog(@"修改地址失败!%@", error);
     }];
     
 

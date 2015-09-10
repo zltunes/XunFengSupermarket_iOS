@@ -17,4 +17,5 @@
 @property(nonatomic,strong)UIButton*malebtn;
 @property(nonatomic,strong)UIButton *backbtn;
 @property(nonatomic,strong)NSString *addrid;
+@property NSInteger editAddress_arrindex;
 @end

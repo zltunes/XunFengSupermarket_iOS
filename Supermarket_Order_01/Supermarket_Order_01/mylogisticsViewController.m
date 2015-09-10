@@ -11,8 +11,11 @@
 #import "AFNetworking/AFNetworking.h"
 #import "AFNetworking/AFHTTPRequestOperation.h"
 #import "AFNetworking/AFHTTPSessionManager.h"
+#import "OrderAppDelegate.h"
 @interface mylogisticsViewController ()
-
+{
+    OrderAppDelegate* appdelegate;
+}
 @end
 
 @implementation mylogisticsViewController
@@ -20,7 +23,7 @@
 @synthesize navbar;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    appdelegate = [UIApplication sharedApplication].delegate;
     navbar=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
     navbar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
     
@@ -58,18 +61,18 @@
     [self.deliveredbtn setTitle:@"待收货" forState:UIControlStateNormal];
     [self.deliveredbtn setBackgroundColor:[UIColor grayColor]];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
-    //申明返回的结果是json类型
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    //申明请求的数据是json类型
-    manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
-    
-    [manager.requestSerializer setValue:@"b07f18c8-3f14-11e5-82bd-00163e021195"forHTTPHeaderField:@"Access_token"];
-    //[manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"]
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
-    // 网络访问是异步的,回调是主线程的,因此程序员不用管在主线程更新UI的事情
-    [manager GET:@"http://115.29.197.143:8999/v1.0/user/addresses" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
+//    //申明返回的结果是json类型
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//    //申明请求的数据是json类型
+//    manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
+//    
+//    [manager.requestSerializer setValue:@"b07f18c8-3f14-11e5-82bd-00163e021195"forHTTPHeaderField:@"Access_token"];
+//    //[manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"]
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
+//    // 网络访问是异步的,回调是主线程的,因此程序员不用管在主线程更新UI的事情
+    [appdelegate.manager GET:@"http://115.29.197.143:8999/v1.0/user/addresses" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
         dispatch_async(dispatch_get_main_queue(), ^{
             self.datasource=responseObject;

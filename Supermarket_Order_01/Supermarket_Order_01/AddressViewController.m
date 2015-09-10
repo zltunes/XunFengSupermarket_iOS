@@ -14,12 +14,13 @@
 #import "AFNetworking/AFHTTPRequestOperation.h"
 #import "AFNetworking/AFHTTPSessionManager.h"
 #import "ConfirmTableViewController.h"
+#import "OrderAppDelegate.h"
 
 @interface AddressViewController (){
     int deleterow;
      NSArray *deletearray;
-    NSMutableArray* addressArr;
     NSIndexPath* deleteIndexPath;
+    OrderAppDelegate* appdelegate;
 }
 
 @end
@@ -29,13 +30,14 @@
 @synthesize navitem;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    appdelegate = [UIApplication sharedApplication].delegate;
     deleteIndexPath = [[NSIndexPath alloc]init];
     navbar=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
     navbar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
     
     UIImageView *view1=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
 //    self.datasource=[[NSMutableArray alloc]init];
-    addressArr = [[NSMutableArray alloc]init];
+    _addressArr = [[NSMutableArray alloc]init];
     [view1 setBackgroundColor:[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0]];
     [self.navbar addSubview:view1];
     //self.navigationController.navigationBar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
@@ -69,20 +71,19 @@
     [self.addbtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
 
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
-    //申明返回的结果是json类型
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    //申明请求的数据是json类型
-    manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
+//    //申明返回的结果是json类型
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//    //申明请求的数据是json类型
+//    manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
+//    
+//    [manager.requestSerializer setValue:@"b07f18c8-3f14-11e5-82bd-00163e021195"forHTTPHeaderField:@"Access_token"];
+//    //[manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"]
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
     
-    [manager.requestSerializer setValue:@"b07f18c8-3f14-11e5-82bd-00163e021195"forHTTPHeaderField:@"Access_token"];
-    //[manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"]
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
-    
-    [manager GET:@"http://115.29.197.143:8999/v1.0/user/addresses" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
-            addressArr=[responseObject mutableCopy];
+    [appdelegate.manager GET:@"http://115.29.197.143:8999/v1.0/user/addresses" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            self.addressArr=[responseObject mutableCopy];
             [self.tableview reloadData];
     }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
@@ -98,7 +99,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return [addressArr count];
+    return [self.addressArr count];
 }
 
 
@@ -123,17 +124,17 @@
     if(cell.addresslabel==nil)
         [cell setupcell];
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-    [cell.addresslabel setText:[addressArr[indexPath.section] objectForKey:@"address"]];
-    [cell.phonelabel setText:[addressArr[indexPath.section] objectForKey:@"phone_num"]];
+    [cell.addresslabel setText:[self.addressArr[indexPath.section] objectForKey:@"address"]];
+    [cell.phonelabel setText:[self.addressArr[indexPath.section] objectForKey:@"phone_num"]];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     EditAddrViewController *editvc=[[EditAddrViewController alloc]init];
-    editvc.addrid=[NSString stringWithFormat:@"%@", [[addressArr objectAtIndex:indexPath.row]objectForKey:@"id"]];
+    editvc.addrid=[NSString stringWithFormat:@"%@", [[self.addressArr objectAtIndex:indexPath.section]objectForKey:@"id"]];
+    editvc.editAddress_arrindex = indexPath.section;
     AddressTableViewCell* editcell = [self.tableview cellForRowAtIndexPath:indexPath];
     editvc.addstr = editcell.addresslabel.text;
-    NSLog(@"%@",editcell.addresslabel.text);
     editvc.phonestr = editcell.phonelabel.text;
     [self presentViewController:editvc animated:NO completion:nil];
     [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
@@ -142,7 +143,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (self.canBeSelected) {
-        NSMutableArray* selectedAddressDict = addressArr[indexPath.section];
+        NSMutableArray* selectedAddressDict = self.addressArr[indexPath.section];
         ConfirmTableViewController* confirmController = [[self.navigationController viewControllers] objectAtIndex:[self.navigationController.viewControllers count] -2];
         confirmController.defaultAddressDict = selectedAddressDict;
         [confirmController.table reloadData];
@@ -153,10 +154,6 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (editingStyle==UITableViewCellEditingStyleDelete){
-        NSLog(@"删除之前:indexpath.section:%ld",(long)indexPath.section);
-        NSLog(@"删除之前:address个数:%lu",(unsigned long)[addressArr count]);
-     
-
          UIAlertView *deletealert = [[UIAlertView alloc] initWithTitle:nil
                                                 message:@"确认删除收货地址？"
                                                delegate:self
@@ -180,20 +177,20 @@
 
     if (buttonIndex==1){
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
-        //申明返回的结果是json类型
-        manager.responseSerializer = [AFJSONResponseSerializer serializer];
-        //申明请求的数据是json类型
-        manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
-        [manager.requestSerializer setValue:@"4244b7ac-4fbb-11e5-82bd-00163e021195"forHTTPHeaderField:@"access_token"];
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//        [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
+//        //申明返回的结果是json类型
+//        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//        //申明请求的数据是json类型
+//        manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
+//        [manager.requestSerializer setValue:@"4244b7ac-4fbb-11e5-82bd-00163e021195"forHTTPHeaderField:@"access_token"];
         //[manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"]
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
+//        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
 
-        NSString *url=[@"http://115.29.197.143:8999/v1.0/user/address/" stringByAppendingString:[NSString stringWithFormat:@"%@",[[addressArr objectAtIndex:deleteIndexPath.section] objectForKey:@"id"]]];
+        NSString *url=[@"http://115.29.197.143:8999/v1.0/user/address/" stringByAppendingString:[NSString stringWithFormat:@"%@",[[self.addressArr objectAtIndex:deleteIndexPath.section] objectForKey:@"id"]]];
         
-        [manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [addressArr removeObjectAtIndex:deleteIndexPath.section];
+        [appdelegate.manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [self.addressArr removeObjectAtIndex:deleteIndexPath.section];
             [self.tableview deleteSections:[NSIndexSet indexSetWithIndex:deleteIndexPath.section] withRowAnimation:UITableViewRowAnimationLeft];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"%@", error);

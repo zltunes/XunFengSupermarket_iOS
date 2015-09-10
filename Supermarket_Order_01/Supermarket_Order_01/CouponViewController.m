@@ -16,6 +16,7 @@
 @interface CouponViewController (){
     UINavigationBar *navbar;
     UINavigationItem*navitem;
+    OrderAppDelegate* appdelegate;
 }
 
 @end
@@ -23,6 +24,7 @@
 @implementation CouponViewController
 
 - (void)viewDidLoad {
+    appdelegate = [UIApplication sharedApplication].delegate;
     [super viewDidLoad];
     navbar=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
     navbar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
@@ -51,22 +53,19 @@
     self.tableview.delegate=self;
     self.tableview.dataSource=self;
     // NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:@"Access_token",@"b07f18c8-3f14-11e5-82bd-00163e021195",nil];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
-    //申明返回的结果是json类型
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    //申明请求的数据是json类型
-    manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
-
-        [manager.requestSerializer setValue:@"b07f18c8-3f14-11e5-82bd-00163e021195"forHTTPHeaderField:@"Access_token"];
-    //[manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"]
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
-    // 网络访问是异步的,回调是主线程的,因此程序员不用管在主线程更新UI的事情
-    [manager GET:@"http://115.29.197.143:8999/v1.0/coupons" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", responseObject);
-        // 提问:NSURLConnection异步方法回调,是在子线程
-        // 得到回调之后,通常更新UI,是在主线程
-        NSLog(@"%@", [NSThread currentThread]);
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
+//    //申明返回的结果是json类型
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//    //申明请求的数据是json类型
+//    manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
+//
+//        [manager.requestSerializer setValue:@"b07f18c8-3f14-11e5-82bd-00163e021195"forHTTPHeaderField:@"Access_token"];
+//    //[manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"]
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
+//    // 网络访问是异步的,回调是主线程的,因此程序员不用管在主线程更新UI的事情
+    [appdelegate.manager GET:@"http://115.29.197.143:8999/v1.0/coupons" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"获取购物券成功!");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
     }];
