@@ -15,4 +15,5 @@
 @property(nonatomic,strong)UIButton *backbtn;
 @property(nonatomic,strong)UIButton *addbtn;
 @property(nonatomic,strong)NSMutableArray *datasource;
+@property int canBeSelected;
 @end

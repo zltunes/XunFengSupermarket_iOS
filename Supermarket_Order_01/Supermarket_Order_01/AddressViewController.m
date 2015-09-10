@@ -13,6 +13,7 @@
 #import "AFNetworking/AFNetworking.h"
 #import "AFNetworking/AFHTTPRequestOperation.h"
 #import "AFNetworking/AFHTTPSessionManager.h"
+#import "ConfirmTableViewController.h"
 
 @interface AddressViewController (){
     int deleterow;
@@ -60,10 +61,13 @@
     self.tableview.dataSource=self;
     [self.view addSubview:self.tableview];
     self.view.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
-    self.addbtn=[[UIButton alloc]initWithFrame:CGRectMake(kWindowWidth-50, 225, 25, 25)];
+//    self.addbtn=[[UIButton alloc]initWithFrame:CGRectMake(kWindowWidth-50, 225, 25, 25)];
+    self.addbtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.addbtn.frame = CGRectMake(25, kWindowHeight-100, kWindowWidth-50,50);
+    [self.addbtn setTitle:@"添加新地址" forState:UIControlStateNormal];
     [self.view addSubview:self.addbtn];
     [self.addbtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
-    [self.addbtn setBackgroundColor:[UIColor blueColor]];
+
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
@@ -118,15 +122,32 @@
     AddressTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];
     if(cell.addresslabel==nil)
         [cell setupcell];
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     [cell.addresslabel setText:[addressArr[indexPath.section] objectForKey:@"address"]];
     [cell.phonelabel setText:[addressArr[indexPath.section] objectForKey:@"phone_num"]];
     return cell;
 }
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
     EditAddrViewController *editvc=[[EditAddrViewController alloc]init];
     editvc.addrid=[NSString stringWithFormat:@"%@", [[addressArr objectAtIndex:indexPath.row]objectForKey:@"id"]];
+    AddressTableViewCell* editcell = [self.tableview cellForRowAtIndexPath:indexPath];
+    editvc.addstr = editcell.addresslabel.text;
+    NSLog(@"%@",editcell.addresslabel.text);
+    editvc.phonestr = editcell.phonelabel.text;
     [self presentViewController:editvc animated:NO completion:nil];
+    [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (self.canBeSelected) {
+        NSMutableArray* selectedAddressDict = addressArr[indexPath.section];
+        ConfirmTableViewController* confirmController = [[self.navigationController viewControllers] objectAtIndex:[self.navigationController.viewControllers count] -2];
+        confirmController.defaultAddressDict = selectedAddressDict;
+        [confirmController.table reloadData];
+        [self.navigationController popViewControllerAnimated:YES];
+}
     [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -165,11 +186,10 @@
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         //申明请求的数据是json类型
         manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
-        [manager.requestSerializer setValue:@"4244b7ac-4fbb-11e5-82bd-00163e021195"forHTTPHeaderField:@"Access_token"];
+        [manager.requestSerializer setValue:@"4244b7ac-4fbb-11e5-82bd-00163e021195"forHTTPHeaderField:@"access_token"];
         //[manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"]
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
-        //NSDictionary *parameters = @{@"phone_num":self.phonefield.text,@"address":self.addressfield.text};
-        // 网络访问是异步的,回调是主线程的,因此程序员不用管在主线程更新UI的事情
+
         NSString *url=[@"http://115.29.197.143:8999/v1.0/user/address/" stringByAppendingString:[NSString stringWithFormat:@"%@",[[addressArr objectAtIndex:deleteIndexPath.section] objectForKey:@"id"]]];
         
         [manager DELETE:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {

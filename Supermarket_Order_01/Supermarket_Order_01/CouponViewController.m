@@ -11,6 +11,8 @@
 #import "AFNetworking/AFNetworking.h"
 #import "AFNetworking/AFHTTPRequestOperation.h"
 #import "AFNetworking/AFHTTPSessionManager.h"
+#import "OrderAppDelegate.h"
+
 @interface CouponViewController (){
     UINavigationBar *navbar;
     UINavigationItem*navitem;

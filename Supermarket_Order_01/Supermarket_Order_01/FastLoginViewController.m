@@ -13,6 +13,7 @@
 #import "myViewController.h"
 #import "AFNetworking/AFHTTPSessionManager.h"
 #import "OrderAppDelegate.h"
+
 @interface FastLoginViewController (){
     UINavigationBar *navbar;
     UINavigationItem*navitem;
@@ -33,7 +34,7 @@
 @implementation FastLoginViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    
     delegate = [UIApplication sharedApplication].delegate;
     navbar=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
     navbar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
@@ -128,6 +129,7 @@
     
     flag=0;
     // Do any additional setup after loading the view.
+    [super viewDidLoad];
 }
 
 -(void)register{
@@ -200,13 +202,19 @@
     [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary* token_dict = responseObject;
         //plistdic存三个key:tel,islogin,access_token
+        //更新plistdic
         [delegate.plistdic setObject:self.phonefield.text forKey:@"tel"];
         [delegate.plistdic setObject:@"1" forKey:@"islogin"];
         [delegate.plistdic setObject:[NSString stringWithFormat:@"%@",[token_dict objectForKey:@"access_token"]] forKey:@"access_token"];
         [delegate.plistdic writeToFile:delegate.filename atomically:YES];
+        //更新delegate登录相关
+        delegate.islogin = YES;
+        delegate.access_token = [delegate.plistdic objectForKey:@"access_token"];
+        [delegate.manager.requestSerializer setValue:delegate.access_token forHTTPHeaderField:@"access_token"];
+        [delegate.viewController.toregistOrloginlabel setHidden:YES];
+        //重新加载orderview
+        [delegate.viewController initOrderView];
         myViewController *myvc=[[myViewController alloc]init];
-        
-//        [self presentViewController:myvc animated:YES completion:nil];
         [self.navigationController pushViewController:myvc animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

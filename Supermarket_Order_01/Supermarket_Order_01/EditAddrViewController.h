@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface EditAddrViewController : UIViewController
+@property(nonatomic,strong)NSString* addstr;
+@property(nonatomic,strong)NSString* phonestr;
 @property(nonatomic,strong)UITextField *addressfield;
 @property(nonatomic,strong)UITextField* phonefield;
 @property(nonatomic,strong)UIButton*femalebtn;

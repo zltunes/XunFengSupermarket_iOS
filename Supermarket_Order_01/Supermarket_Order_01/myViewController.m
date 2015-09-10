@@ -103,10 +103,17 @@
 
 -(void)logout{
     NSLog(@"退出！");
+    //更新delegate.plistdic
     [delegate.plistdic setObject:@"0" forKey:@"islogin"];
     [delegate.plistdic setObject:@"" forKey:@"access_token"];
     [delegate.plistdic setObject:@"" forKey:@"tel"];
     [delegate.plistdic writeToFile:delegate.filename atomically:NO];
+    //更新delegate
+    delegate.islogin = NO;
+    delegate.access_token = @"";
+    [delegate.manager.requestSerializer setValue:nil forHTTPHeaderField:@"access_token"];
+    //重新加载viewcontroller
+    [delegate.viewController initOrderView];
     self.islogin = NO;
     [logoutbtn setHidden:YES];
     [label1 setHidden:YES];

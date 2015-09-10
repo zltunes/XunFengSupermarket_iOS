@@ -20,6 +20,7 @@
 @property(strong,nonatomic)UIView* bottomView;
 @property(strong,nonatomic)UILabel *goodsCount;
 @property(strong,nonatomic)UILabel *totalPricelabel;
+@property(strong,nonatomic)NSMutableDictionary* defaultAddressDict;
 @property int order_id;
 
 @property float topayPrice;//向支付界面传值（包括配送费）

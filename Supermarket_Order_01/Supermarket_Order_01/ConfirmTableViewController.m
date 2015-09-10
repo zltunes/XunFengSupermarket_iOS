@@ -13,10 +13,12 @@
 #import "OrderPayViewController.h"
 #import "OrderAppDelegate.h"
 #import "purchaseBagCell.h"
+#import "AddressViewController.h"
 
 @interface ConfirmTableViewController ()
 {
     OrderAppDelegate *delegate;
+    NSString* defauleAddressURL;
     NSString* orderCreateURL;
     NSString* start_timeURL;
     NSString* remark;//备注
@@ -24,6 +26,7 @@
     NSMutableArray* goods;//后台传送
     NSMutableArray* purchaseBag;//界面购物袋
     int start_time_id;//起送时间
+    int address_id;
     int goodcount;
     float packPrice;
     float sendPrice;
@@ -38,6 +41,7 @@
     sendPrice = 0.5;
     packPrice = 0.0;
     goodcount = 0;
+    self.defaultAddressDict = [[NSMutableDictionary alloc]init];
     self.topayPrice = packPrice + sendPrice +self.totalGoodsPrice;
     remark = @"我的备注";
     self.start_timeStringArr = [[NSMutableArray alloc]init];
@@ -48,6 +52,7 @@
     NSString* timeurl2 = @"/times";
     start_timeURL = [timeurl1 stringByAppendingString:timeurl2];
     orderCreateURL = @"http://115.29.197.143:8999/v1.0/order";
+    defauleAddressURL = @"http://115.29.197.143:8999/v1.0/user/address";
     
     purchaseBag = [[NSMutableArray alloc]init];
     goods = [[NSMutableArray alloc]init];
@@ -88,6 +93,14 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"获取start_time失败:%@",error);
     }];
+    
+    [delegate.manager GET:defauleAddressURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.defaultAddressDict = responseObject;
+        [self.table reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"获取默认地址错误!%@",error);
+    }];
+    
     for (int i=0; i<[self.goodsArr count]; i++) {
         NSDictionary* dict = [self.goodsArr objectAtIndex:i];
         NSDictionary* dict1 = @{@"name":[dict objectForKey:@"name"],@"quantity":[dict objectForKey:@"quantity"],@"price":[dict objectForKey:@"price"]};
@@ -171,26 +184,14 @@
     static NSString* cell4 = @"cell4";
     UITableViewCell *cell;
     NSInteger rowNo = indexPath.row;
-    //包装费\配送费
 
-    //plist模拟商品
-    /*
-     以下均为本地模拟，实际从上一界面获取
-     */
-//    NSString* filePath = [[NSBundle mainBundle]pathForResource:@"personinfo" ofType:@"plist"];
-//    NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:filePath];
-    
-    
-    
-    
-    //    NSArray* goods = dict[@"goods"];
-    
     if (indexPath.section == 0) {
         //收货地址及电话
+        AddressInfoCell* cell = [[AddressInfoCell alloc]init];
         cell = [tableView dequeueReusableCellWithIdentifier:cell0];
-        if (!cell) {
-            cell = [[AddressInfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell0];
-        }
+        cell = [[AddressInfoCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cell0];
+        cell.addressLabel.text = self.defaultAddressDict[@"address"];
+        cell.phoneNoLabel.text = self.defaultAddressDict[@"phone_num"];
         return  cell;
     }
     else if (indexPath.section == 1){
@@ -265,11 +266,17 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.table deselectRowAtIndexPath:indexPath animated:YES];
+    //section0选择地址
+    if (!indexPath.section) {
+        AddressViewController* addressViewController = [[AddressViewController alloc]init];
+        addressViewController.canBeSelected = YES;
+        [self.navigationController pushViewController:addressViewController animated:YES];
+    }
     //section1点击时弹出ZHPicker
     if (indexPath.section == 1) {
         _indexPath=indexPath;
         [_pickview remove];
-        UITableViewCell * cell=[self.table cellForRowAtIndexPath:indexPath];//获取当前cell,为其制定picker
+        UITableViewCell * cell=[self.table cellForRowAtIndexPath:indexPath];
         _pickview=[[ZHPickView alloc] initPickviewWithPlistName:cell.textLabel.text isHaveNavControler:NO];
         _pickview.delegate=self;
         [_pickview show];
@@ -301,7 +308,8 @@
      返回：
      ord_id
      */
-    NSNumber* adr_id = [NSNumber numberWithInt:11];//跳转到“我的地址”界面后进行选择的地址
+    address_id = [self.defaultAddressDict[@"id"] intValue];
+    NSNumber* adr_id = [NSNumber numberWithInt:address_id];//跳转到“我的地址”界面后进行选择的地址
     //问题！！
     NSNumber* cou_id = [NSNumber numberWithInt:2];//我拥有的该超市的coupon，这个应该下一界面支付的时候再用
     remark = remarkCell.remarkField.text;

@@ -11,6 +11,7 @@
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKUI/ShareSDKUI.h>
 #import "OrderTableViewController.h"
+#import "DetailViewController.h"
 
 @interface detailedOrderStatusTableViewController ()
 {
@@ -410,6 +411,19 @@ OrderEvaluate *evalueatController = [[OrderEvaluate alloc]init];
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section==1) {
+        DetailViewController* detail_sup_viewController = [[DetailViewController alloc]init];
+        //向超市界面传送数据
+        detail_sup_viewController.marId = [dict[@"sup_id"] intValue];
+        detail_sup_viewController.barName =dict[@"name"];
+        NSString *url = [NSString stringWithFormat:@"%@%@%@",@"http://115.29.197.143:8999/v1.0/supermarket/",dict[@"sup_id"],@"/goods"];
+        detail_sup_viewController.url = url;
+        //设置搜索url
+        url = [NSString stringWithFormat:@"%@%@%@",@"http://115.29.197.143:8999/v1.0/supermarket/",dict[@"sup_id"],@"/good"];
+        detail_sup_viewController.urlSearch = url;
+        [self setHidesBottomBarWhenPushed:YES];
+        [self.navigationController pushViewController:detail_sup_viewController animated:YES];
+    }
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }

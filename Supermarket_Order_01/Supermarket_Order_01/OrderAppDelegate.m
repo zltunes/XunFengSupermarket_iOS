@@ -123,7 +123,7 @@
         NSMutableArray *keys=[[NSMutableArray alloc]initWithCapacity:10];
         
         [values addObject:@"0"];
-        [values addObject:@"0"];
+        [values addObject:@""];
         [values addObject:@""];
         
         [keys addObject:@"islogin"];
@@ -163,6 +163,15 @@
     [self.window makeKeyAndVisible];
     return YES;
 }
+
+//- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UINavigationController *)naviController
+//{
+//    //点击“订单”按钮刷新该界面
+//    if ([naviController.visibleViewController isKindOfClass:[self.viewController class]]) {
+//        [self.viewController initOrderView];
+//    }
+//}
+
 -(UIImage *)reSizeImage:(UIImage *)image toSize:(CGSize)reSize
 {
     UIGraphicsBeginImageContext(CGSizeMake(reSize.width, reSize.height));

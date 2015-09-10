@@ -98,8 +98,6 @@
     DetailViewController *detailViewController = [[DetailViewController alloc]init];
     detailViewController.barName =[_result2[indexPath.row]objectForKey:@"name"];
     //获得超市id
-    
-   
     NSString *url = [NSString stringWithFormat:@"%@%@%@",@"http://115.29.197.143:8999/v1.0/supermarket/",self.result2[indexPath.row][@"id"],@"/goods"];
     //设置viewcontroaller的超市id和url
     detailViewController.marId = [self.result2[indexPath.row][@"id"]intValue];
@@ -117,15 +115,12 @@
     NSDictionary *parameters3 = @{@"longitude":@"118.826079",@"latitude":@"31.893348"};
     
     [AFtools JSONDataWithUrl:url2 parameters:parameters3 HttpHeader:nil success:^(id responseObject){
-        NSLog(@"ok");
         self.result2 = responseObject;
         self.marketCount = [_result2 count];
-        NSLog(@"%@",responseObject);
         [_marketTableView reloadData];
         _marketTableView.hidden = NO;
-        
     } fail:^{
-        NSLog(@"error");
+        NSLog(@"附近超市获取失败!");
     }];
 }
 /*

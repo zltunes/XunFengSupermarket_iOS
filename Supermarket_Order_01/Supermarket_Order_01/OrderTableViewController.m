@@ -29,47 +29,42 @@
 
 - (void)viewDidLoad {
         appDelegate = [UIApplication sharedApplication].delegate;//为了访问manager属性
+    [self initOrderView];
+    }
+-(void)initOrderView
+{
     if (!appDelegate.islogin) {
-//        UIButton* registerORloginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//        registerORloginBtn.frame = CGRectMake(kWindowWidth/4, kWindowHeight/6, kWindowWidth/2, 50);
-//        [registerORloginBtn setTitle:@"先去注册/登录!" forState:UIControlStateNormal];
-//        [registerORloginBtn addTarget:self action:@selector(toRegisterOrLogin) forControlEvents:UIControlEventTouchUpInside];
-//        [self.view addSubview:registerORloginBtn];
-        UILabel* label = [[UILabel alloc]init];
-        label.frame = CGRectMake(kWindowWidth/3, kWindowHeight/6, kWindowWidth/2, 50);
-        label.text = @"请先注册/登录!";
-        [self.view addSubview:label];
+        //        UIButton* registerORloginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        //        registerORloginBtn.frame = CGRectMake(kWindowWidth/4, kWindowHeight/6, kWindowWidth/2, 50);
+        //        [registerORloginBtn setTitle:@"先去注册/登录!" forState:UIControlStateNormal];
+        //        [registerORloginBtn addTarget:self action:@selector(toRegisterOrLogin) forControlEvents:UIControlEventTouchUpInside];
+        //        [self.view addSubview:registerORloginBtn];
+        self.toregistOrloginlabel = [[UILabel alloc]init];
+        self.toregistOrloginlabel.frame = CGRectMake(kWindowWidth/3, kWindowHeight/6, kWindowWidth/2, 50);
+        self.toregistOrloginlabel.text = @"请先注册/登录!";
+        [self.table setHidden:YES];
+        [self.view addSubview:self.toregistOrloginlabel];
     }
     else{//已登录
-        self.table=[[UITableView alloc]initWithFrame:CGRectMake(0, 0,kWindowWidth, kWindowHeight)];
+        self.table=[[UITableView alloc]initWithFrame:CGRectMake(0,64,kWindowWidth, kWindowHeight-70)];
         self.table.delegate=self;
         self.table.dataSource=self;
         [self.view addSubview:self.table];
+        
+        
+        //mjrefresh下拉刷新
+        self.table.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing)];
+        [self.table.header beginRefreshing];
+        //mjrefresh上拉加载
+        self.table.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
+        
+        page_count = 1;
+        ordersArray = [[NSMutableArray alloc]init];
 
-
-    //mjrefresh下拉刷新
-    self.table.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing)];
-    [self.table.header beginRefreshing];
-    //mjrefresh上拉加载
-    self.table.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
-
-    
-    page_count = 1;
-    ordersArray = [[NSMutableArray alloc]init];
-
-    //先获取page1订单，每个订单为一个dict，所有dict存在一个array中
-    ordersURL = @"http://115.29.197.143:8999/v1.0/orders";
-    [appDelegate.manager GET:ordersURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"获取所有订单成功!");
-        //将服务器json数据转化成NSArray,赋值给orders属性
-        ordersArray = responseObject;
-        [self.table reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"获取所有订单有误: %@",error);
-    }];
-    
     }
+
 }
+
 -(void)toRegisterOrLogin
 {
     FastLoginViewController *regvc=[[FastLoginViewController alloc]init];
@@ -90,9 +85,9 @@
         NSLog(@"获取所有订单成功!");
         //将服务器json数据转化成NSArray,赋值给orders属性
         ordersArray = responseObject;
-        [self.table reloadData];
         page_count = 1;
         [self.table.header endRefreshing];
+        [self.table reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"获取所有订单失败: %@",error);
     }];
