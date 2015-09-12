@@ -370,11 +370,6 @@
     _bigDetail.hidden = YES;
     _backView.hidden = YES;
 }
-
-
-
-
-
 - (void)detailLeftBtnSelect:(id)sender{
     int temp = [_bigDetail.num.text intValue];
     if(temp == 1){

@@ -9,7 +9,7 @@
 #import "OrderPayViewController.h"
 #import "Header.h"
 #import "OrderAppDelegate.h"
-#import "PraiseView.h"
+
 #import "detailedOrderStatusTableViewController.h"
 
 @interface OrderPayViewController ()
@@ -216,7 +216,7 @@
             [delegate.manager GET:couponsURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"获取购物券成功!购物券张数:%lu",(unsigned long)[responseObject count]);
                 couponsArray = [[NSArray alloc]initWithArray:responseObject];
-                ZSYPopoverListView *listView = [[ZSYPopoverListView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+                ZSYPopoverListView *listView = [[ZSYPopoverListView alloc] initWithFrame:CGRectMake(0, 0, 300, 180)];
                 listView.titleName.text = @"选择优惠券";
                 listView.delegate = self;
                 listView.datasource = self;
@@ -254,15 +254,13 @@
 {
     static NSString *identifier = @"identifier";
     UITableViewCell *cell = [tableView dequeueReusablePopoverCellWithIdentifier:identifier];
-    if (nil == cell)
+    if (!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
     }
     cell.accessoryType = UITableViewCellAccessoryNone;
     for (int i = 0; i<[couponsArray count]; i++) {
-        NSLog(@"%d",i);
         NSDictionary* dic = [couponsArray objectAtIndex:i];
-         NSLog(@"%@",[dic objectForKey:@"price"]);
         cell.textLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]];
         //先要判断购物券state，此处暂时不知道state是怎么表示的
         cell.detailTextLabel.text = [NSString stringWithFormat:@"有效期至%@",[dic objectForKey:@"timelimit"]];
@@ -318,4 +316,5 @@
         [warning show];
     }
 }
+
 @end

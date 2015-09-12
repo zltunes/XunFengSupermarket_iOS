@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ZSYPopoverListView.h"//优惠券
+#import "PraiseView.h"
 
 @interface OrderPayViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ZSYPopoverListDatasource, ZSYPopoverListDelegate,UIAlertViewDelegate>
 @property(strong,nonatomic) UITableView* table;

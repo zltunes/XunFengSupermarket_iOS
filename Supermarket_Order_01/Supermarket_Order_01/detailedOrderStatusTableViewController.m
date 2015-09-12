@@ -12,6 +12,8 @@
 #import <ShareSDKUI/ShareSDKUI.h>
 #import "OrderTableViewController.h"
 #import "DetailViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "math.h"
 
 @interface detailedOrderStatusTableViewController ()
 {
@@ -22,6 +24,9 @@ NSString* orderDetailURL;
     NSDictionary* dict;
     NSArray* goodsArray;
 }
+//抽奖背景界面及抽奖界面
+
+//@property(nonatomic) UIView* backView;
 @end
 /*
  OrderStatus:
@@ -65,20 +70,17 @@ NSString* orderDetailURL;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"获取订单信息有误: %@",error);
     }];
-//    self.OrderStatus = @"等待超市接单";
-//    self.OrderStatus = @"配送中";
-//    self.OrderStatus = @"已送达";
-//    self.OrderStatus = @"已取消";
-//    self.OrderStatus = @"订单完成";
-    UIImage* shareimg = [UIImage imageNamed:@"share_icon.jpeg"];
-    UIImage* callimg = [UIImage imageNamed:@"call_icon.jpeg"];
+    UIImage* shareimg = [UIImage imageNamed:@"share_icon.png"];
+    UIImage* callimg = [UIImage imageNamed:@"call_icon.png"];
+    shareimg = [self reSizeImage:shareimg toSize:CGSizeMake(33, 33)];
+    callimg = [self reSizeImage:callimg toSize:CGSizeMake(33, 33)];
     UIImageView* shareimgview = [[UIImageView alloc]initWithImage:shareimg];
     UIImageView* callimgview = [[UIImageView alloc]initWithImage:callimg];
     //创建手势（单击）
     shareimgview.userInteractionEnabled = YES;
     callimgview.userInteractionEnabled = YES;
     UITapGestureRecognizer* shareGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(share:)];
-    UITapGestureRecognizer* callGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(call:)];
+    UITapGestureRecognizer* callGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chou)];
     [shareimgview addGestureRecognizer:shareGesture];
     [callimgview addGestureRecognizer:callGesture];
     self.shareBtn = [[UIBarButtonItem alloc]initWithCustomView:shareimgview];
@@ -90,10 +92,37 @@ NSString* orderDetailURL;
     customBackBatButton.tintColor = [UIColor blueColor];
     self.navigationItem.leftBarButtonItem = customBackBatButton;
     
+//    //抽奖背景界面
+//    UIView *backView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen]applicationFrame]];
+//    backView.backgroundColor = [UIColor blackColor];
+//    backView.alpha = 0.4;
+//    backView.hidden = YES;
+//    _backView = backView;
+//    [self.view addSubview:_backView];
+//    
+//    //抽奖界面
+//    PraiseView* praiseView = [[PraiseView alloc]initWithFrame:CGRectMake(0.0, 0.0, 240.0, 240.0)];
+//    praiseView.hidden = YES;
+//    praiseView.delegate = self;
+//    _praiseView = praiseView;
+//    [self.view addSubview:_praiseView];
+    
     [super viewDidLoad];
     [self hideExcessLine:self.tableView];
 
 }
+-(void)chou
+{
+//    [self praiseViewinit];
+//    CGFloat xWidth = self.view.bounds.size.width - 40.0f;
+//    CGFloat yHeight = 172.0f;
+//    CGFloat yOffset = (self.view.bounds.size.height - yHeight)/2.0f;
+    self.praiseView = [[PraiseView alloc] initWithFrame:CGRectMake(0.0, 0.0, 240.0, 240.0)];
+    self.praiseView.delegate = self;
+    self.praiseView.order_id = appDelegate.orderID;
+    [self.praiseView show];
+}
+
 -(void)returnToOrderTableView:(id)sender
 {
     [self.navigationController popToRootViewControllerAnimated:YES];
@@ -138,6 +167,14 @@ NSString* orderDetailURL;
                            break;
                    }
                }];
+}
+-(UIImage *)reSizeImage:(UIImage *)image toSize:(CGSize)reSize
+{
+    UIGraphicsBeginImageContext(CGSizeMake(reSize.width, reSize.height));
+    [image drawInRect:CGRectMake(0, 0, reSize.width, reSize.height)];
+    UIImage *reSizeImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return reSizeImage;
 }
 -(void)call:(id)sender
 {

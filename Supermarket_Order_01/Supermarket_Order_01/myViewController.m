@@ -200,7 +200,7 @@
         if(_islogin==NO){
         FastLoginViewController *regvc=[[FastLoginViewController alloc]init];
             self.hidesBottomBarWhenPushed = YES;
-//            [self presentViewController:regvc animated:NO completion:nil];
+            [self.navigationItem.backBarButtonItem setTitle:@"返回"];
             [self.navigationController pushViewController:regvc animated:YES];
         }
     

@@ -11,11 +11,13 @@
 #import "MyEvaluateCell.h"
 #import "purchaseBagCell.h"
 #import "MyEvaluateCell.h"
+#import "PraiseView.h"
 
-@interface detailedOrderStatusTableViewController : UITableViewController<UIPopoverListViewDataSource, UIPopoverListViewDelegate,UIAlertViewDelegate>
+@interface detailedOrderStatusTableViewController : UITableViewController<UIPopoverListViewDataSource, UIPopoverListViewDelegate,UIAlertViewDelegate,PraiseDelegate>
 @property(strong,nonatomic) UIApplication* app;//为实现拨号功能
 @property(strong,nonatomic) NSString* OrderStatus;
 @property(strong,nonatomic) UIBarButtonItem* shareBtn;
 @property(strong,nonatomic) UIBarButtonItem* callBtn;
 @property(strong,nonatomic) UIPopoverListView *poplistview;
+@property(strong,nonatomic) PraiseView* praiseView;
 @end

@@ -64,7 +64,7 @@
     [_normalbtn setTitleColor:[UIColor colorWithRed:88.0/255.0 green:88.0/255.0 blue:88.0/255.0 alpha:1.0] forState:UIControlStateNormal];
     [self.view addSubview:_normalbtn];
     [_normalbtn setTitle:@"普通登录" forState:UIControlStateNormal];
-    [_normalbtn setSelected:YES];
+    [_normalbtn setSelected:NO];
     [_normalbtn addTarget:self action:@selector(normallogin) forControlEvents:UIControlEventTouchUpInside];
     [_normalbtn setBackgroundImage:[UIImage imageNamed:@"selected.png"] forState:UIControlStateSelected];
     [_normalbtn setBackgroundImage:[UIImage imageNamed:@"unselected.png"] forState:UIControlStateNormal];
@@ -72,7 +72,7 @@
     _fastbtn=[[UIButton alloc]initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width/2, 50)];
     [_fastbtn setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
     [_fastbtn setTitleColor:[UIColor colorWithRed:88.0/255.0 green:88.0/255.0 blue:88.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-    _fastbtn.selected=NO;
+    _fastbtn.selected=YES;
     [_fastbtn setTitle:@"手机快捷登录" forState:UIControlStateNormal];
     [_fastbtn setBackgroundColor:[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0]];
     [_fastbtn addTarget:self action:@selector(fastlogin) forControlEvents:UIControlEventTouchUpInside];
@@ -228,7 +228,7 @@
     _fastbtn.selected=YES;
     _normalbtn.selected=NO;
     [verifycodebtn setHidden:NO];
-    _verifypwdField.placeholder=@"请输入验证码";
+    _verifypwdField.placeholder=@"请输入您的验证码";
     
 }
 

@@ -62,13 +62,13 @@
     [self.naviController_sup.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
     self.rootViewController.title = @"超  市";
     
-//    UIImage* sup_selected = [UIImage imageNamed:@"sup_selected.png"];
-//    UIImage* sup_noselected = [UIImage imageNamed:@"sup_noselected.png"];
+    UIImage* sup_selected = [UIImage imageNamed:@"sup_selected.png"];
+    UIImage* sup_noselected = [UIImage imageNamed:@"sup_noselected.png"];
 //    [self.rootViewController.tabBarItem setImageInsets:UIEdgeInsetsMake(5.0, 0.0, -7.0, 0.0)];
-//    sup_selected = [self reSizeImage:sup_selected toSize:CGSizeMake(44, 44)];
-//    sup_noselected = [self reSizeImage:sup_noselected toSize:CGSizeMake(44, 44)];
-//    self.rootViewController.tabBarItem.selectedImage = [sup_selected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    self.rootViewController.tabBarItem.image = [sup_noselected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    sup_selected = [self reSizeImage:sup_selected toSize:CGSizeMake(33, 33)];
+    sup_noselected = [self reSizeImage:sup_noselected toSize:CGSizeMake(33, 33)];
+    self.rootViewController.tabBarItem.selectedImage = [sup_selected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.rootViewController.tabBarItem.image = [sup_noselected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 //    self.rootViewController.navigationItem.title = @"超  市";
     
     //2.初始化“订单”界面
@@ -78,14 +78,12 @@
     [self.naviController_order.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
     self.viewController.title = @"订  单";
     
-//    UIImage* order_selected = [UIImage imageNamed:@"order_selected"];
-//    UIImage* order_noselected = [UIImage imageNamed:@"order_noselected.png"];
-//    [self.viewController.tabBarItem setImageInsets:UIEdgeInsetsMake(5.0, 0.0, -7.0, 0.0)];
-//    order_selected = [self reSizeImage:order_selected toSize:CGSizeMake(44, 44)];
-//    order_noselected = [self reSizeImage:order_noselected toSize:CGSizeMake(44, 44)];
-//    self.viewController.tabBarItem.selectedImage = [order_selected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    self.viewController.tabBarItem.image = [order_noselected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    self.viewController.navigationItem.title = @"订  单";
+    UIImage* order_selected = [UIImage imageNamed:@"order_selected"];
+    UIImage* order_noselected = [UIImage imageNamed:@"order_noselected.png"];
+    order_selected = [self reSizeImage:order_selected toSize:CGSizeMake(33, 33)];
+    order_noselected = [self reSizeImage:order_noselected toSize:CGSizeMake(33, 33)];
+    self.viewController.tabBarItem.selectedImage = [order_selected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.viewController.tabBarItem.image = [order_noselected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     //3.初始化“我的”界面
     self.vc3 = [[myViewController alloc]init];
@@ -94,18 +92,19 @@
     [self.naviController_vc3.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
     self.vc3.title = @"我  的";
     
-//    UIImage* my_selected = [UIImage imageNamed:@"my_selected"];
-//    UIImage* my_noselected = [UIImage imageNamed:@"my_noselected.png"];
-//    [self.vc3.tabBarItem setImageInsets:UIEdgeInsetsMake(5.0, 0.0, -7.0, 0.0)];
-//    my_selected = [self reSizeImage:my_selected toSize:CGSizeMake(44, 44)];
-//    my_noselected = [self reSizeImage:my_noselected toSize:CGSizeMake(44, 44)];
-//    self.vc3.tabBarItem.selectedImage = [my_selected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    self.vc3.tabBarItem.image = [my_noselected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIImage* my_selected = [UIImage imageNamed:@"my_selected"];
+    UIImage* my_noselected = [UIImage imageNamed:@"my_noselected.png"];
+
+    my_selected = [self reSizeImage:my_selected toSize:CGSizeMake(33, 33)];
+    my_noselected = [self reSizeImage:my_noselected toSize:CGSizeMake(33, 33)];
+    self.vc3.tabBarItem.selectedImage = [my_selected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.vc3.tabBarItem.image = [my_noselected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
     
     //4.初始化tabbarcontroller
     self.tabbarcontroller=[[UITabBarController alloc]init];
     self.tabbarcontroller.delegate=self;
+    [self.tabbarcontroller.tabBar setTintColor:[UIColor orangeColor]];
     self.tabbarcontroller.viewControllers=[NSArray arrayWithObjects:self.naviController_sup,self.naviController_order,self.naviController_vc3,nil];
     
     

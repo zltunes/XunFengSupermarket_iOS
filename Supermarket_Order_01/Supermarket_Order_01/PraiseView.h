@@ -7,11 +7,30 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OrderAppDelegate.h"
 
-@interface PraiseView : UIViewController
+@protocol PraiseDelegate <NSObject>
+@optional
+- (void)choujiang;
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag;
+@end
+
+
+@interface PraiseView : UIView<UIAlertViewDelegate>
 {
-    UIImageView *image1,*image2;
-    float random;
-    float orign;
+    UIControl   *_overlayView;
+    OrderAppDelegate* appdelegate;
+    NSString* couponCreateURL;
+    NSMutableDictionary* couid_dict;
 }
+@property int cou_price;
+@property float random;
+@property float orign;
+@property int order_id;
+@property(strong,nonatomic) UIImageView *imageView1;
+@property(strong,nonatomic) UIImageView *imageView2;
+@property(nonatomic,assign)id <PraiseDelegate> delegate;
+@property(nonatomic,strong)UITapGestureRecognizer *singleTap;
+- (void)show;
+
 @end

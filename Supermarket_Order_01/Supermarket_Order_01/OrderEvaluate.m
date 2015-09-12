@@ -9,6 +9,8 @@
 #import "OrderEvaluate.h"
 #import "Header.h"
 #import "OrderAppDelegate.h"
+#import "detailedOrderStatusTableViewController.h"
+#import "MJRefresh.h"
 
 @interface OrderEvaluate ()
 {
@@ -70,14 +72,11 @@
     [appDelegate.manager POST:orderCommentsCreateURL parameters:param
         success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSLog(@"评价提交成功!");
+            [appDelegate.viewController.table.header beginRefreshing];
+            [self.navigationController popToViewController:appDelegate.viewController animated:YES];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"评价提交失败:%@",error);
         }];
-    //评价成功后回到detailed界面
-        
-        
-        
-        
     }
 }
 //为导航栏设置右边按钮[开始编辑评论时]
