@@ -63,25 +63,18 @@
     self.tableview.dataSource=self;
     [self.view addSubview:self.tableview];
     self.view.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
-//    self.addbtn=[[UIButton alloc]initWithFrame:CGRectMake(kWindowWidth-50, 225, 25, 25)];
     self.addbtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.addbtn.frame = CGRectMake(25, kWindowHeight-100, kWindowWidth-50,50);
-    [self.addbtn setTitle:@"添加新地址" forState:UIControlStateNormal];
+    [self.addbtn setTitle:@"添 加 新 地 址" forState:UIControlStateNormal];
+    [self.addbtn.layer setMasksToBounds:YES];
+    [self.addbtn.layer setCornerRadius:10.0];
+    [self.addbtn.layer setBorderWidth:2.0];
+    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    CGColorRef color = CGColorCreate(colorSpaceRef, (CGFloat[]){1,0,0,1});
+    [self.addbtn.layer setBorderColor:color];
     [self.view addSubview:self.addbtn];
     [self.addbtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
 
-    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
-//    //申明返回的结果是json类型
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    //申明请求的数据是json类型
-//    manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
-//    
-//    [manager.requestSerializer setValue:@"b07f18c8-3f14-11e5-82bd-00163e021195"forHTTPHeaderField:@"Access_token"];
-//    //[manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"]
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
-    
     [appdelegate.manager GET:@"http://115.29.197.143:8999/v1.0/user/addresses" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
             self.addressArr=[responseObject mutableCopy];
             [self.tableview reloadData];
@@ -176,16 +169,6 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
 
     if (buttonIndex==1){
-        
-//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//        [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
-//        //申明返回的结果是json类型
-//        manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//        //申明请求的数据是json类型
-//        manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
-//        [manager.requestSerializer setValue:@"4244b7ac-4fbb-11e5-82bd-00163e021195"forHTTPHeaderField:@"access_token"];
-        //[manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"]
-//        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
 
         NSString *url=[@"http://115.29.197.143:8999/v1.0/user/address/" stringByAppendingString:[NSString stringWithFormat:@"%@",[[self.addressArr objectAtIndex:deleteIndexPath.section] objectForKey:@"id"]]];
         

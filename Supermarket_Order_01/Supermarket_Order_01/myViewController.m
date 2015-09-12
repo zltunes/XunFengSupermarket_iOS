@@ -60,8 +60,15 @@
     tableview.delegate=self;
     tableview.dataSource=self;
     tableview.scrollEnabled=NO;
-    logoutbtn=[[UIButton alloc]initWithFrame:CGRectMake(50, self.view.bounds.size.height-120, self.view.bounds.size.width-100, 80)];
-    [logoutbtn setTitle:@"退出登录" forState:UIControlStateNormal];
+    logoutbtn=[[UIButton alloc]initWithFrame:CGRectMake(50, self.view.bounds.size.height-100, self.view.bounds.size.width-100, 40)];
+    [logoutbtn setTitle:@"退 出 登 录" forState:UIControlStateNormal];
+    [logoutbtn.layer setMasksToBounds:YES];
+    [logoutbtn.layer setCornerRadius:10.0];
+    [logoutbtn.layer setBorderWidth:2.0];
+    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    CGColorRef color = CGColorCreate(colorSpaceRef, (CGFloat[]){1,0,0,1});
+    [logoutbtn.layer setBorderColor:color];
+
     [self.view addSubview:logoutbtn];
     [logoutbtn addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
     [logoutbtn setTitleColor:[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0] forState:UIControlStateNormal];
@@ -69,35 +76,7 @@
     if(!_islogin)
         [logoutbtn setHidden:YES];
     [self.view addSubview:tableview];
-    
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = [paths objectAtIndex:0];
-//    filename= [documentsDirectory stringByAppendingPathComponent:@"personinfo.plist"];
-//    plistdic=[[[NSMutableDictionary alloc]initWithContentsOfFile:filename]mutableCopy];
-//    if(plistdic==nil){
-//        _islogin=NO;
-//        plistdic=[[NSMutableDictionary alloc]init];
-//        NSMutableArray *values=[[NSMutableArray alloc]initWithCapacity:10];;
-//        NSMutableArray *keys=[[NSMutableArray alloc]initWithCapacity:10];
-//    
-//                [values addObject:@"0"];
-//            [values addObject:@"0"];
-//        [values addObject:@""];
-//        
-//                [keys addObject:@"islogin"];
-//            [keys addObject:@"tel"];
-//        [keys addObject:@"access_token"];
-//    
-//        plistdic = [NSMutableDictionary dictionaryWithObjects:values forKeys:keys];
-//        [plistdic writeToFile:filename atomically:YES];
-//    }
-//    else{
-//        if([[plistdic objectForKey:@"islogin"]isEqualToString:@"1"])
-//            _islogin=YES;
-//        else
-//            _islogin=NO;
-//            
-//    }
+
     _islogin = delegate.islogin;
 }
 
@@ -116,7 +95,10 @@
     [delegate.viewController initOrderView];
     self.islogin = NO;
     [logoutbtn setHidden:YES];
-    [label1 setHidden:YES];
+    NSIndexPath* indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+    myTableViewCell *cell = [self.tableview cellForRowAtIndexPath:indexpath];
+    cell.leftlabel.text = @"我的账户";
+//    [label1 setHidden:YES];
     [self.tableview reloadData];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -146,13 +128,17 @@
     [cell setupcell];
  
     if(indexPath.section==0){
-        NSString *str=@"    我的账户   ";
+        [cell.leftimg setImage:[UIImage imageNamed:@"我的-01.png"]];
+        NSString *str=@"我的账户            ";
         if(_islogin==YES){
             str=[str stringByAppendingString:[delegate.plistdic objectForKey:@"tel"]];
         }
-        label1=[[UILabel alloc]initWithFrame:CGRectMake(18,10 , 280, 20)];
-        [label1 setText:str];
-        [cell addSubview:label1];
+//        label1=[[UILabel alloc]initWithFrame:CGRectMake(18,10 , 280, 20)];
+//        [label1 setText:str];
+//        [cell addSubview:label1];
+        
+        [cell.leftlabel setText:str];
+        [cell.leftlabel sizeToFit];
     }
     //NSUInteger row = [indexPath row];
     if(indexPath.section==1){

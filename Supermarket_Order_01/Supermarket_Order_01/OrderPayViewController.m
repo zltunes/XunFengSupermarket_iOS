@@ -20,6 +20,7 @@
     NSString* myBalanceURL;//账户余额
     NSArray* couponsArray;
     NSArray* couponsIDarr;//购物券id
+    UIPopoverListView* popListView;
 }
 @end
 
@@ -32,6 +33,15 @@
     couponsURL = @"http://115.29.197.143:8999/v1.0/coupons";
     //[{id,price,state,timelimit}]
     myBalanceURL = @"http://115.29.197.143:8999/v1.0/user";
+    [delegate.manager GET:myBalanceURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"获取我的信息成功!余额:%@",[responseObject objectForKey:@"balance"]);
+        NSDictionary* mydic = responseObject;
+        self.banlance = [[mydic objectForKey:@"balance"]floatValue];
+        [self.table reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"获取账户余额失败!%@",error);
+    }];
     self.table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kWindowWidth, kWindowHeight-100) style:UITableViewStylePlain];
     self.table.delegate = self;
     self.table.dataSource = self;
@@ -111,16 +121,10 @@
             }else if (rowNo == 2){
                 //我的余额
                 cell.textLabel.text = [left objectAtIndex:1];
+                cell.detailTextLabel.text = [NSString stringWithFormat:@"%g 元",self.banlance];
                 //从后台获取账户余额
                 //u_id,authority,balance,phone_num
-                [delegate.manager GET:myBalanceURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                    NSLog(@"获取我的信息成功!余额:%@",[responseObject objectForKey:@"balance"]);
-                    NSDictionary* mydic = responseObject;
-                    self.banlance = [[mydic objectForKey:@"balance"]floatValue];
-                    cell.detailTextLabel.text = [NSString stringWithFormat:@"%g 元",self.banlance];
-                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                    NSLog(@"获取账户余额失败!%@",error);
-                }];
+
             }else if (rowNo == 3){
                 //还需支付
                 //需要判断是不是首次下单
@@ -129,9 +133,11 @@
                 //从orderTableViewControler的ordersArray获取数量
                 
                 
-                
-                
+            
                 self.toPayValue = self.totalPrice - self.couponCount - self.banlance;
+                if (self.toPayValue < 0) {
+                    self.toPayValue = 0;
+                }
                 cell.detailTextLabel.text = [NSString stringWithFormat:@"%g 元",self.toPayValue];
                 cell.detailTextLabel.textColor = [UIColor orangeColor];
             }else if (rowNo ==1){
@@ -216,11 +222,14 @@
             [delegate.manager GET:couponsURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"获取购物券成功!购物券张数:%lu",(unsigned long)[responseObject count]);
                 couponsArray = [[NSArray alloc]initWithArray:responseObject];
-                ZSYPopoverListView *listView = [[ZSYPopoverListView alloc] initWithFrame:CGRectMake(0, 0, 300, 180)];
-                listView.titleName.text = @"选择优惠券";
-                listView.delegate = self;
-                listView.datasource = self;
-                [listView show];
+                CGFloat xWidth = self.view.bounds.size.width - 40.0f;
+                CGFloat yHeight = 180.0f;
+                CGFloat yOffset = (self.view.bounds.size.height - yHeight)/2.0f;
+                popListView = [[UIPopoverListView alloc]initWithFrame:CGRectMake(10, yOffset, xWidth, yHeight)];
+                popListView.delegate = self;
+                popListView.datasource = self;
+                [popListView setTitle:@"选择优惠券"];
+                [popListView show];
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 NSLog(@"获取购物券失败!%@",error);
             }];
@@ -243,47 +252,44 @@
     }
     [self.table deselectRowAtIndexPath:indexPath animated:YES];
 }
-- (NSInteger)popoverListView:(ZSYPopoverListView *)tableView numberOfRowsInSection:(NSInteger)section
+
+//以下函数为实现UIPopoverListView协议
+- (UITableViewCell *)popoverListView:(UIPopoverListView *)popoverListView
+                    cellForIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifier = @"cell";
+    NSInteger row = indexPath.row;
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1
+                                                       reuseIdentifier:identifier];
+    NSDictionary* dict = [couponsArray objectAtIndex:row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@",dict[@"price"]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"有效期至%@",dict[@"timelimit"]];
+    
+    return cell;
+}
+
+- (NSInteger)popoverListView:(UIPopoverListView *)popoverListView
+       numberOfRowsInSection:(NSInteger)section
 {
     return [couponsArray count];
 }
-/*
- 优惠券选择栏
- */
-- (UITableViewCell *)popoverListView:(ZSYPopoverListView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (void)popoverListView:(UIPopoverListView *)popoverListView
+     didSelectIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identifier = @"identifier";
-    UITableViewCell *cell = [tableView dequeueReusablePopoverCellWithIdentifier:identifier];
-    if (!cell)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identifier];
-    }
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    for (int i = 0; i<[couponsArray count]; i++) {
-        NSDictionary* dic = [couponsArray objectAtIndex:i];
-        cell.textLabel.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"price"]];
-        //先要判断购物券state，此处暂时不知道state是怎么表示的
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"有效期至%@",[dic objectForKey:@"timelimit"]];
-    }
-    return cell;
-}
-- (void)popoverListView:(ZSYPopoverListView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView popoverCellForRowAtIndexPath:indexPath];
-    if (cell.accessoryType == UITableViewCellAccessoryNone) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        NSDictionary* dict = [couponsArray objectAtIndex:indexPath.row];//默认购物券顺序是按返回顺序排的
-        self.couponCount += [[dict objectForKey:@"price"] intValue];//默认price为integer
-        couponsIDarr = [couponsIDarr arrayByAddingObject:[NSNumber numberWithInt:[dict[@"id"]intValue]]];
-    } else {
-        //已被选的再点击则放弃
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        NSDictionary* dict = [couponsArray objectAtIndex:indexPath.row];
-        self.couponCount -= [[dict objectForKey:@"price"] intValue];
-    }
     
+    UITableViewCell* cell = [self popoverListView:popoverListView cellForIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    self.couponCount = [cell.textLabel.text intValue];
     [self.table reloadData];
 }
+
+- (CGFloat)popoverListView:(UIPopoverListView *)popoverListView
+   heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 40.0f;
+}
+
 //去付款
 -(void)toPay:(id)sender
 {
@@ -304,6 +310,7 @@
         [delegate.manager POST:payURL parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             delegate.orderID = self.order_id;
             detailedOrderStatusTableViewController* detailView = [[detailedOrderStatusTableViewController alloc]init];
+            detailView.PraiseFlag = 1;
             //下一页返回按钮返回订单首页
 //            UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"详情"  style:UIBarButtonItemStylePlain  target:self  action:@selector(detailBack)];
 //            self.navigationController.navigationBar.topItem.leftBarButtonItem = backButton;

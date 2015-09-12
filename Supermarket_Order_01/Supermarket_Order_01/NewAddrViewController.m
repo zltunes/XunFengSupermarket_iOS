@@ -53,7 +53,7 @@
     [self.view addSubview:whiteview];
     UILabel *addrlabel=[[UILabel alloc]initWithFrame:CGRectMake(18, 80, 60, 30)];
     [addrlabel setText:@"地址"];
-    [addrlabel setTextColor:[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0]];
+    [addrlabel setTextColor:[UIColor grayColor]];
     [self.view addSubview:addrlabel];
     self.addressfield=[[UITextField alloc]initWithFrame:CGRectMake(82, 80, 200, 30)];
     [self.view addSubview:self.addressfield];
@@ -65,23 +65,25 @@
     
     UILabel *phonelabel=[[UILabel alloc]initWithFrame:CGRectMake(18, 120, 60, 30)];
     [phonelabel setText:@"电话"];
-    [phonelabel setTextColor:[UIColor colorWithRed:88.0/255.0 green:88.0/255.0 blue:88.0/255.0 alpha:1.0]];
+    [phonelabel setTextColor:[UIColor grayColor]];
     [self.view addSubview:phonelabel];
     self.phonefield=[[UITextField alloc]initWithFrame:CGRectMake(82, 120, 200, 30)];
+    self.phonefield.placeholder = @"请填写收件人电话";
     [self.view addSubview:self.phonefield];
 
     UIImageView* line2=[[UIImageView alloc]initWithFrame:CGRectMake(18, 152, 284, 1)];
     line2.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
     [self.view addSubview:line2];
     
-    UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(0, 220, self.view.bounds.size.width, 50)];
-    [label3 setTextColor:[UIColor colorWithRed:88.0/255.0 green:88.0/255.0 blue:88.0/255.0 alpha:1.0]];
+    UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(10, 220, self.view.bounds.size.width-20, 30)];
+    [label3 setTextColor:[UIColor grayColor]];
     [self.view addSubview:label3];
-    [label3 setText:@"请精确到宿舍号，方便我们送货上门哦"];
+    [label3 setText:@"请精确到宿舍号,方便我们送货上门哦"];
 
     UIButton* savebtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     savebtn.frame = CGRectMake(25, kWindowHeight-300, kWindowWidth-50, 50);
-    [savebtn setTitle:@"保存" forState:UIControlStateNormal];
+//    [savebtn setTitle:@"保存" forState:UIControlStateNormal];
+    [savebtn setBackgroundImage:[UIImage imageNamed:@"save-01.png"] forState:UIControlStateNormal];
     [savebtn addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:savebtn];
     // Do any additional setup after loading the view.

@@ -53,5 +53,6 @@
 
 - (void)show;
 - (void)dismiss;
-
+- (UITableViewCell *)popoverListView:(UIPopoverListView *)popoverListView
+                    cellForIndexPath:(NSIndexPath *)indexPath;
 @end

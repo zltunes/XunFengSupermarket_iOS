@@ -20,4 +20,5 @@
 @property(strong,nonatomic) UIBarButtonItem* callBtn;
 @property(strong,nonatomic) UIPopoverListView *poplistview;
 @property(strong,nonatomic) PraiseView* praiseView;
+@property int PraiseFlag;
 @end

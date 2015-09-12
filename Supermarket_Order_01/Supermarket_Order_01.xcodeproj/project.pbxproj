@@ -58,7 +58,6 @@
 		358539601B9E7F95000D5077 /* ZHPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3585395F1B9E7F95000D5077 /* ZHPickView.m */; settings = {ASSET_TAGS = (); }; };
 		358539641B9E8024000D5077 /* OrderPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 358539631B9E8024000D5077 /* OrderPayViewController.m */; settings = {ASSET_TAGS = (); }; };
 		358539681B9E8035000D5077 /* PraiseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 358539671B9E8035000D5077 /* PraiseView.m */; settings = {ASSET_TAGS = (); }; };
-		3585396C1B9E8056000D5077 /* ZSYPopoverListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3585396B1B9E8056000D5077 /* ZSYPopoverListView.m */; settings = {ASSET_TAGS = (); }; };
 		3585396E1B9E9461000D5077 /* querenzhifu.png in Resources */ = {isa = PBXBuildFile; fileRef = 3585396D1B9E9461000D5077 /* querenzhifu.png */; settings = {ASSET_TAGS = (); }; };
 		358BA4311BA2685200C636BF /* my_noselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 358BA42B1BA2685200C636BF /* my_noselected.png */; settings = {ASSET_TAGS = (); }; };
 		358BA4321BA2685200C636BF /* my_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 358BA42C1BA2685200C636BF /* my_selected.png */; settings = {ASSET_TAGS = (); }; };
@@ -280,8 +279,6 @@
 		358539631B9E8024000D5077 /* OrderPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPayViewController.m; sourceTree = "<group>"; };
 		358539661B9E8035000D5077 /* PraiseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PraiseView.h; sourceTree = "<group>"; };
 		358539671B9E8035000D5077 /* PraiseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PraiseView.m; sourceTree = "<group>"; };
-		3585396A1B9E8056000D5077 /* ZSYPopoverListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSYPopoverListView.h; sourceTree = "<group>"; };
-		3585396B1B9E8056000D5077 /* ZSYPopoverListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSYPopoverListView.m; sourceTree = "<group>"; };
 		3585396D1B9E9461000D5077 /* querenzhifu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = querenzhifu.png; sourceTree = "<group>"; };
 		358BA42B1BA2685200C636BF /* my_noselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = my_noselected.png; sourceTree = "<group>"; };
 		358BA42C1BA2685200C636BF /* my_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = my_selected.png; sourceTree = "<group>"; };
@@ -657,7 +654,6 @@
 		358539611B9E8013000D5077 /* OrderPay */ = {
 			isa = PBXGroup;
 			children = (
-				358539691B9E8041000D5077 /* ChooseCouponView */,
 				358539651B9E8028000D5077 /* 抽奖 */,
 				358539621B9E8024000D5077 /* OrderPayViewController.h */,
 				358539631B9E8024000D5077 /* OrderPayViewController.m */,
@@ -672,15 +668,6 @@
 				358539671B9E8035000D5077 /* PraiseView.m */,
 			);
 			name = "抽奖";
-			sourceTree = "<group>";
-		};
-		358539691B9E8041000D5077 /* ChooseCouponView */ = {
-			isa = PBXGroup;
-			children = (
-				3585396A1B9E8056000D5077 /* ZSYPopoverListView.h */,
-				3585396B1B9E8056000D5077 /* ZSYPopoverListView.m */,
-			);
-			name = ChooseCouponView;
 			sourceTree = "<group>";
 		};
 		359226261B692C0C0089D4B0 /* detailOrderCell */ = {
@@ -1390,7 +1377,6 @@
 				35CB1ED51B9D36A9008E9DE9 /* UIImage+WebP.m in Sources */,
 				35E39DD61B67B82A008336FF /* orderStatusCell.m in Sources */,
 				35FF84AA1B9AE8910049C117 /* FeedbackViewController.m in Sources */,
-				3585396C1B9E8056000D5077 /* ZSYPopoverListView.m in Sources */,
 				35E39DD31B67B7DB008336FF /* detailedOrderStatusTableViewController.m in Sources */,
 				35FF84B31B9AE8910049C117 /* AddressViewController.m in Sources */,
 				357B448B1B637B7E00BCEA69 /* OrderEvaluate.m in Sources */,

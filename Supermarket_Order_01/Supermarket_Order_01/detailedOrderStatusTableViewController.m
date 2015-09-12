@@ -80,7 +80,7 @@ NSString* orderDetailURL;
     shareimgview.userInteractionEnabled = YES;
     callimgview.userInteractionEnabled = YES;
     UITapGestureRecognizer* shareGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(share:)];
-    UITapGestureRecognizer* callGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chou)];
+    UITapGestureRecognizer* callGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(call:)];
     [shareimgview addGestureRecognizer:shareGesture];
     [callimgview addGestureRecognizer:callGesture];
     self.shareBtn = [[UIBarButtonItem alloc]initWithCustomView:shareimgview];
@@ -91,32 +91,18 @@ NSString* orderDetailURL;
     UIBarButtonItem* customBackBatButton = [[UIBarButtonItem alloc]initWithTitle:@"<" style:UIBarButtonItemStylePlain target:self action:@selector(returnToOrderTableView:)];
     customBackBatButton.tintColor = [UIColor blueColor];
     self.navigationItem.leftBarButtonItem = customBackBatButton;
-    
-//    //抽奖背景界面
-//    UIView *backView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen]applicationFrame]];
-//    backView.backgroundColor = [UIColor blackColor];
-//    backView.alpha = 0.4;
-//    backView.hidden = YES;
-//    _backView = backView;
-//    [self.view addSubview:_backView];
-//    
-//    //抽奖界面
-//    PraiseView* praiseView = [[PraiseView alloc]initWithFrame:CGRectMake(0.0, 0.0, 240.0, 240.0)];
-//    praiseView.hidden = YES;
-//    praiseView.delegate = self;
-//    _praiseView = praiseView;
-//    [self.view addSubview:_praiseView];
-    
+    if (self.PraiseFlag) {
+        [self chou];
+        self.PraiseFlag = 0;
+    }
     [super viewDidLoad];
+
     [self hideExcessLine:self.tableView];
 
 }
+
 -(void)chou
 {
-//    [self praiseViewinit];
-//    CGFloat xWidth = self.view.bounds.size.width - 40.0f;
-//    CGFloat yHeight = 172.0f;
-//    CGFloat yOffset = (self.view.bounds.size.height - yHeight)/2.0f;
     self.praiseView = [[PraiseView alloc] initWithFrame:CGRectMake(0.0, 0.0, 240.0, 240.0)];
     self.praiseView.delegate = self;
     self.praiseView.order_id = appDelegate.orderID;
@@ -186,6 +172,7 @@ NSString* orderDetailURL;
     self.poplistview.datasource = self;
     self.poplistview.listView.scrollEnabled = FALSE;
     [self.poplistview setTitle:@"拨打电话"];
+    
     [self.poplistview show];
 }
 -(void)hideExcessLine:(UITableView *)tableView{

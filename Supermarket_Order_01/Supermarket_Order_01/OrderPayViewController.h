@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZSYPopoverListView.h"//优惠券
+//#import "ZSYPopoverListView.h"//优惠券
+#import "UIPopoverListView.h"
 #import "PraiseView.h"
 
-@interface OrderPayViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,ZSYPopoverListDatasource, ZSYPopoverListDelegate,UIAlertViewDelegate>
+@interface OrderPayViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIPopoverListViewDataSource, UIPopoverListViewDelegate,UIAlertViewDelegate>
 @property(strong,nonatomic) UITableView* table;
 @property(strong,nonatomic) UIButton* confirmPayBtn;
 @property(strong,nonatomic) NSIndexPath* lastIndexPath;
