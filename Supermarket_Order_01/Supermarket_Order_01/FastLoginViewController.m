@@ -13,6 +13,7 @@
 #import "myViewController.h"
 #import "AFNetworking/AFHTTPSessionManager.h"
 #import "OrderAppDelegate.h"
+#import "MJRefresh.h"
 
 @interface FastLoginViewController (){
     UINavigationBar *navbar;
@@ -36,6 +37,8 @@
 - (void)viewDidLoad {
     
     delegate = [UIApplication sharedApplication].delegate;
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     navbar=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
     navbar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
     
@@ -175,7 +178,6 @@
     
     [alert dismissWithClickedButtonIndex:0 animated:NO];
     
-    
 }
 
 -(void)login{
@@ -212,15 +214,19 @@
         delegate.access_token = [delegate.plistdic objectForKey:@"access_token"];
         [delegate.manager.requestSerializer setValue:delegate.access_token forHTTPHeaderField:@"access_token"];
         [delegate.viewController.toregistOrloginlabel setHidden:YES];
+        
         //重新加载orderview
-        [delegate.viewController initOrderView];
+//        delegate.naviController_order = [[UINavigationController alloc]initWithRootViewController:delegate.viewController];
+//        delegate.naviController_order.navigationBar.barTintColor = [UIColor colorWithRed:255.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
+//        [delegate.naviController_order.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
+
+        [delegate.viewController initOrderViewAfterLogin];
         myViewController *myvc=[[myViewController alloc]init];
         [self.navigationController pushViewController:myvc animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        NSLog(@"登录失败:%@", error);
     }];
     }
-    
 }
 
 -(void)fastlogin{

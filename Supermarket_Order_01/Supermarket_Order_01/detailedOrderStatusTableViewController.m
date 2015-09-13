@@ -42,6 +42,8 @@ NSString* orderDetailURL;
     self.title = @"订单详情";
     appDelegate = [UIApplication sharedApplication].delegate;//为了访问manager属性
     orderDetailURL = [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/order/%d",appDelegate.orderID];
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     /*获取订单详情返回值
     {id,sup_id,comment,name,total,time,start_time,phone_num,address,state,goods:[{id,name,quantity,price},… ]}
      8项数据
@@ -88,9 +90,7 @@ NSString* orderDetailURL;
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:self.callBtn,self.shareBtn,nil];
     self.app = [UIApplication sharedApplication];
     
-    UIBarButtonItem* customBackBatButton = [[UIBarButtonItem alloc]initWithTitle:@"<" style:UIBarButtonItemStylePlain target:self action:@selector(returnToOrderTableView:)];
-    customBackBatButton.tintColor = [UIColor blueColor];
-    self.navigationItem.leftBarButtonItem = customBackBatButton;
+
     if (self.PraiseFlag) {
         [self chou];
         self.PraiseFlag = 0;

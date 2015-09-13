@@ -34,19 +34,16 @@
 -(void)initOrderView
 {
     if (!appDelegate.islogin) {
-        //        UIButton* registerORloginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        //        registerORloginBtn.frame = CGRectMake(kWindowWidth/4, kWindowHeight/6, kWindowWidth/2, 50);
-        //        [registerORloginBtn setTitle:@"先去注册/登录!" forState:UIControlStateNormal];
-        //        [registerORloginBtn addTarget:self action:@selector(toRegisterOrLogin) forControlEvents:UIControlEventTouchUpInside];
-        //        [self.view addSubview:registerORloginBtn];
+
         self.toregistOrloginlabel = [[UILabel alloc]init];
         self.toregistOrloginlabel.frame = CGRectMake(kWindowWidth/3, kWindowHeight/6, kWindowWidth/2, 50);
         self.toregistOrloginlabel.text = @"请先注册/登录!";
+
         [self.table setHidden:YES];
         [self.view addSubview:self.toregistOrloginlabel];
     }
     else{//已登录
-        self.table=[[UITableView alloc]initWithFrame:CGRectMake(0,64,kWindowWidth, kWindowHeight-70)];
+        self.table=[[UITableView alloc]initWithFrame:CGRectMake(0,0,kWindowWidth, kWindowHeight-70)];
         self.table.delegate=self;
         self.table.dataSource=self;
         [self.view addSubview:self.table];
@@ -64,7 +61,23 @@
     }
 
 }
-
+-(void)initOrderViewAfterLogin
+{
+    self.table=[[UITableView alloc]initWithFrame:CGRectMake(0,64,kWindowWidth, kWindowHeight-70)];
+    self.table.delegate=self;
+    self.table.dataSource=self;
+    [self.view addSubview:self.table];
+    
+    
+    //mjrefresh下拉刷新
+    self.table.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefreshing)];
+    [self.table.header beginRefreshing];
+    //mjrefresh上拉加载
+    self.table.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefreshing)];
+    
+    page_count = 1;
+    ordersArray = [[NSMutableArray alloc]init];
+}
 -(void)toRegisterOrLogin
 {
     FastLoginViewController *regvc=[[FastLoginViewController alloc]init];
@@ -212,8 +225,10 @@
     [self.navigationController pushViewController:detailedStatusController animated:YES];
 
     //设置下一页面的返回,即为超市名
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:cell.nameOfSupermarket.text  style:UIBarButtonItemStylePlain  target:self  action:nil];
-    self.navigationItem.backBarButtonItem = backButton;
+//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:cell.nameOfSupermarket.text  style:UIBarButtonItemStylePlain  target:self  action:nil];
+//    self.navigationItem.backBarButtonItem = backButton;
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = item;
     [self.table deselectRowAtIndexPath:indexPath animated:YES];
 }
 

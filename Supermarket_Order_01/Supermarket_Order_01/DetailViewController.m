@@ -58,13 +58,14 @@
     [super viewDidLoad];
     //导航栏背景颜色
 //    [self.navigationController.navigationBar setBarTintColor:[UIColor whiteColor]];
-    //导航栏字体颜色
+//    导航栏字体颜色
 //    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil]];
-    // Do any additional setup after loading the view.
+//     Do any additional setup after loading the view.
     
     [self connectBackGround];
     //返回按钮的事件
-    
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     
     UITableView *leftTableView = [[UITableView alloc]initWithFrame:(CGRect){0,0,kWindowWidth*0.3,kWindowHeight}];
     leftTableView.rowHeight = 50;
@@ -119,6 +120,7 @@
     
      //导航栏右边的超市详情按钮
     UIBarButtonItem *detailButton = [[UIBarButtonItem alloc] initWithTitle:@"超市详情" style:UIBarButtonItemStylePlain target:self action:@selector(touchDetail)];
+    detailButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = detailButton;
     
     //searchBar搜索条
@@ -303,6 +305,8 @@
     MarketDetailVC *marketVC = [[MarketDetailVC alloc]init];
     [self setHidesBottomBarWhenPushed:YES];
     [self.navigationController pushViewController:marketVC animated:YES];
+//    self.navigationItem.backBarButtonItem.tintColor = [UIColor whiteColor];
+    
     marketVC.marId = self.marId;
     
 }

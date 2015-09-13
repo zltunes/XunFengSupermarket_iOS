@@ -14,4 +14,5 @@
 @property(strong,nonatomic) UITableView* table;
 @property(strong,nonatomic) UILabel* toregistOrloginlabel;
 -(void)initOrderView;
+-(void)initOrderViewAfterLogin;
 @end
