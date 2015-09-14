@@ -55,20 +55,13 @@
                              ,nil];
     
     navbar.titleTextAttributes=attrdic;
-    tableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, 400)];
+    tableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 64, self.view.bounds.size.width, 360)];
     [tableview registerClass:[myTableViewCell class] forCellReuseIdentifier:@"cell"];
     tableview.delegate=self;
     tableview.dataSource=self;
     tableview.scrollEnabled=NO;
-    logoutbtn=[[UIButton alloc]initWithFrame:CGRectMake(50, self.view.bounds.size.height-100, self.view.bounds.size.width-100, 40)];
-    [logoutbtn setTitle:@"退 出 登 录" forState:UIControlStateNormal];
-    [logoutbtn.layer setMasksToBounds:YES];
-    [logoutbtn.layer setCornerRadius:10.0];
-    [logoutbtn.layer setBorderWidth:2.0];
-    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-    CGColorRef color = CGColorCreate(colorSpaceRef, (CGFloat[]){1,0,0,1});
-    [logoutbtn.layer setBorderColor:color];
-
+    logoutbtn=[[UIButton alloc]initWithFrame:CGRectMake(40, 0.8*self.view.bounds.size.height, self.view.bounds.size.width-80, 40)];
+    [logoutbtn setBackgroundImage:[UIImage imageNamed:@"tuichudenglu.png"] forState:UIControlStateNormal];
     [self.view addSubview:logoutbtn];
     [logoutbtn addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
     [logoutbtn setTitleColor:[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0] forState:UIControlStateNormal];

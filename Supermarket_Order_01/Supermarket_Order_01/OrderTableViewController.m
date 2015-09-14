@@ -35,9 +35,8 @@
 {
     if (!appDelegate.islogin) {
 
-        self.toregistOrloginlabel = [[UILabel alloc]init];
-        self.toregistOrloginlabel.frame = CGRectMake(kWindowWidth/3, kWindowHeight/6, kWindowWidth/2, 50);
-        self.toregistOrloginlabel.text = @"请先注册/登录!";
+        self.toregistOrloginlabel = [[UIImageView alloc]initWithFrame:CGRectMake(50,0.2*kWindowHeight , kWindowWidth-100, kWindowHeight*0.35)];
+        self.toregistOrloginlabel.image = [UIImage imageNamed:@"weidenglu.png"];
 
         [self.table setHidden:YES];
         [self.view addSubview:self.toregistOrloginlabel];
@@ -159,7 +158,7 @@
     if (cell == nil) {
         cell = [[OrderTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
     }
-    NSDictionary* orderdict = [ordersArray objectAtIndex:indexPath.section];//每一个dict为一个订单
+    NSDictionary* orderdict = [ordersArray objectAtIndex:[ordersArray count]-indexPath.section-1];//每一个dict为一个订单
     //1⃣️订单状态
     NSString* status = [orderdict objectForKey:@"state"];
     if ([status isEqualToString:@"paid"]) {

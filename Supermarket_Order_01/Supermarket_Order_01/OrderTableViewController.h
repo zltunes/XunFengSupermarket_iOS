@@ -12,7 +12,7 @@
 //@property(strong,nonatomic) UINavigationBar* navbar_order;
 //@property(strong,nonatomic) UINavigationItem* navitem_order;
 @property(strong,nonatomic) UITableView* table;
-@property(strong,nonatomic) UILabel* toregistOrloginlabel;
+@property(strong,nonatomic) UIImageView* toregistOrloginlabel;
 -(void)initOrderView;
 -(void)initOrderViewAfterLogin;
 @end

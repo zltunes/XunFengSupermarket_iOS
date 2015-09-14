@@ -64,14 +64,8 @@
     [self.view addSubview:self.tableview];
     self.view.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
     self.addbtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    self.addbtn.frame = CGRectMake(25, kWindowHeight-100, kWindowWidth-50,50);
-    [self.addbtn setTitle:@"添 加 新 地 址" forState:UIControlStateNormal];
-    [self.addbtn.layer setMasksToBounds:YES];
-    [self.addbtn.layer setCornerRadius:10.0];
-    [self.addbtn.layer setBorderWidth:2.0];
-    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
-    CGColorRef color = CGColorCreate(colorSpaceRef, (CGFloat[]){1,0,0,1});
-    [self.addbtn.layer setBorderColor:color];
+    self.addbtn.frame = CGRectMake(80, kWindowHeight-100, kWindowWidth-160,36);
+    [self.addbtn setBackgroundImage:[UIImage imageNamed:@"addAddress.png"] forState:UIControlStateNormal];
     [self.view addSubview:self.addbtn];
     [self.addbtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
 
@@ -180,7 +174,14 @@
         }];
     }
 }
-
+-(UIImage *)reSizeImage:(UIImage *)image toSize:(CGSize)reSize
+{
+    UIGraphicsBeginImageContext(CGSizeMake(reSize.width, reSize.height));
+    [image drawInRect:CGRectMake(0, 0, reSize.width, reSize.height)];
+    UIImage *reSizeImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return reSizeImage;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -81,8 +81,8 @@ NSString* orderDetailURL;
     
     UIImage* shareimg = [UIImage imageNamed:@"share_icon.png"];
     UIImage* callimg = [UIImage imageNamed:@"call_icon.png"];
-    shareimg = [self reSizeImage:shareimg toSize:CGSizeMake(33, 33)];
-    callimg = [self reSizeImage:callimg toSize:CGSizeMake(33, 33)];
+    shareimg = [self reSizeImage:shareimg toSize:CGSizeMake(35, 35)];
+    callimg = [self reSizeImage:callimg toSize:CGSizeMake(35, 35)];
     UIImageView* shareimgview = [[UIImageView alloc]initWithImage:shareimg];
     UIImageView* callimgview = [[UIImageView alloc]initWithImage:callimg];
     //创建手势（单击）

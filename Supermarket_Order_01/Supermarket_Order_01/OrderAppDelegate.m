@@ -156,20 +156,11 @@
     
     //申明返回的结果是json类型
     self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    self.manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
   
     [self.window makeKeyAndVisible];
     return YES;
 }
-
-//- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UINavigationController *)naviController
-//{
-//    //点击“订单”按钮刷新该界面
-//    if ([naviController.visibleViewController isKindOfClass:[self.viewController class]]) {
-//        [self.viewController initOrderView];
-//    }
-//}
 
 -(UIImage *)reSizeImage:(UIImage *)image toSize:(CGSize)reSize
 {
