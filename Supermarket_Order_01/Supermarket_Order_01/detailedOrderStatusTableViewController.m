@@ -72,6 +72,13 @@ NSString* orderDetailURL;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"获取订单信息有误: %@",error);
     }];
+    
+    UIBarButtonItem* backItem = [[UIBarButtonItem alloc]initWithTitle:@"< 返回" style:UIBarButtonItemStylePlain target:self action:@selector(backToDetail)];
+    self.navigationItem.leftBarButtonItem = backItem;
+    
+    
+    
+    
     UIImage* shareimg = [UIImage imageNamed:@"share_icon.png"];
     UIImage* callimg = [UIImage imageNamed:@"call_icon.png"];
     shareimg = [self reSizeImage:shareimg toSize:CGSizeMake(33, 33)];
@@ -90,7 +97,6 @@ NSString* orderDetailURL;
     self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:self.callBtn,self.shareBtn,nil];
     self.app = [UIApplication sharedApplication];
     
-
     if (self.PraiseFlag) {
         [self chou];
         self.PraiseFlag = 0;
@@ -100,7 +106,10 @@ NSString* orderDetailURL;
     [self hideExcessLine:self.tableView];
 
 }
-
+-(void)backToDetail
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 -(void)chou
 {
     self.praiseView = [[PraiseView alloc] initWithFrame:CGRectMake(0.0, 0.0, 240.0, 240.0)];

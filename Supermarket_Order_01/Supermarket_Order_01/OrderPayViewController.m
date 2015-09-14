@@ -51,7 +51,7 @@
     
     //自定义返回按钮及事件,将来换成图片
     UIBarButtonItem* customBackBatButton = [[UIBarButtonItem alloc]initWithTitle:@"< 订单支付" style:UIBarButtonItemStylePlain target:self action:@selector(returnToOrderConfirm:)];
-    customBackBatButton.tintColor = [UIColor blueColor];
+    customBackBatButton.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = customBackBatButton;
     
     
@@ -311,11 +311,7 @@
             delegate.orderID = self.order_id;
             detailedOrderStatusTableViewController* detailView = [[detailedOrderStatusTableViewController alloc]init];
             detailView.PraiseFlag = 1;
-            //下一页返回按钮返回订单首页
-//            UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"详情"  style:UIBarButtonItemStylePlain  target:self  action:@selector(detailBack)];
-//            self.navigationController.navigationBar.topItem.leftBarButtonItem = backButton;
             [self.navigationController pushViewController:detailView animated:YES];
-            
         } failure:^(AFHTTPRequestOperation * _Nonnull operation, NSError * _Nonnull error) {
             NSLog(@"支付失败:%@",error);
         }];

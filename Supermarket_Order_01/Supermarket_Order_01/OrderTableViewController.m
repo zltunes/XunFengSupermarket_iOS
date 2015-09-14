@@ -43,7 +43,7 @@
         [self.view addSubview:self.toregistOrloginlabel];
     }
     else{//已登录
-        self.table=[[UITableView alloc]initWithFrame:CGRectMake(0,0,kWindowWidth, kWindowHeight-70)];
+        self.table=[[UITableView alloc]initWithFrame:CGRectMake(0,0,kWindowWidth, kWindowHeight-64)];
         self.table.delegate=self;
         self.table.dataSource=self;
         [self.view addSubview:self.table];
@@ -63,7 +63,7 @@
 }
 -(void)initOrderViewAfterLogin
 {
-    self.table=[[UITableView alloc]initWithFrame:CGRectMake(0,64,kWindowWidth, kWindowHeight-70)];
+    self.table=[[UITableView alloc]initWithFrame:CGRectMake(0,64,kWindowWidth, kWindowHeight-64)];
     self.table.delegate=self;
     self.table.dataSource=self;
     [self.view addSubview:self.table];

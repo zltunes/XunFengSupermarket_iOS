@@ -42,7 +42,7 @@
     [self.navbar addSubview:view1];
     //self.navigationController.navigationBar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
     //self.navigationItem.title=@"我的";
-    navitem=[[UINavigationItem alloc]initWithTitle:nil];
+    navitem=[[UINavigationItem alloc]initWithTitle:@"我的地址"];
     [navbar pushNavigationItem:navitem animated:NO];
     navitem.rightBarButtonItem.tintColor=[UIColor whiteColor];
     [self.view addSubview:navbar];
