@@ -24,10 +24,6 @@
     UIButton *submitbtn;
     OrderAppDelegate* delegate;
     int flag;
-//    NSString *filename;
-//    NSMutableDictionary *plistdic;
-    //flag为0，快捷登录；1 普通登录
-   // UIImageView *phoneview3;
 }
 
 @end

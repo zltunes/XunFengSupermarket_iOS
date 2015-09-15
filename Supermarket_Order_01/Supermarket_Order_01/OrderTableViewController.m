@@ -35,7 +35,7 @@
 {
     if (!appDelegate.islogin) {
 
-        self.toregistOrloginlabel = [[UIImageView alloc]initWithFrame:CGRectMake(50,0.2*kWindowHeight , kWindowWidth-100, kWindowHeight*0.35)];
+        self.toregistOrloginlabel = [[UIImageView alloc]initWithFrame:CGRectMake(35,0.2*kWindowHeight , kWindowWidth-70, kWindowHeight*0.35)];
         self.toregistOrloginlabel.image = [UIImage imageNamed:@"weidenglu.png"];
 
         [self.table setHidden:YES];
@@ -238,10 +238,10 @@
     NSString* confirmReceived = [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/user/order/%ld",(long)ges.view.tag];
     [appDelegate.manager PUT:confirmReceived parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"确认收货成功！");
+        [self.table reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"确认收货失败！%@",error);
     }];
-    [self.table reloadData];
 }
 -(void)evaluateOrder:(UITapGestureRecognizer*)sender
 {

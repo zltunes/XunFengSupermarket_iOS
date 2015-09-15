@@ -20,12 +20,14 @@
     // Configure the view for the selected state
 }
 -(void)setupcell{
+    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.leftimg=[[UIImageView alloc]initWithFrame:CGRectMake(18, 10, 20, 20)];
     [self addSubview:self.leftimg];
     self.leftlabel=[[UILabel alloc]initWithFrame:CGRectMake(53, 10, 100,20 )];
     [self addSubview:self.leftlabel];
-    self.rightimg=[[UIImageView alloc]initWithFrame:CGRectMake(self.bounds.size.width-60, 10, 10, 15)];
-    [self addSubview:self.rightimg];
+    self.rightlabel=[[UILabel alloc]initWithFrame:CGRectMake(self.bounds.size.width-150, 10, 130, 20)];
+    [self.rightlabel setTextAlignment:NSTextAlignmentRight];
+    [self addSubview:self.rightlabel];
 }
 
 @end

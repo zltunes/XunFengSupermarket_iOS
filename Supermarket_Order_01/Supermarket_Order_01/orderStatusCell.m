@@ -63,11 +63,11 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         //根据status设置img
-        self.checkORerrorImg = [[UIImageView alloc]initWithFrame:CGRectMake(kWindowWidth/5, 10, 25, 25)];
+        self.checkORerrorImg = [[UIImageView alloc]initWithFrame:CGRectMake(kWindowWidth/9, 10, 25, 25)];
         [self.contentView addSubview:self.checkORerrorImg];
         
         //根据status设置text
-        self.orderStatusLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/5+40, 10, 0.75*kWindowWidth, 25)];
+        self.orderStatusLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth/9+30, 10, 0.75*kWindowWidth, 25)];
 //        self.orderStatusLabel.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:self.orderStatusLabel];
         

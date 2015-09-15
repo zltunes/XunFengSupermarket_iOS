@@ -102,7 +102,7 @@
     //设置viewcontroaller的超市id和url
     detailViewController.marId = [self.result2[indexPath.row][@"id"]intValue];
     detailViewController.url = url;
-    //设置搜索url
+    //设置搜索url  
     url = [NSString stringWithFormat:@"%@%@%@",@"http://115.29.197.143:8999/v1.0/supermarket/",self.result2[indexPath.row][@"id"],@"/good"];
     detailViewController.urlSearch = url;
     [self setHidesBottomBarWhenPushed:YES]; 

@@ -21,6 +21,8 @@
     OrderAppDelegate* delegate;
     UIButton *logoutbtn;
     UILabel *label1;
+    NSString *personInfoURL;
+    NSMutableDictionary* dict;
 }
 @end
 
@@ -32,12 +34,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationItem setHidesBackButton:YES];
+    personInfoURL = @"http://115.29.197.143:8999/v1.0/user";
+    dict = [[NSMutableDictionary alloc]init];
     delegate = [UIApplication sharedApplication].delegate;
      self.islogin = delegate.islogin;
     self.view.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
    navbar=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
    navbar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
-
+    
+    [delegate.manager GET:personInfoURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        dict = responseObject;
+        myTableViewCell* cell = [tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+        [cell.rightlabel setText:[NSString stringWithFormat:@"¥ %@",dict[@"balance"]]];
+        [cell.rightlabel setTextColor:[UIColor orangeColor]];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"获取个人信息失败!%@",error);
+    }];
+    
    UIImageView *view1=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
     [view1 setBackgroundColor:[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0]];
     [self.navbar addSubview:view1];
@@ -45,9 +58,7 @@
     navitem=[[UINavigationItem alloc]initWithTitle:nil];
     [navbar pushNavigationItem:navitem animated:NO];
     UIBarButtonItem *rightitem=[[UIBarButtonItem alloc]initWithTitle:@"修改密码" style:UIBarButtonItemStylePlain target:self action:@selector(changepwd)];
-    //[self.navigationItem setRightBarButtonItem:rightitem];
     [navitem setRightBarButtonItem:rightitem];
-    //self.navigationItem.rightBarButtonItem.tintColor=[UIColor whiteColor];
     navitem.rightBarButtonItem.tintColor=[UIColor whiteColor];
     [self.view addSubview:navbar];
     NSDictionary *attrdic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,
@@ -91,7 +102,6 @@
     NSIndexPath* indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
     myTableViewCell *cell = [self.tableview cellForRowAtIndexPath:indexpath];
     cell.leftlabel.text = @"我的账户";
-//    [label1 setHidden:YES];
     [self.tableview reloadData];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -121,23 +131,22 @@
     [cell setupcell];
  
     if(indexPath.section==0){
+        cell.accessoryType = UITableViewCellAccessoryNone;
         [cell.leftimg setImage:[UIImage imageNamed:@"我的-01.png"]];
         NSString *str=@"我的账户            ";
         if(_islogin==YES){
-            str=[str stringByAppendingString:[delegate.plistdic objectForKey:@"tel"]];
+//            str=[str stringByAppendingString:[delegate.plistdic objectForKey:@"tel"]];
+            [cell.rightlabel setTextColor:[UIColor orangeColor]];
+            [cell.rightlabel setText:[delegate.plistdic objectForKey:@"tel"]];
         }
-//        label1=[[UILabel alloc]initWithFrame:CGRectMake(18,10 , 280, 20)];
-//        [label1 setText:str];
-//        [cell addSubview:label1];
-        
         [cell.leftlabel setText:str];
         [cell.leftlabel sizeToFit];
     }
     //NSUInteger row = [indexPath row];
     if(indexPath.section==1){
-        [cell.leftimg setImage: [UIImage imageNamed:@"物流-01.png"]];
-        [cell.leftlabel setText:@"申请物流"];
-        
+        [cell.leftimg setImage: [UIImage imageNamed:@"账户余额-01.png"]];
+        [cell.leftlabel setText:@"余额"];
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     else if(indexPath.section==2){
         [cell.leftimg setImage: [UIImage imageNamed:@"地址管理-01.png"]];
@@ -146,7 +155,7 @@
     
     else if (indexPath.section==3){
         [cell.leftimg setImage:[UIImage imageNamed:@"账户余额-01.png"]];
-        [cell.leftlabel setText:@"余额"];
+        [cell.leftlabel setText:@"购物券"];
     }
     
     else if(indexPath.section==4){
@@ -184,11 +193,6 @@
         }
     
             
-    }
-    if(indexPath.section==1){
-        mylogisticsViewController *logisticsvc=[[mylogisticsViewController alloc]init];
-        //[self.navigationController pushViewController:logisticsvc animated:YES];
-        [self presentViewController:logisticsvc animated:NO completion:nil];
     }
     if(indexPath.section==2){
         AddressViewController *addressvc=[[AddressViewController alloc]init];

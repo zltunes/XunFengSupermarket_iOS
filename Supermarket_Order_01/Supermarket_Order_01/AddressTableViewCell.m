@@ -20,9 +20,10 @@
     // Configure the view for the selected state
 }
 -(void)setupcell{
-    self.addresslabel=[[UILabel alloc]initWithFrame:CGRectMake(30, 10, 260, 40)];
+    self.addresslabel=[[UILabel alloc]initWithFrame:CGRectMake(30, 10, 260, 30)];
     [self addSubview:self.addresslabel];
-    self.phonelabel=[[UILabel alloc]initWithFrame:CGRectMake(30, 50, 260, 40)];
+    self.phonelabel=[[UILabel alloc]initWithFrame:CGRectMake(30, 40, 260, 30)];
+    [self.phonelabel setTextColor:[UIColor grayColor]];
     [self addSubview:self.phonelabel];
 }
 @end

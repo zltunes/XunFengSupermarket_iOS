@@ -11,7 +11,7 @@
 @interface myTableViewCell : UITableViewCell
 @property(nonatomic,strong)UIImageView *leftimg;
 @property(nonatomic,strong)UILabel *leftlabel;
-@property(nonatomic,strong)UIImageView *rightimg;
+@property(nonatomic,strong)UILabel *rightlabel;
 
 -(void)setupcell;
 @end

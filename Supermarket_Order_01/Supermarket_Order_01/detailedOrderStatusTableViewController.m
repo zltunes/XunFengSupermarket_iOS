@@ -74,6 +74,7 @@ NSString* orderDetailURL;
     }];
     
     UIBarButtonItem* backItem = [[UIBarButtonItem alloc]initWithTitle:@"< 返回" style:UIBarButtonItemStylePlain target:self action:@selector(backToDetail)];
+    [backItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:17], NSFontAttributeName,nil] forState:UIControlStateNormal];
     self.navigationItem.leftBarButtonItem = backItem;
     
     
@@ -299,8 +300,8 @@ NSString* orderDetailURL;
         }
         NSDictionary* goodDict = [goodsArray objectAtIndex:row];
         purchaseCell.goodsNameLabel.text = [goodDict objectForKey:@"name"];
-        purchaseCell.goodsCountLabel.text = [NSString stringWithFormat:@"%@",[goodDict objectForKey:@"quantity"]];
-        purchaseCell.totalPriceLabel.text =[NSString stringWithFormat:@"%@",[goodDict objectForKey:@"price"]];
+        purchaseCell.goodsCountLabel.text = [NSString stringWithFormat:@"%@ 份",[goodDict objectForKey:@"quantity"]];
+        purchaseCell.totalPriceLabel.text =[NSString stringWithFormat:@"¥ %@",[goodDict objectForKey:@"price"]];
         return purchaseCell;
     }else if(section == 3){
         //包装配送费

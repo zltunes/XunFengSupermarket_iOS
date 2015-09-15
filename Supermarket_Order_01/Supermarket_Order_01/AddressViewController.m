@@ -56,12 +56,7 @@
     [self.backbtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [backitem setCustomView:self.backbtn];
     [self.navitem setLeftBarButtonItem:backitem];
-    self.tableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 70, self.view.bounds.size.width, kWindowHeight-200)];
-    [self.tableview registerClass:[AddressTableViewCell class] forCellReuseIdentifier:@"cell"];
-    self.tableview.backgroundColor=[UIColor whiteColor];
-    self.tableview.delegate=self;
-    self.tableview.dataSource=self;
-    [self.view addSubview:self.tableview];
+    
     self.view.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
     self.addbtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     self.addbtn.frame = CGRectMake(80, kWindowHeight-100, kWindowWidth-160,36);
@@ -70,11 +65,22 @@
     [self.addbtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
 
     [appdelegate.manager GET:@"http://115.29.197.143:8999/v1.0/user/addresses" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            self.addressArr=[responseObject mutableCopy];
-            [self.tableview reloadData];
+        self.addressArr=[responseObject mutableCopy];
+        self.tableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 70, self.view.bounds.size.width, kWindowHeight-200)];
+        [self.tableview registerClass:[AddressTableViewCell class] forCellReuseIdentifier:@"cell"];
+        self.tableview.backgroundColor=[UIColor whiteColor];
+        self.tableview.delegate=self;
+        self.tableview.dataSource=self;
+        [self.view addSubview:self.tableview];
+        [self hideExcessLine:self.tableview];
     }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
     }];
+}
+-(void)hideExcessLine:(UITableView *)tableView{
+    UIView *view=[[UIView alloc] init];
+    view.backgroundColor=[UIColor clearColor];
+    [tableView setTableFooterView:view];
 }
 -(void)add{
     NewAddrViewController *newaddrvc=[[NewAddrViewController alloc]init];
@@ -110,22 +116,23 @@
     AddressTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];
     if(cell.addresslabel==nil)
         [cell setupcell];
-    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    cell.accessoryType = UITableViewCellAccessoryDetailButton;
     [cell.addresslabel setText:[self.addressArr[indexPath.section] objectForKey:@"address"]];
     [cell.phonelabel setText:[self.addressArr[indexPath.section] objectForKey:@"phone_num"]];
     return cell;
 }
--(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    EditAddrViewController *editvc=[[EditAddrViewController alloc]init];
-    editvc.addrid=[NSString stringWithFormat:@"%@", [[self.addressArr objectAtIndex:indexPath.section]objectForKey:@"id"]];
-    editvc.editAddress_arrindex = indexPath.section;
-    AddressTableViewCell* editcell = [self.tableview cellForRowAtIndexPath:indexPath];
-    editvc.addstr = editcell.addresslabel.text;
-    editvc.phonestr = editcell.phonelabel.text;
-    [self presentViewController:editvc animated:NO completion:nil];
-    [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
-}
+//-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+//{
+//    EditAddrViewController *editvc=[[EditAddrViewController alloc]init];
+//    editvc.addrid=[NSString stringWithFormat:@"%@", [[self.addressArr objectAtIndex:indexPath.section]objectForKey:@"id"]];
+//    editvc.editAddress_arrindex = indexPath.section;
+//    AddressTableViewCell* editcell = [self.tableview cellForRowAtIndexPath:indexPath];
+//    editvc.addstr = editcell.addresslabel.text;
+//    editvc.phonestr = editcell.phonelabel.text;
+//    [self presentViewController:editvc animated:NO completion:nil];
+//    [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
+//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -136,6 +143,16 @@
         [confirmController.table reloadData];
         [self.navigationController popViewControllerAnimated:YES];
 }
+    else{
+        EditAddrViewController *editvc=[[EditAddrViewController alloc]init];
+        editvc.addrid=[NSString stringWithFormat:@"%@", [[self.addressArr objectAtIndex:indexPath.section]objectForKey:@"id"]];
+        editvc.editAddress_arrindex = indexPath.section;
+        AddressTableViewCell* editcell = [self.tableview cellForRowAtIndexPath:indexPath];
+        editvc.addstr = editcell.addresslabel.text;
+        editvc.phonestr = editcell.phonelabel.text;
+        [self presentViewController:editvc animated:NO completion:nil];
+        [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
+    }
     [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
