@@ -10,6 +10,7 @@
 #import "Header.h"
 #import "UIImageView+WebCache.h"
 #import "SDImageCache.h"
+#import "UIImageView+WebCache.h"
 @implementation MarketCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -55,9 +56,7 @@
         UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(MarketView.frame)+15,CGRectGetMinY(MarketView.frame),100,15)];
         [self.contentView addSubview:nameLabel];
         _nameLabel = nameLabel;
-        
-        
-        
+
         UILabel *monthSale = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(MarketView.frame)+100, CGRectGetMinY(MarketView.frame)+30, 70, 12)];
         monthSale.textColor = [UIColor grayColor];
         [self.contentView addSubview:monthSale];
@@ -115,6 +114,7 @@
     _freeLabel.text = @"免费配送";
     _freeLabel.font = [UIFont boldSystemFontOfSize:14];
     
+    [_MarketView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",data[@"icon"]]]];
     
 }
 

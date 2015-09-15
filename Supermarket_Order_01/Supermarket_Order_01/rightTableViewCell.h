@@ -21,9 +21,12 @@
 @property (nonatomic)NSMutableArray *zL;
 @property (nonatomic)NSUInteger index;
 @property (nonatomic)int *intTemp;
-@property (nonatomic)NSMutableDictionary *chooseDic;
+@property (nonatomic)NSMutableDictionary* chooseDic;
 
 @property (nonatomic)UILabel* bottomPriceLabel;
+@property (nonatomic)UILabel* carNum;
+
+@property (nonatomic)NSInteger *dicPath;
 
 - (void)leftBtnSelect:(id)sender;
 - (void)rightBtnSelect:(id)sender;

@@ -10,4 +10,7 @@
 
 @interface MorCommentVC : UIViewController
 
+@property(nonatomic)NSInteger *marId;
+@property(nonatomic)NSMutableArray *dic;
+
 @end

@@ -8,6 +8,7 @@
 
 #import "MorCommentVC.h"
 #import "moreComCell.h"
+#import "AFtools.h"
 #import "Header.h"
 
 @interface MorCommentVC ()<UITableViewDataSource>
@@ -18,8 +19,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self connectBackGround];
     // Do any additional setup after loading the view.
     UITableView *commentView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0,kWindowWidth-36, kWindowHeight)];
+    commentView.dataSource = self;
     commentView.rowHeight = 64;
     [self.view addSubview:commentView];
     _commentView = commentView;
@@ -31,19 +34,30 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return _dic.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString* cellId = @"cellId";
-    moreComCell* cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if(cell == nil){
-        cell = [[moreComCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-    }
+    moreComCell* cell = [[moreComCell alloc]init];
+   
+    cell.commentDic = self.dic[indexPath.row];
     cell.layer.cornerRadius = 12;
     cell.layer.masksToBounds = YES;
     return cell;
 
 }
+- (void)connectBackGround{
+    NSString *url = [NSString stringWithFormat:@"%@%ld%@",@"http://115.29.197.143:8999/v1.0/supermarket/",(long)self.marId,@"/comments"];
+    [AFtools JSONDataWithUrl:url parameters:nil HttpHeader:nil success:^(id responseObject){
+        self.dic = responseObject;
+
+        //NSLog(@"%@",_dic[0]);
+        [self.commentView reloadData];
+    } fail:^{
+        NSLog(@"error");
+
+    }];
+}
+
 
 /*
 #pragma mark - Navigation

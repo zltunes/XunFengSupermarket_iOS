@@ -20,6 +20,8 @@
 //@property(strong,nonatomic)NSMutableArray *marketArray;
 @property(strong,nonatomic)UITableView *marketTableView;//显示的表格行
 
+@property(nonatomic)UIImageView *marketImage;
+
 @property (nonatomic)NSObject *result;//临时存放的Access token
 @property (nonatomic)id result2;
 @property (nonatomic)NSInteger marketCount;
@@ -31,8 +33,8 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     //设置导航栏的背景颜色和字体颜色
-//    [self.navigationController.navigationBar setBarTintColor:[UIColor orangeColor]];
-//    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
+//    self.navigationController.navigationBar.barTintColor = [UIColor orangeColor];
+//    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     [self connectBackGround];
 
  }
@@ -56,6 +58,7 @@
     marketTableView.hidden = YES;
     [self.view addSubview:marketTableView];
     _marketTableView = marketTableView;
+    
         
     NSMutableArray *detailArray = [NSMutableArray array];
     _detailArray = detailArray;
@@ -76,12 +79,8 @@
 }
 //创建超市单元格
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString* cellId = @"cellId";
-    MarketCell* cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    
-    if(cell == nil){
-        cell = [[MarketCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-    }
+    MarketCell* cell = [[MarketCell alloc]init];
+
     cell.layer.cornerRadius = 12;
     cell.layer.masksToBounds = YES;
     cell.data = _result2[indexPath.row];
@@ -102,7 +101,7 @@
     //设置viewcontroaller的超市id和url
     detailViewController.marId = [self.result2[indexPath.row][@"id"]intValue];
     detailViewController.url = url;
-    //设置搜索url  
+    //设置搜索url
     url = [NSString stringWithFormat:@"%@%@%@",@"http://115.29.197.143:8999/v1.0/supermarket/",self.result2[indexPath.row][@"id"],@"/good"];
     detailViewController.urlSearch = url;
     [self setHidesBottomBarWhenPushed:YES]; 
@@ -120,7 +119,17 @@
         [_marketTableView reloadData];
         _marketTableView.hidden = NO;
     } fail:^{
-        NSLog(@"附近超市获取失败!");
+        NSLog(@"获取附近超市列表失败!");
     }];
 }
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
 @end

@@ -31,9 +31,14 @@
         [self.contentView addSubview:saleLabel];
         _saleLabel = saleLabel;
         
-        UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(pic.frame)+8, CGRectGetMinY(pic.frame)+40, kWindowWidth-300, 9)];
+        UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(pic.frame)+12, CGRectGetMinY(pic.frame)+40, kWindowWidth-300, 9)];
+        priceLabel.textColor = [UIColor redColor];
         [self.contentView addSubview:priceLabel];
         _priceLabel = priceLabel;
+        
+        UIImageView *pricePic = [[UIImageView alloc]initWithFrame:CGRectMake(priceLabel.frame.origin.x-10, priceLabel.frame.origin.y, 10, 10)];
+        pricePic.image = [UIImage imageNamed:@"9.png"];
+        [self.contentView addSubview:pricePic];
         
         UILabel *num = [[UILabel alloc]initWithFrame:CGRectMake((self.frame.size.width)*0.78, 60, 30, 30)];
         num.backgroundColor = [UIColor whiteColor];
@@ -68,7 +73,7 @@
         [self.contentView addSubview:rightBtn];
         _rightBtn = rightBtn;
         
-        NSMutableDictionary * chooseDic = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"",@"name",@"",@"gid",@"",@"price",@"",@"quantity", nil];
+        NSMutableDictionary *chooseDic = [[NSMutableDictionary alloc]init];
         _chooseDic = chooseDic;
         
     }
@@ -77,9 +82,6 @@
 
 - (void)setData:(NSMutableDictionary *)data{
     NSString *temp = [[NSString alloc]init];
-    int *intTemp = [data[@"num"]intValue];
-    _intTemp = intTemp;
-
     
     _data = data;
     
@@ -109,13 +111,20 @@
 }
 
 -(void)rightBtnSelect:(id)sender{
+    //购物车数量
+    _carNum.hidden = NO;
+    int tempCar = [_carNum.text intValue];
+    tempCar++;
+    _carNum.text = [NSString stringWithFormat:@"%d",tempCar];
+    
+    
     //两个按钮之间的数量
     _leftBtn.hidden = NO;
     int temp = [_num.text intValue];
     if(temp == 0){
-        [_zL addObject:@"1"];
+        [_zL addObject:_chooseDic];
+
     }
-    _index = _zL.count;
     temp++;
     _num.text =[NSString stringWithFormat:@"%d",temp];
     //存放到本地数组中（刷新后不改变）
@@ -132,19 +141,32 @@
     [_chooseDic setObject:_data[@"name"] forKey:@"name"];
     [_chooseDic setObject:_data[@"num"] forKey:@"quantity"];
     [_chooseDic setObject:_data[@"price"] forKey:@"price"];
-//    NSLog(@"%lu",(unsigned long)_zL.count);
-//    NSLog(@"%@",_chooseDic);
-    [_zL replaceObjectAtIndex:_index-1 withObject:_chooseDic];
-    //NSLog(@"%@",_zL[_index-1]);
+    [_chooseDic setObject:self forKey:@"cell"];
+
+
+    
 }
 
 - (void)leftBtnSelect:(id)sender{
+    //购物车数量
+    int tempCar = [_carNum.text intValue];
+    if(tempCar ==1){
+        _carNum.hidden = YES;
+    }
+    tempCar--;
+    _carNum.text = [NSString stringWithFormat:@"%d",tempCar];
+    
+    //跟赵磊交互
     int temp = [_num.text intValue];
-    _index = _zL.count;
     if(temp == 1){
         _leftBtn.hidden = YES;
-        [_zL removeLastObject];
-        _index = _zL.count;
+        for(NSInteger i=0;i<_zL.count;i++){
+            if([[_zL[i]objectForKey:@"name"]isEqualToString:[NSString stringWithFormat:@"%@",_data[@"name"]]]){
+                [_zL removeObjectAtIndex:i];
+            }
+        }
+        
+        
     }
     temp--;
     _num.text =[NSString stringWithFormat:@"%d",temp];
@@ -155,9 +177,6 @@
     _bottomPriceLabel.text = [NSString stringWithFormat:@"%.1lf",totalTemp];
     
     [_chooseDic setObject:_data[@"num"] forKey:@"quantity"];
-//    NSLog(@"%@",_chooseDic);
-//     NSLog(@"%lu",(unsigned long)_zL.count);
-//     NSLog(@"%@",_zL[_index-1]);
 }
 
 - (void)setBottomPriceLabel:(UILabel *)bottomPriceLabel{

@@ -68,7 +68,6 @@
         self.addressArr=[responseObject mutableCopy];
         self.tableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 70, self.view.bounds.size.width, kWindowHeight-200)];
         [self.tableview registerClass:[AddressTableViewCell class] forCellReuseIdentifier:@"cell"];
-        self.tableview.backgroundColor=[UIColor whiteColor];
         self.tableview.delegate=self;
         self.tableview.dataSource=self;
         [self.view addSubview:self.tableview];
@@ -122,17 +121,6 @@
     [cell.phonelabel setText:[self.addressArr[indexPath.section] objectForKey:@"phone_num"]];
     return cell;
 }
-//-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-//{
-//    EditAddrViewController *editvc=[[EditAddrViewController alloc]init];
-//    editvc.addrid=[NSString stringWithFormat:@"%@", [[self.addressArr objectAtIndex:indexPath.section]objectForKey:@"id"]];
-//    editvc.editAddress_arrindex = indexPath.section;
-//    AddressTableViewCell* editcell = [self.tableview cellForRowAtIndexPath:indexPath];
-//    editvc.addstr = editcell.addresslabel.text;
-//    editvc.phonestr = editcell.phonelabel.text;
-//    [self presentViewController:editvc animated:NO completion:nil];
-//    [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
-//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     

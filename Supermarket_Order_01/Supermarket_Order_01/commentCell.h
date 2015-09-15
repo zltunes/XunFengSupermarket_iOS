@@ -11,7 +11,17 @@
 @interface commentCell : UITableViewCell
 
 @property(nonatomic)UILabel *phoneNum;
-@property(nonatomic)UILabel *comment;
-@property(nonatomic)UILabel *data;
+@property(nonatomic)UILabel *commentLab;
+@property(nonatomic)UILabel *dataLab;
+
+@property(nonatomic)NSMutableDictionary *dataDic;
+
+@property (nonatomic)UIImageView* star1;
+@property (nonatomic)UIImageView* star2;
+@property (nonatomic)UIImageView* star3;
+@property (nonatomic)UIImageView* star4;
+@property (nonatomic)UIImageView* star5;
+
+@property (nonatomic)NSString *star;
 
 @end

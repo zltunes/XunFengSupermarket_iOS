@@ -11,6 +11,7 @@
 #import "Header.h"
 #import "MorCommentVC.h"
 #import "AFtools.h"
+#import "UIImageView+WebCache.h"
 @interface MarketDetailVC ()<UITableViewDataSource>
     
 @property (strong,nonatomic)UIImageView *marketImage;
@@ -19,6 +20,7 @@
 @property (strong,nonatomic)UILabel *marketText;
 @property (nonatomic)NSString *next;
 @property (nonatomic)NSMutableDictionary *dic;
+
 
 @end
 
@@ -93,27 +95,27 @@
     return 3;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString* cellId = @"cellId";
-    commentCell* cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if(cell == nil){
-        cell = [[commentCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-    }
-    cell.layer.cornerRadius = 12;
-    cell.layer.masksToBounds = YES;
-    return cell;
+    commentCell* cell = [[commentCell alloc]init];
+    
+    cell.dataDic = _dic[@"comments"][indexPath.row];
+        return cell;
 }
 
 - (void)touchBtn{
     MorCommentVC *morCommentVC = [[MorCommentVC alloc]init];
+    morCommentVC.marId = self.marId;
     [self.navigationController pushViewController:morCommentVC animated:YES];
     
 }
 
 - (void)connectBackGround{
-    NSString *url = [NSString stringWithFormat:@"%@%d",@"http://115.29.197.143:8999/v1.0/supermarket/",self.marId];
+    NSString *url = [NSString stringWithFormat:@"%@%ld",@"http://115.29.197.143:8999/v1.0/supermarket/",(long)self.marId];
     [AFtools JSONDataWithUrl:url parameters:nil HttpHeader:nil success:^(id responseObject){
         self.dic = responseObject;
+        [_marketImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_dic[@"icon"]]] ];
+       NSLog(@"%@",responseObject[@"comments"]);
         [self reloadTextData];
+        [self.commentView reloadData];
            } fail:^{
         NSLog(@"error");
     }];
