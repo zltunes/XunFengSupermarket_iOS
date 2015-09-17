@@ -21,12 +21,10 @@
 }
 
 -(void)setupcell{
-    self.numlabel=[[UILabel alloc]initWithFrame:CGRectMake(50, 10, 30, 50)];
+    self.numlabel=[[UILabel alloc]initWithFrame:CGRectMake(50, 21, 30, 60)];
     [self addSubview:self.numlabel];
-    [self.numlabel setFont:[UIFont systemFontOfSize:24.0]];
     self.timelabel=[[UILabel alloc]initWithFrame:CGRectMake(100, 10, self.bounds.size.width-180, 50)];
     [self addSubview:self.timelabel];
-    [self.numlabel setFont:[UIFont systemFontOfSize:12.0]];
     self.statelabel=[[UILabel alloc]initWithFrame:CGRectMake(self.bounds.size.width-80, 10, 70, 50)];
     [self addSubview:self.statelabel];
     

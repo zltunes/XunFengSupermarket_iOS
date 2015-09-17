@@ -51,6 +51,7 @@ NSString* orderDetailURL;
     //获取订单状态
     [appDelegate.manager GET:orderDetailURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //将服务器json数据转化成NSDictionary,赋值给orders属性
+        NSLog(@"%@",responseObject);
         dict = responseObject;
         //1⃣️state
         NSString* status = [dict objectForKey:@"state"];
@@ -373,12 +374,9 @@ NSString* orderDetailURL;
 //评价
 -(void)evaluate:(id)sender
 {
-OrderEvaluate *evalueatController = [[OrderEvaluate alloc]init];
+    OrderEvaluate *evalueatController = [[OrderEvaluate alloc]init];
     [self setHidesBottomBarWhenPushed:YES];
-[self.navigationController pushViewController:evalueatController animated:YES];
-//自定义返回按钮
-//UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"评价"  style:UIBarButtonItemStylePlain  target:self  action:nil];
-//self.navigationItem.backBarButtonItem = backButton;
+    [self.navigationController pushViewController:evalueatController animated:YES];
 }
 //确认收货事件
 -(void)queRenShouHuo:(id)sender
@@ -474,10 +472,10 @@ OrderEvaluate *evalueatController = [[OrderEvaluate alloc]init];
     
     if(row == 0){
         cell.textLabel.text = @"商家电话";
-        cell.detailTextLabel.text = @"13720928727";//从后台获取
+        cell.detailTextLabel.text = @"15651907759";//从后台获取
     }else if (row == 1){
         cell.textLabel.text = @"客服电话";
-        cell.detailTextLabel.text = @"15651907759";
+        cell.detailTextLabel.text = @"18795886298";
     }
     return cell;
 }
@@ -496,9 +494,9 @@ OrderEvaluate *evalueatController = [[OrderEvaluate alloc]init];
     NSURL *telURL = nil;
     //使用UIWebView加载tel:开头的URL打电话，而且电话结束后回到本应用，以留住用户！！
     if(!indexPath.row){
-    telURL = [NSURL URLWithString:@"tel:13720928727"];
-    }else{
     telURL = [NSURL URLWithString:@"tel:15651907759"];
+    }else{
+    telURL = [NSURL URLWithString:@"tel:18795886298"];
     }
     [callWebView loadRequest:[NSURLRequest requestWithURL:telURL]];
     [self.view addSubview:callWebView];

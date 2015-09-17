@@ -17,6 +17,8 @@
     UINavigationBar *navbar;
     UINavigationItem*navitem;
     OrderAppDelegate* appdelegate;
+    NSString* couponURL;
+    NSMutableArray* couponArray;
 }
 
 @end
@@ -25,6 +27,8 @@
 
 - (void)viewDidLoad {
     appdelegate = [UIApplication sharedApplication].delegate;
+    couponURL = @"http://115.29.197.143:8999/v1.0/coupons";
+    couponArray = [[NSMutableArray alloc]init];
     [super viewDidLoad];
     navbar=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
     navbar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
@@ -46,26 +50,15 @@
     [self.backbtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [backitem setCustomView:self.backbtn];
     [navitem setLeftBarButtonItem:backitem];
-    
-    self.tableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 74, self.view.bounds.size.width, self.view.bounds.size.height)];
-    [self.view addSubview:self.tableview];
-    [self.tableview registerClass:[CouponTableViewCell class] forCellReuseIdentifier:@"cell"];
-    self.tableview.delegate=self;
-    self.tableview.dataSource=self;
-    // NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:@"Access_token",@"b07f18c8-3f14-11e5-82bd-00163e021195",nil];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
-//    //申明返回的结果是json类型
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    //申明请求的数据是json类型
-//    manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
-//
-//        [manager.requestSerializer setValue:@"b07f18c8-3f14-11e5-82bd-00163e021195"forHTTPHeaderField:@"Access_token"];
-//    //[manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"]
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
-//    // 网络访问是异步的,回调是主线程的,因此程序员不用管在主线程更新UI的事情
-    [appdelegate.manager GET:@"http://115.29.197.143:8999/v1.0/coupons" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"获取购物券成功!");
+
+    [appdelegate.manager GET:couponURL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+        couponArray = responseObject;
+        self.tableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 74, self.view.bounds.size.width, self.view.bounds.size.height)];
+        [self.view addSubview:self.tableview];
+        [self.tableview registerClass:[CouponTableViewCell class] forCellReuseIdentifier:@"cell"];
+        self.tableview.delegate=self;
+        self.tableview.dataSource=self;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
     }];
@@ -77,7 +70,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return [couponArray count];
 }
 
 
@@ -97,20 +90,31 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+            //[{id,price,state,timelimit}]
     static NSString *CellWithIdentifier = @"cell";
     CouponTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellWithIdentifier];
-    if(cell.timelabel==nil)
-        [cell setupcell];
-    [cell.timelabel setText:@"有效期至2015-08-12"];
+    NSMutableDictionary* couponDict = [[NSMutableDictionary alloc]init];
+    couponDict = [couponArray objectAtIndex:indexPath.section];
+    [cell setupcell];
+    [cell.timelabel setText:[NSString stringWithFormat:@"有效期至%@",couponDict[@"timelimit"]]];
     [cell.timelabel setFont:[UIFont systemFontOfSize:13.0]];
-    [cell.numlabel setText:@"¥ 2"];
-    [cell.numlabel setFont:[UIFont systemFontOfSize:20.0]];
-    [cell.statelabel setText:@"已过期"];
+    [cell.numlabel setText:[NSString stringWithFormat:@"¥ %@",couponDict[@"price"]]];
+    [cell.numlabel setFont:[UIFont systemFontOfSize:25.0]];
+    [cell.numlabel sizeToFit];
+    [cell.numlabel setTextColor:[UIColor orangeColor]];
+    if ([couponDict[@"state"] isEqualToString:@"timeout"]) {
+        cell.statelabel.text = @"过期";
+        cell.statelabel.textColor = [UIColor grayColor];
+    } else {
+        cell.statelabel.text = @"可用";
+        cell.statelabel.textColor = [UIColor orangeColor];
+    }
+    
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-   
+    [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
@@ -118,15 +122,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

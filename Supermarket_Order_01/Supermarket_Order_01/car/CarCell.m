@@ -23,16 +23,17 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
    // self.frame = CGRectMake(0, 0, kWindowWidth, 50);
     if(self){
-        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, 5, kWindowWidth*0.4, 50)];
+        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, kWindowWidth*0.4, 40)];
+        nameLabel.font = [UIFont boldSystemFontOfSize:14];
         [self.contentView addSubview:nameLabel];
         _nameLabel = nameLabel;
         
-        UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth*0.5, 5, 30, 50)];
+        UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth*0.5, 0, 30, 40)];
         [self.contentView addSubview:priceLabel];
         _priceLabel = priceLabel;
         
         UIButton *leftBtn = [[UIButton alloc]init];
-        leftBtn.frame = CGRectMake(kWindowWidth*0.75, 20, 20, 20);
+        leftBtn.frame = CGRectMake(kWindowWidth*0.75, 10, 20, 20);
         leftBtn.layer.masksToBounds = YES;
         leftBtn.layer.cornerRadius = 10;
         [leftBtn setTitle:@"-" forState:UIControlStateNormal];
@@ -47,7 +48,7 @@
         
         
         UIButton *rightBtn = [[UIButton alloc]init];
-        rightBtn.frame = CGRectMake(kWindowWidth*0.9, 20, 20, 20);
+        rightBtn.frame = CGRectMake(kWindowWidth*0.9, 10, 20, 20);
         rightBtn.layer.masksToBounds = YES;
         rightBtn.layer.cornerRadius = 10;
         [rightBtn setTitle:@"+" forState:UIControlStateNormal];
@@ -60,7 +61,7 @@
         [self.contentView addSubview:rightBtn];
         _rightBtn = rightBtn;
         
-        UILabel *numLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth*0.8, 20, kWindowWidth*0.1, 20)];
+        UILabel *numLabel = [[UILabel alloc]initWithFrame:CGRectMake(kWindowWidth*0.8, 10, kWindowWidth*0.1, 20)];
         numLabel.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:numLabel];
         _numLabel = numLabel;
@@ -83,7 +84,6 @@
     if(temp == 1){
         [_tempCell leftBtnSelect:sender];
         [self.delegate CarViewDataReload];
-        _leftBtn.hidden = YES;
         return;
     }
     temp--;

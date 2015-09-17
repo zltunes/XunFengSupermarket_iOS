@@ -45,10 +45,10 @@
     [self.backbtn setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
     [self.backbtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [backitem setCustomView:self.backbtn];
-    [navitem setLeftBarButtonItem:backitem];
+//    [navitem setLeftBarButtonItem:backitem];
     
     self.view.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
-    UIImageView *whiteview=[[UIImageView alloc]initWithFrame:CGRectMake(0, 72, self.view.bounds.size.width, 130)];
+    UIImageView *whiteview=[[UIImageView alloc]initWithFrame:CGRectMake(0, 72, self.view.bounds.size.width, 90)];
     [whiteview setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:whiteview];
     UILabel *addrlabel=[[UILabel alloc]initWithFrame:CGRectMake(18, 80, 60, 30)];
@@ -60,7 +60,7 @@
     [self.view addSubview:self.addressfield];
     
     UIImageView* line1=[[UIImageView alloc]initWithFrame:CGRectMake(18, 112, 284, 1)];
-    line1.backgroundColor=[UIColor colorWithRed:88.0/255.0 green:88.0/255.0 blue:88.0/255.0 alpha:1.0];
+    line1.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
     [self.view addSubview:line1];
     
     
@@ -76,14 +76,13 @@
     line2.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
     [self.view addSubview:line2];
     
-    UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(10, 220, self.view.bounds.size.width-20, 20)];
+    UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(20, 220, self.view.bounds.size.width-20, 20)];
     [label3 setTextColor:[UIColor grayColor]];
     [self.view addSubview:label3];
     [label3 setText:@"请精确到宿舍号,方便我们送货上门哦"];
 
     UIButton* savebtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     savebtn.frame = CGRectMake(25, kWindowHeight-300, kWindowWidth-50, 50);
-//    [savebtn setTitle:@"保存" forState:UIControlStateNormal];
     [savebtn setBackgroundImage:[UIImage imageNamed:@"save-01.png"] forState:UIControlStateNormal];
     [savebtn addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:savebtn];
@@ -96,22 +95,16 @@
 }
 
 -(void)save{
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
-//    //申明返回的结果是json类型
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    //申明请求的数据是json类型
-//    manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
-//    [manager.requestSerializer setValue:@"4244b7ac-4fbb-11e5-82bd-00163e021195"forHTTPHeaderField:@"Access_token"];
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
+
     NSDictionary *parameters = @{@"phone_num":self.phonefield.text,@"address":self.addressfield.text};
     NSString *url=[@"http://115.29.197.143:8999/v1.0/user/address/" stringByAppendingString:self.addrid];
     [appdelegate.manager PUT:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        AddressViewController* addressViewController = [[AddressViewController alloc]init];
-        [[addressViewController.addressArr objectAtIndex:self.editAddress_arrindex] setObject:self.phonefield.text forKey:@"address"];
+        AddressViewController* addressViewController = [[self.navigationController viewControllers] objectAtIndex:[[self.navigationController viewControllers]count]-2];
+        [[addressViewController.addressArr objectAtIndex:self.editAddress_arrindex] setValue:self.addressfield.text forKey:@"address"];
         [[addressViewController.addressArr objectAtIndex:self.editAddress_arrindex] setObject:self.phonefield.text forKey:@"phone_num"];
         [addressViewController.tableview reloadData];
-        [self presentViewController:addressViewController animated:NO completion:nil];
+//        [self presentViewController:addressViewController animated:NO completion:nil];
+        [self.navigationController popViewControllerAnimated:YES];
 //        [self dismissViewControllerAnimated:NO completion:nil];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"修改地址失败!%@", error);

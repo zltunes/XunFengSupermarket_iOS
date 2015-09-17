@@ -210,13 +210,9 @@
         delegate.access_token = [delegate.plistdic objectForKey:@"access_token"];
         [delegate.manager.requestSerializer setValue:delegate.access_token forHTTPHeaderField:@"access_token"];
         [delegate.viewController.toregistOrloginlabel setHidden:YES];
-        
-        //重新加载orderview
-//        delegate.naviController_order = [[UINavigationController alloc]initWithRootViewController:delegate.viewController];
-//        delegate.naviController_order.navigationBar.barTintColor = [UIColor colorWithRed:255.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
-//        [delegate.naviController_order.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
 
         [delegate.viewController initOrderViewAfterLogin];
+        
         myViewController *myvc=[[myViewController alloc]init];
         [self.navigationController pushViewController:myvc animated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

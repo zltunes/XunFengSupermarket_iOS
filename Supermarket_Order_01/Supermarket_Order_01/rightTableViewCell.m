@@ -31,7 +31,7 @@
         [self.contentView addSubview:saleLabel];
         _saleLabel = saleLabel;
         
-        UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(pic.frame)+12, CGRectGetMinY(pic.frame)+40, kWindowWidth-300, 9)];
+        UILabel *priceLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(pic.frame)+12, CGRectGetMinY(pic.frame)+40, 50, 9)];
         priceLabel.textColor = [UIColor redColor];
         [self.contentView addSubview:priceLabel];
         _priceLabel = priceLabel;
@@ -108,6 +108,13 @@
     }
     else
         _leftBtn.hidden = NO;
+    if([[NSString stringWithFormat:@"%@",data[@"state"]]isEqual:@"pull off"]){
+        self.userInteractionEnabled = NO;
+        _leftBtn.hidden = YES;
+        _rightBtn.hidden = YES;
+        _num.hidden = YES;
+        self.alpha = 0.2;
+    }
 }
 
 -(void)rightBtnSelect:(id)sender{

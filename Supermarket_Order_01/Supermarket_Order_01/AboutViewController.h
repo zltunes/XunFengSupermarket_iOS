@@ -1,13 +1,17 @@
 //
 //  AboutViewController.h
-//  mysupermarket
+//  Supermarket_Order_01
 //
-//  Created by 程茹洁 on 15/8/14.
-//  Copyright (c) 2015年 程茹洁. All rights reserved.
+//  Created by 赵磊 on 15/9/15.
+//  Copyright © 2015年 赵磊. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+#import "Header.h"
 
-@interface AboutViewController : UIViewController
+@interface AboutViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)UIButton *backbtn;
+@property(nonatomic,strong)UITableView *table;
+@property(nonatomic,strong)UIImageView *imageview;
+@property(nonatomic,strong)UILabel *iconlabel;
 @end

@@ -64,12 +64,10 @@
     
     UIImage* sup_selected = [UIImage imageNamed:@"sup_selected.png"];
     UIImage* sup_noselected = [UIImage imageNamed:@"sup_noselected.png"];
-//    [self.rootViewController.tabBarItem setImageInsets:UIEdgeInsetsMake(5.0, 0.0, -7.0, 0.0)];
     sup_selected = [self reSizeImage:sup_selected toSize:CGSizeMake(33, 33)];
     sup_noselected = [self reSizeImage:sup_noselected toSize:CGSizeMake(33, 33)];
     self.rootViewController.tabBarItem.selectedImage = [sup_selected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.rootViewController.tabBarItem.image = [sup_noselected imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    self.rootViewController.navigationItem.title = @"超  市";
     
     //2.初始化“订单”界面
     self.viewController = [[OrderTableViewController alloc]init];
@@ -89,6 +87,8 @@
     self.vc3 = [[myViewController alloc]init];
     self.naviController_vc3 = [[UINavigationController alloc]initWithRootViewController:self.vc3];
         self.naviController_vc3.navigationBar.barTintColor = [UIColor colorWithRed:255.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
+    self.naviController_vc3.navigationBar.barStyle = UIStatusBarStyleDefault;
+    [self.naviController_vc3.navigationBar setTintColor:[UIColor whiteColor]];
     [self.naviController_vc3.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
     self.vc3.title = @"我  的";
     
@@ -159,6 +159,7 @@
     self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
   
     [self.window makeKeyAndVisible];
+    [NSThread sleepForTimeInterval:1];
     return YES;
 }
 

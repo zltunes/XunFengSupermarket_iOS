@@ -38,7 +38,8 @@
     [self.ratingBar setImageDeselected:@"ratingbar_unselected" halfSelected:nil fullSelected:@"ratingbar_selected" andDelegate:self];
     
     //显示结果的UILabel
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(280,145,150,20)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(260,145,150,20)];
+    label.textColor = [UIColor orangeColor];
     [self.view addSubview:label];
     self.ratingLabel = label;
     

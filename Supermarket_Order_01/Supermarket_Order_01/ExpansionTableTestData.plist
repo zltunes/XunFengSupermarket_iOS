@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>answer</key>
+		<array>
+			<string>订单取消后，款项会在一个工作日内，直接返还到您的掌上超市余额账户。</string>
+			<string>这个情况属于第三方平台付款延迟问题，我们会立即将扣款退回余额账户。</string>
+		</array>
+		<key>list</key>
+		<array>
+			<string>Q: 在线支付取消订单后钱怎么返还?</string>
+			<string>Q: 订单未支付成功，款项被扣除怎么办？</string>
+		</array>
+		<key>name</key>
+		<string>支付问题</string>
+	</dict>
+	<dict>
+		<key>answer</key>
+		<array>
+			<string>商家接单前可直接取消订单；商家接单后，若想取消订单需联系商家由商家取消该订单。</string>
+			<string>如果商家尚未接单，您可以自主取消订单；如果商家已经接单，您可以电话联系商家后由对方取消订单，然后重新订一单。</string>
+		</array>
+		<key>list</key>
+		<array>
+			<string>Q: 如何取消订单？</string>
+			<string>Q: 刚下单发现信息填错了怎么办？</string>
+		</array>
+		<key>name</key>
+		<string>订单问题</string>
+	</dict>
+	<dict>
+		<key>answer</key>
+		<array>
+			<string>每次下单成功后拥有抽取优惠券的资格，优惠券价值1到5元不等，优惠券有使用日期限制，在下次下单时可使用已抽取的优惠券。</string>
+		</array>
+		<key>list</key>
+		<array>
+			<string>Q: 优惠券如何使用？</string>
+		</array>
+		<key>name</key>
+		<string>优惠问题</string>
+	</dict>
+	<dict>
+		<key>answer</key>
+		<array>
+			<string>赵磊、赵浩然</string>
+		</array>
+		<key>list</key>
+		<array>
+			<string>Q: 这款APP开发者是谁？</string>
+		</array>
+		<key>name</key>
+		<string>其他问题</string>
+	</dict>
+</array>
+</plist>

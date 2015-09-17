@@ -17,8 +17,11 @@
 #import "SearchVC.h"
 #import "ShoppingCarView.h"
 #import "ConfirmTableViewController.h"
+#import "OrderAppDelegate.h"
 
-@interface DetailViewController ()<UITableViewDelegate,UITableViewDataSource,BigDetailDelegate,UISearchBarDelegate,UISearchControllerDelegate,UISearchResultsUpdating,ShoppingCarViewDelegate>
+@interface DetailViewController ()<UITableViewDelegate,UITableViewDataSource,BigDetailDelegate,UISearchBarDelegate,UISearchControllerDelegate,UISearchResultsUpdating,ShoppingCarViewDelegate>{
+    OrderAppDelegate* appdelegate;
+}
 @property (strong,nonatomic)UITableView *leftTableView;
 @property (strong,nonatomic)UITableView *rightTableView;
 @property  NSMutableArray *temp;//右边表格项的临时数组
@@ -71,6 +74,7 @@
     // Do any additional setup after loading the view.
     
     [self connectBackGround];
+    appdelegate = [UIApplication sharedApplication].delegate;
     //返回按钮的事件
     self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
@@ -83,7 +87,7 @@
     leftTableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     _leftTableView = leftTableView;
     
-    UITableView *rightTableView = [[UITableView alloc]initWithFrame:(CGRect){CGRectGetMaxX(leftTableView.frame)+10,CGRectGetMinY(leftTableView.frame)+65,kWindowWidth-10-(leftTableView.frame.size.width),kWindowHeight}];
+    UITableView *rightTableView = [[UITableView alloc]initWithFrame:(CGRect){CGRectGetMaxX(leftTableView.frame)+10,CGRectGetMinY(leftTableView.frame)+65,kWindowWidth-10-(leftTableView.frame.size.width),kWindowHeight-120}];
     rightTableView.rowHeight = 90;
     rightTableView.dataSource = self;
     rightTableView.delegate = self;
@@ -101,13 +105,26 @@
     [self.view addSubview:bottomLabel];
     _bottomLabel = bottomLabel;
     
+    //购物车
+    UIImageView *carImage = [[UIImageView alloc]initWithFrame:CGRectMake(15, kWindowHeight-65, 50, 50)];
+    carImage.image = [UIImage imageNamed:@"6.png"];
+    carImage.userInteractionEnabled = YES;
+    UITapGestureRecognizer *carImageAction = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(carImageAction)];
+    [carImage addGestureRecognizer:carImageAction];
+    [self.view addSubview:carImage];
+    _carImage = carImage;
+    
+    UIImageView *moneyPic = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(carImage.frame)+5,15,15, 15)];
+    moneyPic.image = [UIImage imageNamed:@"9.png"];
+    [bottomLabel addSubview:moneyPic];
+    
     
     //注意这里的初始化坐标！！如果加到一个view上面，坐标时以父view为基准的坐标！！！
-    UILabel *totalPrice = [[UILabel alloc]initWithFrame:CGRectMake(75, 15, 50, 15)];
+    UILabel *totalPrice = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(moneyPic.frame)+5, 15, 100, 15)];
     totalPrice.text = @"0.0";
     totalPrice.font = [UIFont boldSystemFontOfSize:18];
     totalPrice.textColor = [UIColor colorWithRed:255.0/255 green:117.0/255 blue:68.0/255 alpha:1];
-    totalPrice.textAlignment = NSTextAlignmentCenter;
+    //totalPrice.textAlignment = NSTextAlignmentCenter;
     //totalPrice.layer.masksToBounds = YES;
     [bottomLabel addSubview:totalPrice];
     _totalPrice = totalPrice;
@@ -120,14 +137,7 @@
     [bottomLabel addSubview:payBtn];
     _payBtn = payBtn;
     
-    //购物车
-    UIImageView *carImage = [[UIImageView alloc]initWithFrame:CGRectMake(15, kWindowHeight-65, 50, 50)];
-    carImage.image = [UIImage imageNamed:@"6.png"];
-    carImage.userInteractionEnabled = YES;
-    UITapGestureRecognizer *carImageAction = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(carImageAction)];
-    [carImage addGestureRecognizer:carImageAction];
-    [self.view addSubview:carImage];
-    _carImage = carImage;
+ 
     
     //购物车的数量显示
     UILabel *goodsNumLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(carImage.frame)-13,CGRectGetMinY(carImage.frame), 12, 12)];
@@ -143,13 +153,10 @@
     _goodsNumLabel = goodsNumLabel;
     
     
-    UIImageView *moneyPic = [[UIImageView alloc]initWithFrame:CGRectMake(totalPrice.frame.origin.x-8,totalPrice.frame.origin.y, 15, 15)];
-    moneyPic.image = [UIImage imageNamed:@"9.png"];
-    [bottomLabel addSubview:moneyPic];
     
     
      //导航栏右边的超市详情按钮
-    UIBarButtonItem *detailButton = [[UIBarButtonItem alloc] initWithTitle:@"超市详情" style:UIBarButtonItemStylePlain target:self action:@selector(touchDetail)];
+    UIBarButtonItem *detailButton = [[UIBarButtonItem alloc] initWithTitle:@"详情" style:UIBarButtonItemStylePlain target:self action:@selector(touchDetail)];
     detailButton.tintColor = [UIColor whiteColor];
     self.navigationItem.rightBarButtonItem = detailButton;
     
@@ -226,17 +233,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if(tableView == _leftTableView){
-//        static NSString* cellId = @"cellId";
-//        leftTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-//        
-//        if(cell == nil){
-//            cell = [[leftTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-//        }
+
         leftTableViewCell* cell = [[leftTableViewCell alloc]init];
         cell.name = _nameArray[indexPath.row];
         cell.backgroundColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1];
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-
 
         return cell;
     }
@@ -263,7 +264,6 @@
         //
         cell.bottomPriceLabel = _totalPrice;
         cell.carNum = _goodsNumLabel;
-        
         return  cell;
     }
 }
@@ -305,9 +305,13 @@
        [self bigDetailInit];
     }
 }
-
+//15895900337
 - (void)didSelect:(id)sender{
-    if([_totalPrice.text isEqualToString:@"0.0"]){
+    if (!appdelegate.islogin) {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"请先登录!" message:nil delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    else if([_totalPrice.text isEqualToString:@"0.0"]){
         UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"至少选购一款商品!" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
     }
@@ -488,7 +492,7 @@
 
 //购物车事件
 - (void)carImageAction{
-    _shoppingCar.frame = CGRectMake(0, kWindowHeight-(self.toZL.count)*50-(_bottomLabel.frame.size.height)-50, kWindowWidth, (_toZL.count)*50+50);
+    _shoppingCar.frame = CGRectMake(0, kWindowHeight-(self.toZL.count)*40-(_bottomLabel.frame.size.height)-50, kWindowWidth, (_toZL.count)*40+50);
     
     CGFloat tempY = _shoppingCar.frame.origin.y;
     [_shoppingCar setNeedsDisplay];

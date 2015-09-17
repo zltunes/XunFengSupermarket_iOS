@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RatingBar.h"
+#import "Header.h"
+#import "OrderAppDelegate.h"
 
 @interface FeedbackViewController : UIViewController<UITextViewDelegate>
 @property(nonatomic,strong)UIButton *backbtn;
+@property(strong,nonatomic) UILabel* evaluateLabel;
+@property(strong,nonatomic) UITextView* evaluateView;
+@property(strong,nonatomic) UIButton* submitEvaluateBtn;
+@property(strong,nonatomic) UILabel* ratingLabel;
+@property(strong,nonatomic) UIBarButtonItem* done;
+@property(strong,nonatomic) RatingBar *ratingBar;
+@property(strong,nonatomic) NSNumber* rating;
 @end

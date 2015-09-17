@@ -48,7 +48,7 @@
     [navitem setLeftBarButtonItem:backitem];
     
     self.view.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
-    UIImageView *whiteview=[[UIImageView alloc]initWithFrame:CGRectMake(0, 72, self.view.bounds.size.width, 130)];
+    UIImageView *whiteview=[[UIImageView alloc]initWithFrame:CGRectMake(0, 72, self.view.bounds.size.width, 90)];
     [whiteview setBackgroundColor:[UIColor whiteColor]];
     [self.view addSubview:whiteview];
     UILabel *addrlabel=[[UILabel alloc]initWithFrame:CGRectMake(18, 80, 60, 30)];
@@ -59,7 +59,7 @@
     [self.view addSubview:self.addressfield];
     self.addressfield.placeholder=@"请填写收货地址";
     UIImageView* line1=[[UIImageView alloc]initWithFrame:CGRectMake(18, 112, 284, 1)];
-    line1.backgroundColor=[UIColor colorWithRed:88.0/255.0 green:88.0/255.0 blue:88.0/255.0 alpha:1.0];
+    line1.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
     [self.view addSubview:line1];
     
     
@@ -75,18 +75,16 @@
     line2.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
     [self.view addSubview:line2];
     
-    UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(10, 220, self.view.bounds.size.width-20, 30)];
+    UILabel *label3=[[UILabel alloc]initWithFrame:CGRectMake(20, 220, self.view.bounds.size.width-30, 20)];
     [label3 setTextColor:[UIColor grayColor]];
     [self.view addSubview:label3];
     [label3 setText:@"请精确到宿舍号,方便我们送货上门哦"];
 
     UIButton* savebtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     savebtn.frame = CGRectMake(25, kWindowHeight-300, kWindowWidth-50, 50);
-//    [savebtn setTitle:@"保存" forState:UIControlStateNormal];
     [savebtn setBackgroundImage:[UIImage imageNamed:@"save-01.png"] forState:UIControlStateNormal];
     [savebtn addTarget:self action:@selector(save) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:savebtn];
-    // Do any additional setup after loading the view.
 }
 
 
@@ -94,12 +92,14 @@
 
     NSDictionary *parameters = @{@"phone_num":self.phonefield.text,@"address":self.addressfield.text};
     [appdelegate.manager  POST:@"http://115.29.197.143:8999/v1.0/user/address" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        AddressViewController* addressViewController = [[AddressViewController alloc]init];
+        AddressViewController* addressViewController = [[self.navigationController viewControllers] objectAtIndex:[[self.navigationController viewControllers] count]-2];
         NSDictionary* add_id_dic = responseObject;
         NSDictionary* newadddic = @{@"phone_num":self.phonefield.text,@"address":self.addressfield.text,@"id":add_id_dic[@"id"]};
         [addressViewController.addressArr addObject:newadddic];
         [addressViewController.tableview reloadData];
-        [self presentViewController:addressViewController animated:NO completion:nil];
+//        [self presentViewController:addressViewController animated:NO completion:nil];
+//        [self.navigationController pushViewController:addressViewController animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"添加新地址失败!%@", error);
     }];

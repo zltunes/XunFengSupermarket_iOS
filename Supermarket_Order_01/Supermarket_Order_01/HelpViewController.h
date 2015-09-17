@@ -8,13 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HelpViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>{
-    NSString *dropDown1;
-    NSString *dropDown2;
-    
-    BOOL dropDown1Open;
-    BOOL dropDown2Open;
-}
+@interface HelpViewController : UIViewController
 @property(nonatomic,strong)UIButton *backbtn;
-@property(nonatomic,strong)UITableView *tableview;
 @end

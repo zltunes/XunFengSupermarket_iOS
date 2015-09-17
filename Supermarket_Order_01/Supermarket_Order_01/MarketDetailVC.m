@@ -92,12 +92,14 @@
     // Dispose of any resources that can be recreated.
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return [_dic[@"comments"] count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     commentCell* cell = [[commentCell alloc]init];
     
     cell.dataDic = _dic[@"comments"][indexPath.row];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+
         return cell;
 }
 

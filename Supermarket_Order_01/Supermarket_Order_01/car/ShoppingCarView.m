@@ -33,11 +33,11 @@
     carImage.image = [UIImage imageNamed:@"6.png"];
     [self addSubview:carImage];
     
-    UITableView *carGoods = [[UITableView alloc]initWithFrame:CGRectMake(0, 50, kWindowWidth, _goodArray.count*50)];
+    UITableView *carGoods = [[UITableView alloc]initWithFrame:CGRectMake(0, 50, kWindowWidth, _goodArray.count*40)];
     carGoods.delegate = self;
     carGoods.dataSource = self;
     carGoods.backgroundColor = [UIColor whiteColor];
-    carGoods.rowHeight = 50;
+    carGoods.rowHeight = 40;
     [self addSubview:carGoods];
     _carGoods = carGoods;
     
@@ -67,7 +67,9 @@
 
 }
 - (void)CarViewDataReload{
-    self.frame = CGRectMake(0, kWindowHeight-self.goodArray.count*50-50-50, kWindowWidth, (self.goodArray.count)*50+50);
+    self.frame = CGRectMake(0, kWindowHeight-self.goodArray.count*40-50-50, kWindowWidth, (self.goodArray.count)*40+50);
+    self.carGoods.frame = self.frame;
+
     [self setNeedsDisplay];
     NSLog(@"%f",self.frame.origin.y);
     NSLog(@"%lu",(unsigned long)_goodArray.count);

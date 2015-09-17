@@ -49,7 +49,7 @@
     UIImage *btImage = [UIImage imageNamed:@"7.png"];
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    cancelBtn.frame = CGRectMake(self.frame.size.width-35, 15, 20, 20);
+    cancelBtn.frame = CGRectMake(self.frame.size.width-35, 15, 27, 27);
     [cancelBtn setBackgroundImage:btImage forState:UIControlStateNormal];
     [cancelBtn addTarget:_delegate action:@selector(selectCancel) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:cancelBtn];

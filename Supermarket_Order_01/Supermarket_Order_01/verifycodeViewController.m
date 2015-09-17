@@ -81,7 +81,7 @@
     [self.view addSubview:phoneview];
     
     _verifyCodeField=[[UITextField alloc]initWithFrame:CGRectMake(80, 160, 200, 25)];
-    _verifyCodeField.placeholder=@"请输入你的手机号码" ;
+    _verifyCodeField.placeholder=@"请输入验证码" ;
     [self.view addSubview:_verifyCodeField];
     
     UIImageView *line=[[UIImageView alloc]initWithFrame:CGRectMake(70, 185, 200, 1)];

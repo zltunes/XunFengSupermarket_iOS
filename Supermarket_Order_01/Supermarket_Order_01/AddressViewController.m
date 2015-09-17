@@ -30,6 +30,13 @@
 @synthesize navitem;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"地址管理";
+    UIBarButtonItem *back = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:nil];
+    self.navigationItem.backBarButtonItem = back;
+    
+    
+    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     appdelegate = [UIApplication sharedApplication].delegate;
     deleteIndexPath = [[NSIndexPath alloc]init];
     navbar=[[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
@@ -51,11 +58,11 @@
                              ,nil];
     navbar.titleTextAttributes=attrdic;
     UIBarButtonItem *backitem=[[UIBarButtonItem alloc]init];
-    self.backbtn=[[UIButton alloc]initWithFrame:CGRectMake(9, 30,20.5, 33)];
-    [self.backbtn setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-    [self.backbtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    [backitem setCustomView:self.backbtn];
-    [self.navitem setLeftBarButtonItem:backitem];
+//    self.backbtn=[[UIButton alloc]initWithFrame:CGRectMake(9, 30,20.5, 33)];
+//    [self.backbtn setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+//    [self.backbtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+//    [backitem setCustomView:self.backbtn];
+////    [self.navitem setLeftBarButtonItem:backitem];
     
     self.view.backgroundColor=[UIColor colorWithRed:242.0/255.0 green:242.0/255.0 blue:242.0/255.0 alpha:1.0];
     self.addbtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -65,15 +72,22 @@
     [self.addbtn addTarget:self action:@selector(add) forControlEvents:UIControlEventTouchUpInside];
 
     [appdelegate.manager GET:@"http://115.29.197.143:8999/v1.0/user/addresses" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.addressArr=[responseObject mutableCopy];
-        self.tableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 70, self.view.bounds.size.width, kWindowHeight-200)];
-        [self.tableview registerClass:[AddressTableViewCell class] forCellReuseIdentifier:@"cell"];
-        self.tableview.delegate=self;
-        self.tableview.dataSource=self;
-        [self.view addSubview:self.tableview];
-        [self hideExcessLine:self.tableview];
-    }failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@", error);
+        NSArray* dictCopy = [[NSArray alloc]init];
+        dictCopy = responseObject;
+        for (int i =0; i<[dictCopy count]; i++) {
+            NSMutableDictionary* editableDict = [[dictCopy objectAtIndex:i] mutableCopy];
+            self.addressArr = [self.addressArr arrayByAddingObject:editableDict];
+        }
+            self.tableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 70, self.view.bounds.size.width, kWindowHeight-200)];
+            [self.tableview registerClass:[AddressTableViewCell class] forCellReuseIdentifier:@"cell"];
+            self.tableview.delegate=self;
+            self.tableview.dataSource=self;
+            [self.view addSubview:self.tableview];
+            [self hideExcessLine:self.tableview];
+
+        }
+            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error:%@",error); 
     }];
 }
 -(void)hideExcessLine:(UITableView *)tableView{
@@ -83,7 +97,8 @@
 }
 -(void)add{
     NewAddrViewController *newaddrvc=[[NewAddrViewController alloc]init];
-    [self presentViewController:newaddrvc animated:NO completion:nil];
+//    [self presentViewController:newaddrvc animated:NO completion:nil];
+    [self.navigationController pushViewController:newaddrvc animated:YES];
 }
 
 -(void)back{
@@ -138,7 +153,9 @@
         AddressTableViewCell* editcell = [self.tableview cellForRowAtIndexPath:indexPath];
         editvc.addstr = editcell.addresslabel.text;
         editvc.phonestr = editcell.phonelabel.text;
-        [self presentViewController:editvc animated:NO completion:nil];
+//        [self presentViewController:editvc animated:NO completion:nil];
+//        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController pushViewController:editvc animated:YES];
         [self.tableview deselectRowAtIndexPath:indexPath animated:YES];
     }
     [self.tableview deselectRowAtIndexPath:indexPath animated:YES];

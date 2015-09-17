@@ -195,8 +195,8 @@
         cell.pingjiaBtn.hidden = YES;
         cell.querenshouhuoBtn.userInteractionEnabled = YES;
         UITapGestureRecognizer* ges = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(confirmStatusBtn:)];
-        [ges.view setTag:cell.orderID];
         [cell.querenshouhuoBtn addGestureRecognizer:ges];
+        ges.view.tag = cell.orderID;
     } else if([cell.OrderStatus isEqual:@"已送达"]){
         cell.querenshouhuoBtn.hidden = YES;
         cell.pingjiaBtn.hidden = NO;

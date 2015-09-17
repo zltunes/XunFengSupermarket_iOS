@@ -61,17 +61,6 @@
     [self.deliveredbtn setTitle:@"待收货" forState:UIControlStateNormal];
     [self.deliveredbtn setBackgroundColor:[UIColor grayColor]];
     
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    [manager.requestSerializer setValue:@"application/json;charset=utf-8"forHTTPHeaderField:@"Content-Type"];
-//    //申明返回的结果是json类型
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    //申明请求的数据是json类型
-//    manager.requestSerializer=[AFJSONRequestSerializer serializer];    //如果报接受类型不一致请替换一致text/html或别的
-//    
-//    [manager.requestSerializer setValue:@"b07f18c8-3f14-11e5-82bd-00163e021195"forHTTPHeaderField:@"Access_token"];
-//    //[manager.requestSerializer setValue:token forHTTPHeaderField:@"Authorization"]
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html",@"text/json",@"text/javascript", nil];
-//    // 网络访问是异步的,回调是主线程的,因此程序员不用管在主线程更新UI的事情
     [appdelegate.manager GET:@"http://115.29.197.143:8999/v1.0/user/addresses" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@", responseObject);
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -79,11 +68,6 @@
             self.tableview.frame=CGRectMake(0, 128, self.view.bounds.size.width, 148*[self.datasource count]);
             [self.tableview reloadData];
         });
-        
-        // 提问:NSURLConnection异步方法回调,是在子线程
-        // 得到回调之后,通常更新UI,是在主线程
-        
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@", error);
     }];
@@ -134,15 +118,5 @@
    
 }
 
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

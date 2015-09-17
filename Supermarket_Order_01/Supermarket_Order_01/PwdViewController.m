@@ -11,6 +11,8 @@
 #import "AFNetworking/AFHTTPRequestOperation.h"
 #import "AFNetworking/AFHTTPSessionManager.h"
 #import "myViewController.h"
+#import "FastLoginViewController.h"
+
 @interface PwdViewController (){
     UINavigationBar *navbar;
     UINavigationItem*navitem;
@@ -77,7 +79,7 @@
         
         _pwdfield=[[UITextField alloc]initWithFrame:CGRectMake(85, 160, 200, 25)];
         _pwdfield.placeholder=@"6-32位字母符号组合" ;
-    _pwdfield.secureTextEntry=YES;
+        _pwdfield.secureTextEntry=YES;
         [self.view addSubview:_pwdfield];
     
     UIImageView *phoneview2=[[UIImageView alloc]initWithFrame:CGRectMake(55, 195, 25, 25)];
@@ -138,10 +140,11 @@
 }
 
 -(void)performDismiss:(id)sender{
+    //注册完毕后返回“登录”界面进行登录
     [_alert dismissWithClickedButtonIndex:0 animated:NO];
-    myViewController *myvc=[[myViewController alloc]init];
-    [self presentViewController:myvc animated:NO completion:nil];
-
+    FastLoginViewController *regvc=[[FastLoginViewController alloc]init];
+    [self.navigationItem.backBarButtonItem setTitle:@"返回"];
+    [self presentViewController:regvc animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -149,14 +152,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
