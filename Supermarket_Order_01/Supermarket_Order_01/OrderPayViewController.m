@@ -71,8 +71,9 @@
 //自定义左边返回按钮事件
 -(void)returnToOrderConfirm:(id)sender
 {
-    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"是否放弃付款?" message:nil delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是",nil];
-    [alert show];
+    UIAlertView* alert1 = [[UIAlertView alloc]initWithTitle:@"是否放弃付款?" message:nil delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是",nil];
+    alert1.tag = 1;
+    [alert1 show];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -306,8 +307,16 @@
         NSString* payURL1 =
         [NSString stringWithFormat:@"http://115.29.197.143:8999/v1.0/order/%d",self.order_id];
         NSString* payURL2 = @"/pay";
-        NSString* payURL = [payURL1 stringByAppendingString:payURL2];
-        [delegate.manager POST:payURL parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        self.payURL = [payURL1 stringByAppendingString:payURL2];
+        
+//        UIAlertView* alert2 = [[UIAlertView alloc]initWithTitle:@"登录" message:@"请输入支付账号与密码" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//        alert2.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+//        [alert2 textFieldAtIndex:1].keyboardType = UIKeyboardTypeNumberPad;
+//        alert2.tag = 2;
+//        [alert2 show];
+//        
+        
+        [delegate.manager POST:self.payURL parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             delegate.orderID = self.order_id;
             detailedOrderStatusTableViewController* detailView = [[detailedOrderStatusTableViewController alloc]init];
             detailView.PraiseFlag = 1;

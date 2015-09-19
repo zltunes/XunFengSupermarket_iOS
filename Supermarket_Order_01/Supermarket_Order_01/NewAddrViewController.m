@@ -95,7 +95,8 @@
         AddressViewController* addressViewController = [[self.navigationController viewControllers] objectAtIndex:[[self.navigationController viewControllers] count]-2];
         NSDictionary* add_id_dic = responseObject;
         NSDictionary* newadddic = @{@"phone_num":self.phonefield.text,@"address":self.addressfield.text,@"id":add_id_dic[@"id"]};
-        [addressViewController.addressArr addObject:newadddic];
+//        [addressViewController.addressArr addObject:newadddic];
+        addressViewController.addressArr = [addressViewController.addressArr arrayByAddingObject:newadddic];
         [addressViewController.tableview reloadData];
 //        [self presentViewController:addressViewController animated:NO completion:nil];
 //        [self.navigationController pushViewController:addressViewController animated:YES];

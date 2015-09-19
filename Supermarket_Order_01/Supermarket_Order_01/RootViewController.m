@@ -59,14 +59,12 @@
     [self.view addSubview:marketTableView];
     _marketTableView = marketTableView;
     
-        
     NSMutableArray *detailArray = [NSMutableArray array];
     _detailArray = detailArray;
 
     [self hideExcessLine:self.marketTableView];
    
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -93,7 +91,7 @@
 }
 //点击单元格进入超市详情
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    if (!indexPath.row || indexPath.row==1) {
     DetailViewController *detailViewController = [[DetailViewController alloc]init];
     detailViewController.barName =[_result2[indexPath.row]objectForKey:@"name"];
     //获得超市id
@@ -106,6 +104,12 @@
     detailViewController.urlSearch = url;
     [self setHidesBottomBarWhenPushed:YES]; 
     [self.navigationController pushViewController:detailViewController animated:YES];
+    }
+    else{
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"商家休息中!" message:@"选择其他超市吧!" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    [self.marketTableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)connectBackGround{

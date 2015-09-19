@@ -300,33 +300,41 @@
 //点击“去下单”按钮,先向后台创建order，再跳转到支付界面
 -(void)clicked:(id)sender
 {
-    //创建order给后台
-    /*
-     post参数
-     {adr_id,start_time,remark,cou_id，sup_id,
-     goods:[{gid,quantity},…]}
-     返回：
-     ord_id
-     */
-    address_id = [self.defaultAddressDict[@"id"] intValue];
-    NSNumber* adr_id = [NSNumber numberWithInt:address_id];//跳转到“我的地址”界面后进行选择的地址
-    //问题！！
-    NSNumber* cou_id = [NSNumber numberWithInt:2];//我拥有的该超市的coupon，这个应该下一界面支付的时候再用
-    remark = remarkCell.remarkField.text;
-    NSNumber* sup_id = [NSNumber numberWithInt:self.sup_id];
+    
+    if (!start_time_id) {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"信息不完整!" message:@"请选择起送时间!" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        [alert show];
+    } else {
+        //创建order给后台
+        /*
+         post参数
+         {adr_id,start_time,remark,cou_id，sup_id,
+         goods:[{gid,quantity},…]}
+         返回：
+         ord_id
+         */
+        address_id = [self.defaultAddressDict[@"id"] intValue];
+        NSNumber* adr_id = [NSNumber numberWithInt:address_id];//跳转到“我的地址”界面后进行选择的地址
+        //问题！！
+        NSNumber* cou_id = [NSNumber numberWithInt:2];//我拥有的该超市的coupon，这个应该下一界面支付的时候再用
+        remark = remarkCell.remarkField.text;
+        NSNumber* sup_id = [NSNumber numberWithInt:self.sup_id];
+        
+        //创建订单
+        NSDictionary* param = @{@"adr_id":adr_id,@"start_time_id":[NSNumber numberWithInt:start_time_id],@"remark":remark,@"cou_id":cou_id,@"sup_id":sup_id,@"goods":goods};
+        [delegate.manager POST:orderCreateURL parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            self.order_id = [[responseObject objectForKey:@"ord_id"] intValue];
+            NSLog(@"创建订单成功，返回order_id!%d",self.order_id);
+            //跳转到支付界面
+            OrderPayViewController* payViewController = [[OrderPayViewController alloc]init];
+            payViewController.totalPrice = self.topayPrice;
+            payViewController.order_id = self.order_id;
+            [self.navigationController pushViewController:payViewController animated:YES];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"创建订单失败：%@",error);
+        }];
 
-    //创建订单
-    NSDictionary* param = @{@"adr_id":adr_id,@"start_time_id":[NSNumber numberWithInt:start_time_id],@"remark":remark,@"cou_id":cou_id,@"sup_id":sup_id,@"goods":goods};
-    [delegate.manager POST:orderCreateURL parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.order_id = [[responseObject objectForKey:@"ord_id"] intValue];
-        NSLog(@"创建订单成功，返回order_id!%d",self.order_id);
-        //跳转到支付界面
-        OrderPayViewController* payViewController = [[OrderPayViewController alloc]init];
-        payViewController.totalPrice = self.topayPrice;
-        payViewController.order_id = self.order_id;
-        [self.navigationController pushViewController:payViewController animated:YES];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"创建订单失败：%@",error);
-    }];
+    }
+    
 }
 @end

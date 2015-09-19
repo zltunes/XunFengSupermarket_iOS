@@ -44,7 +44,7 @@
     
     UIImageView *view1=[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
 //    self.datasource=[[NSMutableArray alloc]init];
-    _addressArr = [[NSMutableArray alloc]init];
+    self.addressArr = [[NSMutableArray alloc]init];
     [view1 setBackgroundColor:[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0]];
     [self.navbar addSubview:view1];
     //self.navigationController.navigationBar.barTintColor=[UIColor colorWithRed:225.0/255.0 green:117.0/255.0 blue:68.0/255.0 alpha:1.0];
@@ -76,7 +76,7 @@
         dictCopy = responseObject;
         for (int i =0; i<[dictCopy count]; i++) {
             NSMutableDictionary* editableDict = [[dictCopy objectAtIndex:i] mutableCopy];
-            self.addressArr = [self.addressArr arrayByAddingObject:editableDict];
+            self.addressArr = [[self.addressArr arrayByAddingObject:editableDict] mutableCopy];
         }
             self.tableview=[[UITableView alloc]initWithFrame:CGRectMake(0, 70, self.view.bounds.size.width, kWindowHeight-200)];
             [self.tableview registerClass:[AddressTableViewCell class] forCellReuseIdentifier:@"cell"];

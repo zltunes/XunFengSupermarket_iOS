@@ -55,6 +55,8 @@
 @property (nonatomic)NSMutableArray *searchGoods;
 //给赵磊交互的array
 @property (nonatomic)NSMutableArray *toZL;
+
+@property(nonatomic)UITapGestureRecognizer *dissmissCar;
 @end
 
 @implementation DetailViewController
@@ -216,6 +218,9 @@
     //给赵磊的array初始化
     NSMutableArray *toZL = [[NSMutableArray alloc]init];
     _toZL = toZL;
+    
+    UITapGestureRecognizer *dissmissCar = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(bottomAction)];
+    _dissmissCar = dissmissCar;
     
 }
 
@@ -515,7 +520,7 @@
     _carBackView.hidden = NO;
     _shoppingCar.hidden = NO;
     
-    
+    [_carBackView addGestureRecognizer:_dissmissCar];
     _carImage.hidden = YES;
     _goodsNumLabel.hidden = YES;
     

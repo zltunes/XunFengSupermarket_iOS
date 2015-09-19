@@ -16,6 +16,7 @@
 @property(strong,nonatomic) UIButton* confirmPayBtn;
 @property(strong,nonatomic) NSIndexPath* lastIndexPath;
 @property(strong,nonatomic) UITableViewCell* couponCell;//购物券cell
+@property(strong,nonatomic) NSString* payURL;
 @property float banlance;//我的余额
 @property float toPayValue;//还需支付
 @property int couponCount;
